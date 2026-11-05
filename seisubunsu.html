@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計算修行！分数・整数マスター</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"M PLUS Rounded 1c"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              orange: '#ff8800',
+              gold: '#f59e0b',
+              cyan: '#38bdf8',
+              card: '#1e2129',
+              dark: '#121316',
+              accent: '#3b82f6'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #121316;
+      color: #f3f4f6;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* 縦型分数のスタイル */
+    .fraction-box {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1.1;
+      padding: 0 4px;
+    }
+    .fraction-numerator {
+      border-bottom: 3px solid currentColor;
+      padding-bottom: 3px;
+      font-weight: 700;
+    }
+    .fraction-denominator {
+      padding-top: 3px;
+      font-weight: 700;
+    }
+
+    /* 答え入力用分数スタイル */
+    .input-fraction-box {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .input-fraction-line {
+      width: 100%;
+      height: 3px;
+      background: #4b5563;
+      margin: 8px 0;
+      border-radius: 9999px;
+    }
+
+    /* ネオン・オーラ効果 */
+    .glow-orange {
+      box-shadow: 0 0 25px rgba(255, 136, 0, 0.35);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+    .glow-success {
+      box-shadow: 0 0 35px rgba(34, 197, 94, 0.5);
+    }
+
+    /* アニメーション */
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.03); opacity: 1; }
+    }
+    .animate-aura {
+      animation: pulseAura 2.5s infinite ease-in-out;
+    }
+
+    /* 数値入力のスピンボタン非表示 */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col justify-between font-sans relative">
+
+  <!-- 背景グリッドとオーラ光彩 -->
+  <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,136,0,0.15),rgba(255,255,255,0))]"></div>
+  <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_right,#1f293710_1px,transparent_1px),linear-gradient(to_bottom,#1f293710_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+
+  <!-- ヘッダー（全画面ボタン・スコア情報・タイトル） -->
+  <header class="relative z-10 w-full px-8 py-5 flex items-center justify-between border-b border-gray-800/80 bg-[#121316]/80 backdrop-blur-md">
+    <!-- タイトル -->
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange to-yellow-500 flex items-center justify-center text-xl font-black text-black shadow-lg">
+        界
+      </div>
+      <div>
+        <h1 class="text-xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 to-amber-400">
+          計算修行道場
+        </h1>
+        <p class="text-xs text-gray-400 tracking-wider">FRACTION & INTEGER TRAINING</p>
+      </div>
+    </div>
+
+    <!-- 成績・ステータス -->
+    <div class="flex items-center space-x-6 text-sm font-bold bg-[#1a1d24] px-5 py-2.5 rounded-2xl border border-gray-700/60 shadow-inner">
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400">連続正解:</span>
+        <span id="comboText" class="text-brand-orange font-mono text-xl font-black">0</span>
+        <span class="text-xs text-orange-400">連撃!</span>
+      </div>
+      <div class="h-4 w-px bg-gray-700"></div>
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400">正解率:</span>
+        <span id="accuracyText" class="text-brand-cyan font-mono text-lg font-black">0%</span>
+        <span id="scoreText" class="text-xs text-gray-400">(0/0問)</span>
+      </div>
+    </div>
+
+    <!-- フルスクリーン切り替えボタン -->
+    <button id="fullscreenBtn" class="flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 text-gray-200 hover:text-white px-4 py-2.5 rounded-xl border border-gray-700 transition duration-150 active:scale-95 shadow-md">
+      <svg id="fsExpandIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+      </svg>
+      <svg id="fsCompressIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m10 7h6m-6 0V4m0 6l7-7" />
+      </svg>
+      <span id="fsText" class="text-xs font-bold tracking-wider">全画面表示</span>
+    </button>
+  </header>
+
+  <!-- メイン対戦・修行エリア（中央配置・スクロールなし） -->
+  <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
+    <!-- メインカード -->
+    <div id="mainCard" class="w-full max-w-3xl bg-[#1e2129] border-2 border-gray-700/70 rounded-3xl p-8 sm:p-10 shadow-2xl relative transition-all duration-300">
+      
+      <!-- 修行掛け声メッセージバッジ -->
+      <div class="flex justify-center -mt-14 mb-4">
+        <div id="masterDialogue" class="bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black px-6 py-2 rounded-full text-base sm:text-lg shadow-xl tracking-wider flex items-center space-x-2 animate-bounce">
+          <span>⚡</span>
+          <span id="dialogueText">オッス！計算修行すっぞ！</span>
+          <span>⚡</span>
+        </div>
+      </div>
+
+      <!-- 問題表示セクション -->
+      <div class="text-center my-4 py-6 px-4 bg-[#14161b] rounded-2xl border border-gray-800/90 shadow-inner flex flex-col items-center justify-center">
+        <span class="text-xs font-bold tracking-widest text-orange-400/80 uppercase mb-2">Question</span>
+        <div id="questionDisplay" class="text-4xl sm:text-5xl font-black text-white font-mono flex items-center justify-center space-x-4 tracking-wider">
+          <!-- JSで数式生成 -->
+        </div>
+      </div>
+
+      <!-- ステップ1: 答えの種類を選択（整数 or 分数） -->
+      <div id="stepChoice" class="mt-6 flex flex-col items-center">
+        <p class="text-base sm:text-lg font-bold text-gray-300 mb-4 flex items-center">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-brand-orange mr-2"></span>
+          答えの形はどっちだ？ 選んでくれ！
+        </p>
+        <div class="grid grid-cols-2 gap-5 w-full max-w-md">
+          <button id="btnChooseInt" class="group relative py-5 px-6 rounded-2xl bg-[#262a35] hover:bg-[#323746] border-2 border-gray-600 hover:border-brand-orange text-white text-xl font-extrabold shadow-lg transition-all transform active:scale-95 flex flex-col items-center justify-center">
+            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🔟</span>
+            <span class="tracking-wide">整数</span>
+            <span class="text-[11px] font-normal text-gray-400 mt-1">割り切れる数</span>
+          </button>
+          
+          <button id="btnChooseFrac" class="group relative py-5 px-6 rounded-2xl bg-[#262a35] hover:bg-[#323746] border-2 border-gray-600 hover:border-brand-cyan text-white text-xl font-extrabold shadow-lg transition-all transform active:scale-95 flex flex-col items-center justify-center">
+            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🍰</span>
+            <span class="tracking-wide">分数</span>
+            <span class="text-[11px] font-normal text-gray-400 mt-1">分子 / 分母</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ステップ2: 答えの入力エリア（初期は非表示） -->
+      <div id="stepInput" class="mt-6 hidden flex flex-col items-center">
+        <div class="flex items-center justify-between w-full max-w-md mb-3 px-1">
+          <button id="btnBackToChoice" class="text-xs text-gray-400 hover:text-white flex items-center space-x-1 py-1 px-2.5 rounded-lg bg-gray-800/80 border border-gray-700 transition">
+            <span>←</span>
+            <span>選び直す</span>
+          </button>
+          <span id="selectedTypeBadge" class="text-xs font-black px-3 py-1 rounded-md tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30">
+            整数入力
+          </span>
+        </div>
+
+        <!-- 整数用入力フォーム -->
+        <div id="integerInputContainer" class="w-full max-w-xs flex flex-col items-center my-2">
+          <div class="relative w-full">
+            <input type="number" id="intAnswerInput" placeholder="?" autocomplete="off"
+              class="w-full text-center text-4xl sm:text-5xl font-mono font-black py-3 px-4 bg-[#14161b] text-white border-2 border-brand-orange rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-500/40 transition">
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Enterキーでも解答できるぞ！</p>
+        </div>
+
+        <!-- 分数用入力フォーム（上下に並ぶ直感UI） -->
+        <div id="fractionInputContainer" class="hidden flex-col items-center my-2">
+          <div class="input-fraction-box w-36 sm:w-44">
+            <!-- 分子 -->
+            <input type="number" id="numInput" placeholder="分子" autocomplete="off"
+              class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
+            
+            <!-- 分数線 -->
+            <div class="input-fraction-line bg-gray-400"></div>
+
+            <!-- 分母 -->
+            <input type="number" id="denInput" placeholder="分母" autocomplete="off"
+              class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
+          </div>
+          <p class="text-xs text-gray-400 mt-2">※できるだけ約分した形で入力してくれよな！</p>
+        </div>
+
+        <!-- 解答ボタン -->
+        <button id="btnSubmitAnswer" class="mt-5 w-full max-w-md py-4 rounded-2xl bg-gradient-to-r from-brand-orange to-yellow-500 hover:from-orange-500 hover:to-yellow-400 text-slate-950 text-xl font-black shadow-lg transition-all transform active:scale-95 flex items-center justify-center space-x-2">
+          <span>気合で答える！</span>
+          <span class="text-sm bg-black/20 px-2 py-0.5 rounded-md font-mono">[Enter]</span>
+        </button>
+      </div>
+
+      <!-- フィードバック表示オーバーレイ/結果 -->
+      <div id="resultFeedback" class="hidden mt-6 flex flex-col items-center text-center p-4 rounded-2xl bg-black/40 border border-gray-700/80">
+        <div id="resultIcon" class="text-5xl mb-2">⭕</div>
+        <div id="resultTitle" class="text-2xl font-black mb-1 text-white">大正解だ！すげぇぞ！</div>
+        <div id="resultDetail" class="text-sm text-gray-300 font-bold mb-4 font-mono"></div>
+        <button id="btnNextQuestion" class="py-3 px-8 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-lg shadow-lg active:scale-95 transition">
+          次の問題へ進む！ [Enter]
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="relative z-10 w-full px-6 py-3 text-center text-xs text-gray-500 border-t border-gray-800/80 bg-[#121316]">
+    PC全画面推奨・答えは整数か既約分数で入力 | 思考力を極限まで高める計算修行
+  </footer>
+
+  <script>
+    /* ================================================================
+       1. 悟空風・修行メッセージ集 ＆ サウンドエンジン (Web Audio API)
+       ================================================================ */
+    const GOKU_MESSAGES = {
+      start: ["オッス！計算修行すっぞ！", "かめはめ波級の集中力を見せてくれ！", "でっけえ気を感じるぞ！さあ来い！"],
+      correctCombo: [
+        "おめえすげえな！絶好調だ！", 
+        "いいぞ！気合い入ってんな！", 
+        "その調子だ！界王拳使ってんのか！？", 
+        "つええ！もっと修行続けっぞ！",
+        "会心の当たりだ！完璧だぞ！"
+      ],
+      wrong: [
+        "くそったれ…！まだこれからだ！", 
+        "惜しいぞ！もういっちょ集中すっぞ！", 
+        "あきらめんな！仙豆食って立ち上がれ！"
+      ],
+      needReduction: [
+        "おっと！約分できるぞ！もっと小さくできねえか？",
+        "答えは合ってるが、最後まで約分してみてくれよな！"
+      ]
+    };
+
+    // Web Audio API による自前効果音生成（外部URLなし）
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playCorrect() {
+        try {
+          this.init();
+          const t = this.ctx.currentTime;
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
+
+          // 明るいファンファーレ音 (C5 -> G5)
+          osc1.frequency.setValueAtTime(523.25, t);
+          osc1.frequency.setValueAtTime(783.99, t + 0.1);
+          osc2.frequency.setValueAtTime(1046.50, t + 0.1);
+
+          gain.gain.setValueAtTime(0.3, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc1.start(t);
+          osc2.start(t);
+          osc1.stop(t + 0.5);
+          osc2.stop(t + 0.5);
+        } catch(e) {}
+      }
+      playWrong() {
+        try {
+          this.init();
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, t);
+          osc.frequency.linearRampToValueAtTime(130, t + 0.35);
+
+          gain.gain.setValueAtTime(0.25, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(t);
+          osc.stop(t + 0.35);
+        } catch(e) {}
+      }
+      playSelect() {
+        try {
+          this.init();
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t);
+          osc.frequency.setValueAtTime(880, t + 0.05);
+          gain.gain.setValueAtTime(0.15, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.12);
+        } catch(e) {}
+      }
+    }
+    const sounds = new SoundEngine();
+
+    /* ================================================================
+       2. 数学ユーティリティ（最大公約数・既約分数判定）
+       ================================================================ */
+    function gcd(a, b) {
+      a = Math.abs(a);
+      b = Math.abs(b);
+      while (b) {
+        let t = b;
+        b = a % b;
+        a = t;
+      }
+      return a;
+    }
+
+    /* ================================================================
+       3. アプリの状態管理 (State)
+       ================================================================ */
+    let currentQuestion = null;
+    let selectedMode = null; // 'integer' | 'fraction'
+    let totalAnswered = 0;
+    let correctCount = 0;
+    let currentCombo = 0;
+    let isWaitingNext = false;
+
+    // DOM要素の参照
+    const questionDisplay = document.getElementById('questionDisplay');
+    const stepChoice = document.getElementById('stepChoice');
+    const stepInput = document.getElementById('stepInput');
+    const integerInputContainer = document.getElementById('integerInputContainer');
+    const fractionInputContainer = document.getElementById('fractionInputContainer');
+    const intAnswerInput = document.getElementById('intAnswerInput');
+    const numInput = document.getElementById('numInput');
+    const denInput = document.getElementById('denInput');
+    const btnChooseInt = document.getElementById('btnChooseInt');
+    const btnChooseFrac = document.getElementById('btnChooseFrac');
+    const btnBackToChoice = document.getElementById('btnBackToChoice');
+    const btnSubmitAnswer = document.getElementById('btnSubmitAnswer');
+    const resultFeedback = document.getElementById('resultFeedback');
+    const resultIcon = document.getElementById('resultIcon');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultDetail = document.getElementById('resultDetail');
+    const btnNextQuestion = document.getElementById('btnNextQuestion');
+    const dialogueText = document.getElementById('dialogueText');
+    const selectedTypeBadge = document.getElementById('selectedTypeBadge');
+    const comboText = document.getElementById('comboText');
+    const accuracyText = document.getElementById('accuracyText');
+    const scoreText = document.getElementById('scoreText');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fsExpandIcon = document.getElementById('fsExpandIcon');
+    const fsCompressIcon = document.getElementById('fsCompressIcon');
+    const fsText = document.getElementById('fsText');
+
+    /* ================================================================
+       4. 問題生成ロジック
+       画像の問題パターン：
+       - (2桁 or 3桁の数) × (1/10 or 1/100)
+       - (1/10 or 1/100) × (2桁 or 3桁の数)
+       例：30, 40, 50, 60, 70, 80, 120, 150, 240, 320, 480 等
+       ================================================================ */
+    const NUM_CANDIDATES = [
+      20, 30, 40, 50, 60, 70, 80, 90,
+      110, 120, 140, 150, 160, 180, 200, 240, 250, 280, 300, 320, 350, 400, 450, 480, 500
+    ];
+
+    function generateQuestion() {
+      // 数を決定
+      const n = NUM_CANDIDATES[Math.floor(Math.random() * NUM_CANDIDATES.length)];
+      // 分母を決定 (10 または 100)
+      const denominator = Math.random() < 0.5 ? 10 : 100;
+      // 順番を決定 (true: 数 × 1/D, false: 1/D × 数)
+      const numFirst = Math.random() < 0.5;
+
+      // 計算結果: n * 1 / denominator = n / denominator
+      const g = gcd(n, denominator);
+      const simpNum = n / g;
+      const simpDen = denominator / g;
+      const isInteger = (simpDen === 1);
+
+      return {
+        number: n,
+        denominatorMultiplier: denominator,
+        numFirst: numFirst,
+        isInteger: isInteger,
+        // 正解の既約分数 / 整数
+        correctInt: isInteger ? simpNum : null,
+        correctNum: simpNum,
+        correctDen: simpDen,
+        originalNum: n,
+        originalDen: denominator
+      };
+    }
+
+    /* ================================================================
+       5. 画面描画・遷移ロジック
+       ================================================================ */
+    function loadNewQuestion() {
+      isWaitingNext = false;
+      selectedMode = null;
+      currentQuestion = generateQuestion();
+
+      // UI初期化
+      resultFeedback.classList.add('hidden');
+      stepInput.classList.add('hidden');
+      stepChoice.classList.remove('hidden');
+      intAnswerInput.value = '';
+      numInput.value = '';
+      denInput.value = '';
+
+      // 問題の数式をHTML描画（きれいな上下分数）
+      const fracHtml = `
+        <span class="fraction-box text-3xl sm:text-4xl text-amber-300">
+          <span class="fraction-numerator">1</span>
+          <span class="fraction-denominator">${currentQuestion.denominatorMultiplier}</span>
+        </span>
+      `;
+
+      if (currentQuestion.numFirst) {
+        questionDisplay.innerHTML = `
+          <span>${currentQuestion.number}</span>
+          <span class="text-orange-400">×</span>
+          ${fracHtml}
+          <span class="text-gray-400">=</span>
+          <span class="text-gray-500">?</span>
+        `;
+      } else {
+        questionDisplay.innerHTML = `
+          ${fracHtml}
+          <span class="text-orange-400">×</span>
+          <span>${currentQuestion.number}</span>
+          <span class="text-gray-400">=</span>
+          <span class="text-gray-500">?</span>
+        `;
+      }
+
+      // セリフをセット
+      dialogueText.textContent = GOKU_MESSAGES.start[Math.floor(Math.random() * GOKU_MESSAGES.start.length)];
+    }
+
+    // 「整数」または「分数」を選択したとき
+    function selectAnswerType(type) {
+      sounds.playSelect();
+      selectedMode = type;
+      stepChoice.classList.add('hidden');
+      stepInput.classList.remove('hidden');
+
+      if (type === 'integer') {
+        selectedTypeBadge.textContent = '🔟 整数として回答';
+        selectedTypeBadge.className = 'text-xs font-black px-3 py-1 rounded-md tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30';
+        integerInputContainer.classList.remove('hidden');
+        fractionInputContainer.classList.add('hidden');
+        setTimeout(() => intAnswerInput.focus(), 50);
+      } else {
+        selectedTypeBadge.textContent = '🍰 分数として回答';
+        selectedTypeBadge.className = 'text-xs font-black px-3 py-1 rounded-md tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/30';
+        integerInputContainer.classList.add('hidden');
+        fractionInputContainer.classList.remove('hidden');
+        setTimeout(() => numInput.focus(), 50);
+      }
+    }
+
+    // 選び直す
+    function backToChoice() {
+      sounds.playSelect();
+      selectedMode = null;
+      stepInput.classList.add('hidden');
+      stepChoice.classList.remove('hidden');
+    }
+
+    /* ================================================================
+       6. 判定ロジック (正解・不正解・約分忘れ)
+       ================================================================ */
+    function checkAnswer() {
+      if (!selectedMode || isWaitingNext) return;
+
+      totalAnswered++;
+
+      let isCorrect = false;
+      let feedbackDetail = "";
+      let message = "";
+      let isUnreducedFraction = false;
+
+      // 正解の表現文字列
+      const correctAnswerStr = currentQuestion.isInteger
+        ? `${currentQuestion.correctInt}`
+        : `${currentQuestion.correctNum}/${currentQuestion.correctDen}`;
+
+      if (selectedMode === 'integer') {
+        const userVal = parseInt(intAnswerInput.value.trim(), 10);
+        if (isNaN(userVal)) {
+          alertCustom("数値を入力してくれよな！");
+          totalAnswered--;
+          return;
+        }
+
+        if (currentQuestion.isInteger && userVal === currentQuestion.correctInt) {
+          isCorrect = true;
+        } else if (!currentQuestion.isInteger) {
+          // 実際は分数なのに整数を選んだ
+          isCorrect = false;
+          message = "おっと！この問題の答えは割り切れねえから【分数】だぞ！";
+          feedbackDetail = `正解: ${correctAnswerStr} (${currentQuestion.number} × 1/${currentQuestion.denominatorMultiplier} = ${currentQuestion.originalNum}/${currentQuestion.originalDen})`;
+        } else {
+          isCorrect = false;
+          message = GOKU_MESSAGES.wrong[Math.floor(Math.random() * GOKU_MESSAGES.wrong.length)];
+          feedbackDetail = `あなたの答え: ${userVal}  |  正しい答え: ${correctAnswerStr}`;
+        }
+
+      } else { // fraction
+        const uNum = parseInt(numInput.value.trim(), 10);
+        const uDen = parseInt(denInput.value.trim(), 10);
+
+        if (isNaN(uNum) || isNaN(uDen) || uDen === 0) {
+          alertCustom("分子と分母（0以外）をしっかり入れてくれ！");
+          totalAnswered--;
+          return;
+        }
+
+        // 実際は整数になる問題で分数を選んだ場合
+        if (currentQuestion.isInteger) {
+          if (uNum / uDen === currentQuestion.correctInt) {
+            isCorrect = false;
+            message = `惜しい！${uNum}/${uDen} は割り切れて整数【${currentQuestion.correctInt}】になるぞ！`;
+            feedbackDetail = `整数として回答するのが正解だぞ！ 正解: ${currentQuestion.correctInt}`;
+          } else {
+            isCorrect = false;
+            message = "答えがちがうぞ！しかもこの問題は【整数】になるんだ！";
+            feedbackDetail = `正しい答え: ${currentQuestion.correctInt}`;
+          }
+        } else {
+          // 既約分数判定
+          if (uNum === currentQuestion.correctNum && uDen === currentQuestion.correctDen) {
+            isCorrect = true;
+          } else if (uNum * currentQuestion.correctDen === uDen * currentQuestion.correctNum) {
+            // 値は同じだが約分されていない！
+            isCorrect = false;
+            isUnreducedFraction = true;
+            message = GOKU_MESSAGES.needReduction[Math.floor(Math.random() * GOKU_MESSAGES.needReduction.length)];
+            feedbackDetail = `あなたの答え: ${uNum}/${uDen} → 約分した正解: ${correctAnswerStr}`;
+          } else {
+            isCorrect = false;
+            message = GOKU_MESSAGES.wrong[Math.floor(Math.random() * GOKU_MESSAGES.wrong.length)];
+            feedbackDetail = `あなたの答え: ${uNum}/${uDen}  |  正しい答え: ${correctAnswerStr}`;
+          }
+        }
+      }
+
+      // 結果反映
+      showResult(isCorrect, message, feedbackDetail, isUnreducedFraction);
+    }
+
+    function showResult(isCorrect, customMsg, detail, isUnreduced) {
+      isWaitingNext = true;
+      stepInput.classList.add('hidden');
+      resultFeedback.classList.remove('hidden');
+
+      if (isCorrect) {
+        sounds.playCorrect();
+        correctCount++;
+        currentCombo++;
+        resultIcon.textContent = '🔥';
+        resultTitle.textContent = GOKU_MESSAGES.correctCombo[Math.floor(Math.random() * GOKU_MESSAGES.correctCombo.length)];
+        resultTitle.className = "text-2xl font-black mb-1 text-emerald-400";
+        dialogueText.textContent = `正解だ！ ${currentCombo}連撃中！`;
+        
+        const ans = currentQuestion.isInteger ? currentQuestion.correctInt : `${currentQuestion.correctNum}/${currentQuestion.correctDen}`;
+        resultDetail.innerHTML = `<span class="text-emerald-300 font-black">正解！ [ ${ans} ]</span> 見事な計算力だ！`;
+      } else {
+        sounds.playWrong();
+        currentCombo = 0;
+        resultIcon.textContent = isUnreduced ? '⚡' : '💥';
+        resultTitle.textContent = customMsg;
+        resultTitle.className = isUnreduced ? "text-xl font-black mb-1 text-yellow-400" : "text-xl font-black mb-1 text-rose-400";
+        dialogueText.textContent = isUnreduced ? "約分すんの忘れんなよな！" : "修行あるのみ！次で取り返すぞ！";
+        resultDetail.innerHTML = detail;
+      }
+
+      updateScoreBoard();
+      setTimeout(() => btnNextQuestion.focus(), 50);
+    }
+
+    function updateScoreBoard() {
+      comboText.textContent = currentCombo;
+      const acc = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+      accuracyText.textContent = `${acc}%`;
+      scoreText.textContent = `(${correctCount}/${totalAnswered}問)`;
+    }
+
+    function alertCustom(msg) {
+      dialogueText.textContent = msg;
+    }
+
+    /* ================================================================
+       7. フルスクリーン (Fullscreen API) トグル
+       ================================================================ */
+    function toggleFullScreen() {
+      sounds.playSelect();
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function handleFullscreenChange() {
+      if (document.fullscreenElement) {
+        fsExpandIcon.classList.add('hidden');
+        fsCompressIcon.classList.remove('hidden');
+        fsText.textContent = '解除';
+      } else {
+        fsExpandIcon.classList.remove('hidden');
+        fsCompressIcon.classList.add('hidden');
+        fsText.textContent = '全画面表示';
+      }
+    }
+
+    /* ================================================================
+       8. イベントリスナーとキーボード操作
+       ================================================================ */
+    btnChooseInt.addEventListener('click', () => selectAnswerType('integer'));
+    btnChooseFrac.addEventListener('click', () => selectAnswerType('fraction'));
+    btnBackToChoice.addEventListener('click', backToChoice);
+    btnSubmitAnswer.addEventListener('click', checkAnswer);
+    btnNextQuestion.addEventListener('click', loadNewQuestion);
+    fullscreenBtn.addEventListener('click', toggleFullScreen);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+    // キーボードショートカット (Enterで解答/次へ、矢印キーで分子分母移動)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        if (isWaitingNext) {
+          loadNewQuestion();
+        } else if (selectedMode) {
+          checkAnswer();
+        }
+      } else if (e.key === 'ArrowDown' && selectedMode === 'fraction' && document.activeElement === numInput) {
+        denInput.focus();
+      } else if (e.key === 'ArrowUp' && selectedMode === 'fraction' && document.activeElement === denInput) {
+        numInput.focus();
+      }
+    });
+
+    // 初期化ロード
+    window.onload = function() {
+      loadNewQuestion();
+    };
+  </script>
+</body>
+</html>
