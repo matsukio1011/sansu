@@ -615,7 +615,10 @@
         selectedTypeBadge.className = 'text-xs font-black px-3 py-1 rounded-md tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/30';
         integerInputContainer.classList.add('hidden');
         fractionInputContainer.classList.remove('hidden');
-        setTimeout(() => numInput.focus(), 50);
+        setTimeout(() => {
+          denInput.focus();
+          denInput.select();
+        }, 50);
       }
     }
 
@@ -797,6 +800,15 @@
       if (e.key === 'Enter') {
         if (isWaitingNext) {
           loadNewQuestion();
+        } else if (selectedMode === 'fraction') {
+          // 分母入力中で分子がまだ空の場合、Enterで分子へスムーズに移動
+          if (document.activeElement === denInput && numInput.value.trim() === '') {
+            e.preventDefault();
+            numInput.focus();
+            numInput.select();
+            return;
+          }
+          checkAnswer();
         } else if (selectedMode) {
           checkAnswer();
         }
