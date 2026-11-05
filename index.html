@@ -205,15 +205,18 @@
         <p class="text-base sm:text-lg font-bold text-gray-300 mb-4 flex items-center">
           <span class="inline-block w-2.5 h-2.5 rounded-full bg-brand-orange mr-2"></span>
           答えの形はどっちだ？ 選んでくれ！
+          <span class="text-xs text-gray-400 ml-2 hidden sm:inline">(キーボードの [←] [→] でも選択可能)</span>
         </p>
         <div class="grid grid-cols-2 gap-5 w-full max-w-md">
           <button id="btnChooseInt" class="group relative py-5 px-6 rounded-2xl bg-[#262a35] hover:bg-[#323746] border-2 border-gray-600 hover:border-brand-orange text-white text-xl font-extrabold shadow-lg transition-all transform active:scale-95 flex flex-col items-center justify-center">
+            <span class="absolute top-2.5 left-3 text-[11px] font-mono font-bold bg-black/50 text-orange-400 px-2 py-0.5 rounded border border-orange-500/40">[← キー]</span>
             <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🔟</span>
             <span class="tracking-wide">整数</span>
             <span class="text-[11px] font-normal text-gray-400 mt-1">割り切れる数</span>
           </button>
           
           <button id="btnChooseFrac" class="group relative py-5 px-6 rounded-2xl bg-[#262a35] hover:bg-[#323746] border-2 border-gray-600 hover:border-brand-cyan text-white text-xl font-extrabold shadow-lg transition-all transform active:scale-95 flex flex-col items-center justify-center">
+            <span class="absolute top-2.5 right-3 text-[11px] font-mono font-bold bg-black/50 text-cyan-400 px-2 py-0.5 rounded border border-cyan-500/40">[キー →]</span>
             <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🍰</span>
             <span class="tracking-wide">分数</span>
             <span class="text-[11px] font-normal text-gray-400 mt-1">分子 / 分母</span>
@@ -226,7 +229,7 @@
         <div class="flex items-center justify-between w-full max-w-md mb-3 px-1">
           <button id="btnBackToChoice" class="text-xs text-gray-400 hover:text-white flex items-center space-x-1 py-1 px-2.5 rounded-lg bg-gray-800/80 border border-gray-700 transition">
             <span>←</span>
-            <span>選び直す</span>
+            <span>選び直す [Esc]</span>
           </button>
           <span id="selectedTypeBadge" class="text-xs font-black px-3 py-1 rounded-md tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30">
             整数入力
@@ -244,19 +247,31 @@
 
         <!-- 分数用入力フォーム（上下に並ぶ直感UI） -->
         <div id="fractionInputContainer" class="hidden flex-col items-center my-2">
-          <div class="input-fraction-box w-36 sm:w-44">
-            <!-- 分子 -->
-            <input type="number" id="numInput" placeholder="分子" autocomplete="off"
-              class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
-            
-            <!-- 分数線 -->
-            <div class="input-fraction-line bg-gray-400"></div>
+          <div class="flex items-center space-x-3">
+            <div class="input-fraction-box w-36 sm:w-44">
+              <!-- 分子 -->
+              <input type="number" id="numInput" placeholder="分子" autocomplete="off"
+                class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
+              
+              <!-- 分数線 -->
+              <div class="input-fraction-line bg-gray-400"></div>
 
-            <!-- 分母 -->
-            <input type="number" id="denInput" placeholder="分母" autocomplete="off"
-              class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
+              <!-- 分母 -->
+              <input type="number" id="denInput" placeholder="分母" autocomplete="off"
+                class="w-full text-center text-3xl sm:text-4xl font-mono font-black py-2.5 bg-[#14161b] text-brand-cyan border-2 border-brand-cyan rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/40 transition">
+            </div>
+
+            <!-- 上下キーガイド -->
+            <div class="flex flex-col justify-between h-24 py-1 text-xs font-bold text-gray-400">
+              <span class="flex items-center space-x-1 bg-gray-800/90 px-2 py-1 rounded-lg border border-gray-700 text-cyan-300">
+                <span class="font-mono">[↑]</span><span>分子</span>
+              </span>
+              <span class="flex items-center space-x-1 bg-gray-800/90 px-2 py-1 rounded-lg border border-gray-700 text-cyan-300">
+                <span class="font-mono">[↓]</span><span>分母</span>
+              </span>
+            </div>
           </div>
-          <p class="text-xs text-gray-400 mt-2">※できるだけ約分した形で入力してくれよな！</p>
+          <p class="text-xs text-gray-400 mt-2">※ [↑][↓] 矢印キーで分子・分母を移動！できるだけ約分してくれよな！</p>
         </div>
 
         <!-- 解答ボタン -->
@@ -776,18 +791,47 @@
     fullscreenBtn.addEventListener('click', toggleFullScreen);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
 
-    // キーボードショートカット (Enterで解答/次へ、矢印キーで分子分母移動)
+    // キーボードショートカット (Enterで解答/次へ、矢印左右で整数/分数、矢印上下で分子/分母)
     window.addEventListener('keydown', (e) => {
+      // 1. Enterキー: 結果画面なら次の問題へ、入力画面なら解答提出
       if (e.key === 'Enter') {
         if (isWaitingNext) {
           loadNewQuestion();
         } else if (selectedMode) {
           checkAnswer();
         }
-      } else if (e.key === 'ArrowDown' && selectedMode === 'fraction' && document.activeElement === numInput) {
-        denInput.focus();
-      } else if (e.key === 'ArrowUp' && selectedMode === 'fraction' && document.activeElement === denInput) {
-        numInput.focus();
+        return;
+      }
+
+      // 2. 矢印キー左右: 答えの形を選択中（ステップ1）なら [←: 整数] / [→: 分数]
+      if (!selectedMode && !isWaitingNext) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          selectAnswerType('integer');
+          return;
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          selectAnswerType('fraction');
+          return;
+        }
+      }
+
+      // 3. 矢印キー上下: 分数入力中（ステップ2）なら [↑: 分子] / [↓: 分母] へカーソル移動
+      if (selectedMode === 'fraction' && !isWaitingNext) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          denInput.focus();
+          denInput.select();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          numInput.focus();
+          numInput.select();
+        }
+      }
+
+      // 4. Escapeキー: 入力中なら選び直しに戻る
+      if (e.key === 'Escape' && selectedMode && !isWaitingNext) {
+        backToChoice();
       }
     });
 
