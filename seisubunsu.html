@@ -156,7 +156,27 @@
   </header>
 
   <!-- メイン対戦・修行エリア（中央配置・スクロールなし） -->
-  <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
+  <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-2">
+
+    <!-- 修行コース選択（1/10, 1/100, すべて） -->
+    <div class="mb-4 flex flex-wrap items-center justify-center gap-2 bg-[#1a1d24]/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-gray-700/80 shadow-lg">
+      <span class="text-xs font-bold text-gray-400 mr-1 flex items-center">
+        <span class="w-2 h-2 rounded-full bg-brand-orange inline-block mr-1.5 animate-pulse"></span>
+        修行コース:
+      </span>
+      <div class="flex items-center space-x-1.5 bg-[#121316] p-1 rounded-xl border border-gray-800">
+        <button id="btnCourseAll" class="course-tab-btn active px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-extrabold transition-all bg-gradient-to-r from-brand-orange to-yellow-500 text-slate-950 shadow-md">
+          すべて (ランダム)
+        </button>
+        <button id="btnCourse10" class="course-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+          × 1/10 (十分の1)
+        </button>
+        <button id="btnCourse100" class="course-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+          × 1/100 (百分の一)
+        </button>
+      </div>
+    </div>
+
     <!-- メインカード -->
     <div id="mainCard" class="w-full max-w-3xl bg-[#1e2129] border-2 border-gray-700/70 rounded-3xl p-8 sm:p-10 shadow-2xl relative transition-all duration-300">
       
@@ -171,7 +191,10 @@
 
       <!-- 問題表示セクション -->
       <div class="text-center my-4 py-6 px-4 bg-[#14161b] rounded-2xl border border-gray-800/90 shadow-inner flex flex-col items-center justify-center">
-        <span class="text-xs font-bold tracking-widest text-orange-400/80 uppercase mb-2">Question</span>
+        <div class="flex items-center space-x-2 mb-2">
+          <span class="text-xs font-bold tracking-widest text-orange-400/80 uppercase">Question</span>
+          <span id="questionCourseBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gray-800 text-yellow-300 border border-yellow-500/40">× 1/10</span>
+        </div>
         <div id="questionDisplay" class="text-4xl sm:text-5xl font-black text-white font-mono flex items-center justify-center space-x-4 tracking-wider">
           <!-- JSで数式生成 -->
         </div>
@@ -386,6 +409,7 @@
     /* ================================================================
        3. アプリの状態管理 (State)
        ================================================================ */
+    let currentCourse = 'all'; // 'all' | '10' | '100'
     let currentQuestion = null;
     let selectedMode = null; // 'integer' | 'fraction'
     let totalAnswered = 0;
@@ -394,6 +418,11 @@
     let isWaitingNext = false;
 
     // DOM要素の参照
+    const btnCourseAll = document.getElementById('btnCourseAll');
+    const btnCourse10 = document.getElementById('btnCourse10');
+    const btnCourse100 = document.getElementById('btnCourse100');
+    const questionCourseBadge = document.getElementById('questionCourseBadge');
+
     const questionDisplay = document.getElementById('questionDisplay');
     const stepChoice = document.getElementById('stepChoice');
     const stepInput = document.getElementById('stepInput');
@@ -436,8 +465,16 @@
     function generateQuestion() {
       // 数を決定
       const n = NUM_CANDIDATES[Math.floor(Math.random() * NUM_CANDIDATES.length)];
-      // 分母を決定 (10 または 100)
-      const denominator = Math.random() < 0.5 ? 10 : 100;
+      // 分母を決定 (コース設定に応じて 10 または 100 またはランダム)
+      let denominator;
+      if (currentCourse === '10') {
+        denominator = 10;
+      } else if (currentCourse === '100') {
+        denominator = 100;
+      } else {
+        denominator = Math.random() < 0.5 ? 10 : 100;
+      }
+
       // 順番を決定 (true: 数 × 1/D, false: 1/D × 数)
       const numFirst = Math.random() < 0.5;
 
@@ -464,7 +501,7 @@
     /* ================================================================
        5. 画面描画・遷移ロジック
        ================================================================ */
-    function loadNewQuestion() {
+    function loadNewQuestion(preserveDialogue = false) {
       isWaitingNext = false;
       selectedMode = null;
       currentQuestion = generateQuestion();
@@ -476,6 +513,11 @@
       intAnswerInput.value = '';
       numInput.value = '';
       denInput.value = '';
+
+      // 問題のバッジ更新
+      if (questionCourseBadge) {
+        questionCourseBadge.textContent = `× 1/${currentQuestion.denominatorMultiplier}`;
+      }
 
       // 問題の数式をHTML描画（きれいな上下分数）
       const fracHtml = `
@@ -504,7 +546,40 @@
       }
 
       // セリフをセット
-      dialogueText.textContent = GOKU_MESSAGES.start[Math.floor(Math.random() * GOKU_MESSAGES.start.length)];
+      if (!preserveDialogue) {
+        dialogueText.textContent = GOKU_MESSAGES.start[Math.floor(Math.random() * GOKU_MESSAGES.start.length)];
+      }
+    }
+
+    // コース切り替え処理
+    function setCourse(course) {
+      sounds.playSelect();
+      currentCourse = course;
+
+      const courseButtons = [
+        { el: btnCourseAll, key: 'all' },
+        { el: btnCourse10, key: '10' },
+        { el: btnCourse100, key: '100' }
+      ];
+
+      courseButtons.forEach(({ el, key }) => {
+        if (!el) return;
+        if (key === course) {
+          el.className = 'course-tab-btn active px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-extrabold transition-all bg-gradient-to-r from-brand-orange to-yellow-500 text-slate-950 shadow-md';
+        } else {
+          el.className = 'course-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white hover:bg-gray-800 transition-all';
+        }
+      });
+
+      if (course === '10') {
+        dialogueText.textContent = "よし！【1/10】の掛け算に集中すっぞ！";
+      } else if (course === '100') {
+        dialogueText.textContent = "よし！【1/100】の掛け算に集中すっぞ！";
+      } else {
+        dialogueText.textContent = "よし！【1/10 と 1/100】をランダムで修行すっぞ！";
+      }
+
+      loadNewQuestion(true);
     }
 
     // 「整数」または「分数」を選択したとき
@@ -689,6 +764,10 @@
     /* ================================================================
        8. イベントリスナーとキーボード操作
        ================================================================ */
+    btnCourseAll.addEventListener('click', () => setCourse('all'));
+    btnCourse10.addEventListener('click', () => setCourse('10'));
+    btnCourse100.addEventListener('click', () => setCourse('100'));
+
     btnChooseInt.addEventListener('click', () => selectAnswerType('integer'));
     btnChooseFrac.addEventListener('click', () => selectAnswerType('fraction'));
     btnBackToChoice.addEventListener('click', backToChoice);
