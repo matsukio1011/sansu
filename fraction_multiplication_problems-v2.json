@@ -1,0 +1,3925 @@
+{
+  "title": "分数のかけ算 問題データセット",
+  "version": "1.1",
+  "categories": [
+    {
+      "id": 1,
+      "title": "真分数×整数（約分なし）",
+      "description": "真分数に整数をかける計算（途中約分なし）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 1,
+          "expression": {
+            "latex": "\\frac{1}{4} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.75,
+            "latex": "\\frac{3}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 2,
+          "expression": {
+            "latex": "\\frac{1}{5} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.8,
+            "latex": "\\frac{4}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 3,
+          "expression": {
+            "latex": "\\frac{2}{7} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.5714285714285714,
+            "latex": "\\frac{4}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 4,
+          "expression": {
+            "latex": "\\frac{2}{9} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 0.8888888888888888,
+            "latex": "\\frac{8}{9}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 5,
+          "expression": {
+            "latex": "\\frac{3}{10} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 10,
+            "is_integer": false,
+            "value": 0.9,
+            "latex": "\\frac{9}{10}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 6,
+          "expression": {
+            "latex": "\\frac{4}{15} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 0.5333333333333333,
+            "latex": "\\frac{8}{15}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 7,
+          "expression": {
+            "latex": "\\frac{1}{4} \\times 7",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 7
+            }
+          },
+          "answer": {
+            "numerator": 7,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 1.75,
+            "latex": "\\frac{7}{4}",
+            "mixed": {
+              "whole": 1,
+              "num": 3,
+              "den": 4,
+              "latex": "1\\frac{3}{4}"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 8,
+          "expression": {
+            "latex": "\\frac{4}{5} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.6,
+            "latex": "\\frac{8}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 3,
+              "den": 5,
+              "latex": "1\\frac{3}{5}"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 9,
+          "expression": {
+            "latex": "\\frac{5}{9} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.1111111111111112,
+            "latex": "\\frac{10}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 9,
+              "latex": "1\\frac{1}{9}"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 10,
+          "expression": {
+            "latex": "\\frac{5}{8} \\times 5",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 5
+            }
+          },
+          "answer": {
+            "numerator": 25,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 3.125,
+            "latex": "\\frac{25}{8}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 8,
+              "latex": "3\\frac{1}{8}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 11,
+          "expression": {
+            "latex": "\\frac{7}{10} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 10,
+            "is_integer": false,
+            "value": 2.1,
+            "latex": "\\frac{21}{10}",
+            "mixed": {
+              "whole": 2,
+              "num": 1,
+              "den": 10,
+              "latex": "2\\frac{1}{10}"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 12,
+          "expression": {
+            "latex": "\\frac{4}{15} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 16,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 1.0666666666666667,
+            "latex": "\\frac{16}{15}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 15,
+              "latex": "1\\frac{1}{15}"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 13,
+          "expression": {
+            "latex": "\\frac{5}{9} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.1111111111111112,
+            "latex": "\\frac{10}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 9,
+              "latex": "1\\frac{1}{9}"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 14,
+          "expression": {
+            "latex": "\\frac{2}{7} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.8571428571428571,
+            "latex": "\\frac{6}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 15,
+          "expression": {
+            "latex": "\\frac{1}{8} \\times 5",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 5
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 0.625,
+            "latex": "\\frac{5}{8}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 16,
+          "expression": {
+            "latex": "\\frac{2}{15} \\times 7",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 7
+            }
+          },
+          "answer": {
+            "numerator": 14,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 0.9333333333333333,
+            "latex": "\\frac{14}{15}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 17,
+          "expression": {
+            "latex": "\\frac{3}{5} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.2,
+            "latex": "\\frac{6}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 5,
+              "latex": "1\\frac{1}{5}"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 18,
+          "expression": {
+            "latex": "\\frac{3}{4} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 2.25,
+            "latex": "\\frac{9}{4}",
+            "mixed": {
+              "whole": 2,
+              "num": 1,
+              "den": 4,
+              "latex": "2\\frac{1}{4}"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 19,
+          "expression": {
+            "latex": "\\frac{1}{7} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.8571428571428571,
+            "latex": "\\frac{6}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 20,
+          "expression": {
+            "latex": "\\frac{7}{9} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 14,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.5555555555555556,
+            "latex": "\\frac{14}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 5,
+              "den": 9,
+              "latex": "1\\frac{5}{9}"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "global_id": 21,
+          "expression": {
+            "latex": "\\frac{3}{16} \\times 5",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 5
+            }
+          },
+          "answer": {
+            "numerator": 15,
+            "denominator": 16,
+            "is_integer": false,
+            "value": 0.9375,
+            "latex": "\\frac{15}{16}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 22,
+          "global_id": 22,
+          "expression": {
+            "latex": "\\frac{1}{10} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 10,
+            "is_integer": false,
+            "value": 0.3,
+            "latex": "\\frac{3}{10}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 23,
+          "global_id": 23,
+          "expression": {
+            "latex": "\\frac{4}{9} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 16,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.7777777777777777,
+            "latex": "\\frac{16}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 7,
+              "den": 9,
+              "latex": "1\\frac{7}{9}"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "global_id": 24,
+          "expression": {
+            "latex": "\\frac{2}{7} \\times 5",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 5
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 1.4285714285714286,
+            "latex": "\\frac{10}{7}",
+            "mixed": {
+              "whole": 1,
+              "num": 3,
+              "den": 7,
+              "latex": "1\\frac{3}{7}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "真分数×整数（約分あり）",
+      "description": "真分数に整数をかける計算（計算途中で約分あり）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 25,
+          "expression": {
+            "latex": "\\frac{1}{8} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.25,
+            "latex": "\\frac{1}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 26,
+          "expression": {
+            "latex": "\\frac{1}{9} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.3333333333333333,
+            "latex": "\\frac{1}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 27,
+          "expression": {
+            "latex": "\\frac{1}{6} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.6666666666666666,
+            "latex": "\\frac{2}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 28,
+          "expression": {
+            "latex": "\\frac{1}{12} \\times 9",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 9
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.75,
+            "latex": "\\frac{3}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 29,
+          "expression": {
+            "latex": "\\frac{3}{8} \\times 2",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 2
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.75,
+            "latex": "\\frac{3}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 30,
+          "expression": {
+            "latex": "\\frac{4}{15} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.8,
+            "latex": "\\frac{4}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 31,
+          "expression": {
+            "latex": "\\frac{4}{9} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 1.3333333333333333,
+            "latex": "\\frac{4}{3}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 3,
+              "latex": "1\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 32,
+          "expression": {
+            "latex": "\\frac{7}{10} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 4.2,
+            "latex": "\\frac{21}{5}",
+            "mixed": {
+              "whole": 4,
+              "num": 1,
+              "den": 5,
+              "latex": "4\\frac{1}{5}"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 33,
+          "expression": {
+            "latex": "\\frac{3}{5} \\times 5",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 5
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 3.0,
+            "latex": "3",
+            "mixed": null
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 34,
+          "expression": {
+            "latex": "\\frac{4}{15} \\times 9",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 9
+            }
+          },
+          "answer": {
+            "numerator": 12,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 2.4,
+            "latex": "\\frac{12}{5}",
+            "mixed": {
+              "whole": 2,
+              "num": 2,
+              "den": 5,
+              "latex": "2\\frac{2}{5}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 35,
+          "expression": {
+            "latex": "\\frac{2}{9} \\times 3",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 3
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.6666666666666666,
+            "latex": "\\frac{2}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 36,
+          "expression": {
+            "latex": "\\frac{5}{12} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 1.6666666666666667,
+            "latex": "\\frac{5}{3}",
+            "mixed": {
+              "whole": 1,
+              "num": 2,
+              "den": 3,
+              "latex": "1\\frac{2}{3}"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 37,
+          "expression": {
+            "latex": "\\frac{1}{8} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.75,
+            "latex": "\\frac{3}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 38,
+          "expression": {
+            "latex": "\\frac{4}{5} \\times 10",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 10
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 8.0,
+            "latex": "8",
+            "mixed": null
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 39,
+          "expression": {
+            "latex": "\\frac{4}{21} \\times 14",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 21
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 14
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 2.6666666666666665,
+            "latex": "\\frac{8}{3}",
+            "mixed": {
+              "whole": 2,
+              "num": 2,
+              "den": 3,
+              "latex": "2\\frac{2}{3}"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 40,
+          "expression": {
+            "latex": "\\frac{5}{6} \\times 4",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 4
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 3.3333333333333335,
+            "latex": "\\frac{10}{3}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 3,
+              "latex": "3\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 41,
+          "expression": {
+            "latex": "\\frac{3}{4} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 2,
+            "is_integer": false,
+            "value": 4.5,
+            "latex": "\\frac{9}{2}",
+            "mixed": {
+              "whole": 4,
+              "num": 1,
+              "den": 2,
+              "latex": "4\\frac{1}{2}"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 42,
+          "expression": {
+            "latex": "\\frac{1}{15} \\times 9",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 9
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.6,
+            "latex": "\\frac{3}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 43,
+          "expression": {
+            "latex": "\\frac{3}{16} \\times 12",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 12
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 2.25,
+            "latex": "\\frac{9}{4}",
+            "mixed": {
+              "whole": 2,
+              "num": 1,
+              "den": 4,
+              "latex": "2\\frac{1}{4}"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 44,
+          "expression": {
+            "latex": "\\frac{7}{9} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 14,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 4.666666666666667,
+            "latex": "\\frac{14}{3}",
+            "mixed": {
+              "whole": 4,
+              "num": 2,
+              "den": 3,
+              "latex": "4\\frac{2}{3}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "整数×真分数（約分なし）",
+      "description": "整数に真分数をかける計算（途中約分なし）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 45,
+          "expression": {
+            "latex": "5 \\times \\frac{1}{7}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.7142857142857143,
+            "latex": "\\frac{5}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 46,
+          "expression": {
+            "latex": "3 \\times \\frac{1}{4}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.75,
+            "latex": "\\frac{3}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 47,
+          "expression": {
+            "latex": "2 \\times \\frac{4}{9}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 0.8888888888888888,
+            "latex": "\\frac{8}{9}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 48,
+          "expression": {
+            "latex": "2 \\times \\frac{3}{7}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.8571428571428571,
+            "latex": "\\frac{6}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 49,
+          "expression": {
+            "latex": "7 \\times \\frac{2}{15}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 14,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 0.9333333333333333,
+            "latex": "\\frac{14}{15}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 50,
+          "expression": {
+            "latex": "3 \\times \\frac{5}{16}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 16
+            }
+          },
+          "answer": {
+            "numerator": 15,
+            "denominator": 16,
+            "is_integer": false,
+            "value": 0.9375,
+            "latex": "\\frac{15}{16}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 51,
+          "expression": {
+            "latex": "8 \\times \\frac{1}{5}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.6,
+            "latex": "\\frac{8}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 3,
+              "den": 5,
+              "latex": "1\\frac{3}{5}"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 52,
+          "expression": {
+            "latex": "4 \\times \\frac{3}{7}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 12,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 1.7142857142857142,
+            "latex": "\\frac{12}{7}",
+            "mixed": {
+              "whole": 1,
+              "num": 5,
+              "den": 7,
+              "latex": "1\\frac{5}{7}"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 53,
+          "expression": {
+            "latex": "5 \\times \\frac{3}{8}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 15,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 1.875,
+            "latex": "\\frac{15}{8}",
+            "mixed": {
+              "whole": 1,
+              "num": 7,
+              "den": 8,
+              "latex": "1\\frac{7}{8}"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 54,
+          "expression": {
+            "latex": "5 \\times \\frac{2}{9}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.1111111111111112,
+            "latex": "\\frac{10}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 9,
+              "latex": "1\\frac{1}{9}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 55,
+          "expression": {
+            "latex": "7 \\times \\frac{3}{16}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 16
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 16,
+            "is_integer": false,
+            "value": 1.3125,
+            "latex": "\\frac{21}{16}",
+            "mixed": {
+              "whole": 1,
+              "num": 5,
+              "den": 16,
+              "latex": "1\\frac{5}{16}"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 56,
+          "expression": {
+            "latex": "3 \\times \\frac{2}{5}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.2,
+            "latex": "\\frac{6}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 5,
+              "latex": "1\\frac{1}{5}"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 57,
+          "expression": {
+            "latex": "2 \\times \\frac{3}{5}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.2,
+            "latex": "\\frac{6}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 5,
+              "latex": "1\\frac{1}{5}"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 58,
+          "expression": {
+            "latex": "4 \\times \\frac{2}{7}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 1.1428571428571428,
+            "latex": "\\frac{8}{7}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 7,
+              "latex": "1\\frac{1}{7}"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 59,
+          "expression": {
+            "latex": "5 \\times \\frac{1}{9}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 0.5555555555555556,
+            "latex": "\\frac{5}{9}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 60,
+          "expression": {
+            "latex": "3 \\times \\frac{3}{8}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 1.125,
+            "latex": "\\frac{9}{8}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 8,
+              "latex": "1\\frac{1}{8}"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 61,
+          "expression": {
+            "latex": "7 \\times \\frac{3}{4}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 5.25,
+            "latex": "\\frac{21}{4}",
+            "mixed": {
+              "whole": 5,
+              "num": 1,
+              "den": 4,
+              "latex": "5\\frac{1}{4}"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 62,
+          "expression": {
+            "latex": "9 \\times \\frac{2}{5}",
+            "left": {
+              "type": "integer",
+              "val": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 18,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 3.6,
+            "latex": "\\frac{18}{5}",
+            "mixed": {
+              "whole": 3,
+              "num": 3,
+              "den": 5,
+              "latex": "3\\frac{3}{5}"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 63,
+          "expression": {
+            "latex": "2 \\times \\frac{4}{15}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 0.5333333333333333,
+            "latex": "\\frac{8}{15}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 64,
+          "expression": {
+            "latex": "8 \\times \\frac{1}{7}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 1.1428571428571428,
+            "latex": "\\frac{8}{7}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 7,
+              "latex": "1\\frac{1}{7}"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "global_id": 65,
+          "expression": {
+            "latex": "4 \\times \\frac{2}{5}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.6,
+            "latex": "\\frac{8}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 3,
+              "den": 5,
+              "latex": "1\\frac{3}{5}"
+            }
+          }
+        },
+        {
+          "id": 22,
+          "global_id": 66,
+          "expression": {
+            "latex": "2 \\times \\frac{8}{9}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 8,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 16,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 1.7777777777777777,
+            "latex": "\\frac{16}{9}",
+            "mixed": {
+              "whole": 1,
+              "num": 7,
+              "den": 9,
+              "latex": "1\\frac{7}{9}"
+            }
+          }
+        },
+        {
+          "id": 23,
+          "global_id": 67,
+          "expression": {
+            "latex": "9 \\times \\frac{1}{4}",
+            "left": {
+              "type": "integer",
+              "val": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 2.25,
+            "latex": "\\frac{9}{4}",
+            "mixed": {
+              "whole": 2,
+              "num": 1,
+              "den": 4,
+              "latex": "2\\frac{1}{4}"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "global_id": 68,
+          "expression": {
+            "latex": "3 \\times \\frac{7}{16}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 16
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 16,
+            "is_integer": false,
+            "value": 1.3125,
+            "latex": "\\frac{21}{16}",
+            "mixed": {
+              "whole": 1,
+              "num": 5,
+              "den": 16,
+              "latex": "1\\frac{5}{16}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "整数×真分数（約分あり）",
+      "description": "整数に真分数をかける計算（計算途中で約分あり）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 69,
+          "expression": {
+            "latex": "3 \\times \\frac{1}{6}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 2,
+            "is_integer": false,
+            "value": 0.5,
+            "latex": "\\frac{1}{2}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 70,
+          "expression": {
+            "latex": "4 \\times \\frac{1}{12}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 12
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.3333333333333333,
+            "latex": "\\frac{1}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 71,
+          "expression": {
+            "latex": "8 \\times \\frac{1}{10}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 10
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.8,
+            "latex": "\\frac{4}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 72,
+          "expression": {
+            "latex": "6 \\times \\frac{1}{9}",
+            "left": {
+              "type": "integer",
+              "val": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.6666666666666666,
+            "latex": "\\frac{2}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 73,
+          "expression": {
+            "latex": "3 \\times \\frac{2}{9}",
+            "left": {
+              "type": "integer",
+              "val": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.6666666666666666,
+            "latex": "\\frac{2}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 74,
+          "expression": {
+            "latex": "2 \\times \\frac{5}{16}",
+            "left": {
+              "type": "integer",
+              "val": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 16
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 0.625,
+            "latex": "\\frac{5}{8}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 75,
+          "expression": {
+            "latex": "4 \\times \\frac{3}{8}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 2,
+            "is_integer": false,
+            "value": 1.5,
+            "latex": "\\frac{3}{2}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 2,
+              "latex": "1\\frac{1}{2}"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 76,
+          "expression": {
+            "latex": "7 \\times \\frac{4}{7}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 77,
+          "expression": {
+            "latex": "4 \\times \\frac{5}{6}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 3.3333333333333335,
+            "latex": "\\frac{10}{3}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 3,
+              "latex": "3\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 78,
+          "expression": {
+            "latex": "8 \\times \\frac{5}{12}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 12
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 3.3333333333333335,
+            "latex": "\\frac{10}{3}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 3,
+              "latex": "3\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 79,
+          "expression": {
+            "latex": "6 \\times \\frac{3}{8}",
+            "left": {
+              "type": "integer",
+              "val": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 2.25,
+            "latex": "\\frac{9}{4}",
+            "mixed": {
+              "whole": 2,
+              "num": 1,
+              "den": 4,
+              "latex": "2\\frac{1}{4}"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 80,
+          "expression": {
+            "latex": "7 \\times \\frac{1}{14}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 14
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 2,
+            "is_integer": false,
+            "value": 0.5,
+            "latex": "\\frac{1}{2}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 81,
+          "expression": {
+            "latex": "16 \\times \\frac{7}{12}",
+            "left": {
+              "type": "integer",
+              "val": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 12
+            }
+          },
+          "answer": {
+            "numerator": 28,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 9.333333333333334,
+            "latex": "\\frac{28}{3}",
+            "mixed": {
+              "whole": 9,
+              "num": 1,
+              "den": 3,
+              "latex": "9\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 82,
+          "expression": {
+            "latex": "9 \\times \\frac{2}{15}",
+            "left": {
+              "type": "integer",
+              "val": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 1.2,
+            "latex": "\\frac{6}{5}",
+            "mixed": {
+              "whole": 1,
+              "num": 1,
+              "den": 5,
+              "latex": "1\\frac{1}{5}"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 83,
+          "expression": {
+            "latex": "12 \\times \\frac{3}{4}",
+            "left": {
+              "type": "integer",
+              "val": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 9.0,
+            "latex": "9",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 84,
+          "expression": {
+            "latex": "6 \\times \\frac{5}{9}",
+            "left": {
+              "type": "integer",
+              "val": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 3.3333333333333335,
+            "latex": "\\frac{10}{3}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 3,
+              "latex": "3\\frac{1}{3}"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 85,
+          "expression": {
+            "latex": "5 \\times \\frac{2}{3}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 3
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 3.3333333333333335,
+            "latex": "\\frac{10}{3}",
+            "mixed": {
+              "whole": 3,
+              "num": 1,
+              "den": 3,
+              "latex": "3\\frac{1}{3}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "真分数×真分数（約分2回）",
+      "description": "真分数同士をかける計算（計算途中で約分が2回ある問題）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 86,
+          "expression": {
+            "latex": "\\frac{2}{5} \\times \\frac{5}{8}",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 4,
+            "is_integer": false,
+            "value": 0.25,
+            "latex": "\\frac{1}{4}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 87,
+          "expression": {
+            "latex": "\\frac{7}{9} \\times \\frac{3}{7}",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.3333333333333333,
+            "latex": "\\frac{1}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 88,
+          "expression": {
+            "latex": "\\frac{3}{16} \\times \\frac{4}{9}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 12,
+            "is_integer": false,
+            "value": 0.08333333333333333,
+            "latex": "\\frac{1}{12}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 89,
+          "expression": {
+            "latex": "\\frac{5}{14} \\times \\frac{7}{15}",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 14
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 6,
+            "is_integer": false,
+            "value": 0.16666666666666666,
+            "latex": "\\frac{1}{6}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 90,
+          "expression": {
+            "latex": "\\frac{4}{9} \\times \\frac{3}{10}",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 10
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 15,
+            "is_integer": false,
+            "value": 0.13333333333333333,
+            "latex": "\\frac{2}{15}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 91,
+          "expression": {
+            "latex": "\\frac{7}{12} \\times \\frac{8}{21}",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 8,
+              "den": 21
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 0.2222222222222222,
+            "latex": "\\frac{2}{9}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 92,
+          "expression": {
+            "latex": "\\frac{3}{5} \\times \\frac{10}{21}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 10,
+              "den": 21
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 7,
+            "is_integer": false,
+            "value": 0.2857142857142857,
+            "latex": "\\frac{2}{7}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 93,
+          "expression": {
+            "latex": "\\frac{9}{20} \\times \\frac{5}{6}",
+            "left": {
+              "type": "fraction",
+              "num": 9,
+              "den": 20
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 8,
+            "is_integer": false,
+            "value": 0.375,
+            "latex": "\\frac{3}{8}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 94,
+          "expression": {
+            "latex": "\\frac{14}{27} \\times \\frac{6}{7}",
+            "left": {
+              "type": "fraction",
+              "num": 14,
+              "den": 27
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 6,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 9,
+            "is_integer": false,
+            "value": 0.4444444444444444,
+            "latex": "\\frac{4}{9}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 95,
+          "expression": {
+            "latex": "\\frac{3}{4} \\times \\frac{14}{15}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 14,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 7,
+            "denominator": 10,
+            "is_integer": false,
+            "value": 0.7,
+            "latex": "\\frac{7}{10}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 96,
+          "expression": {
+            "latex": "\\frac{2}{3} \\times \\frac{9}{10}",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 9,
+              "den": 10
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.6,
+            "latex": "\\frac{3}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 97,
+          "expression": {
+            "latex": "\\frac{5}{6} \\times \\frac{4}{5}",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 3,
+            "is_integer": false,
+            "value": 0.6666666666666666,
+            "latex": "\\frac{2}{3}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 98,
+          "expression": {
+            "latex": "\\frac{3}{14} \\times \\frac{7}{9}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 14
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 6,
+            "is_integer": false,
+            "value": 0.16666666666666666,
+            "latex": "\\frac{1}{6}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 99,
+          "expression": {
+            "latex": "\\frac{8}{15} \\times \\frac{9}{20}",
+            "left": {
+              "type": "fraction",
+              "num": 8,
+              "den": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 9,
+              "den": 20
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 25,
+            "is_integer": false,
+            "value": 0.24,
+            "latex": "\\frac{6}{25}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 100,
+          "expression": {
+            "latex": "\\frac{3}{8} \\times \\frac{10}{21}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 10,
+              "den": 21
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 28,
+            "is_integer": false,
+            "value": 0.17857142857142858,
+            "latex": "\\frac{5}{28}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 101,
+          "expression": {
+            "latex": "\\frac{6}{7} \\times \\frac{7}{12}",
+            "left": {
+              "type": "fraction",
+              "num": 6,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 12
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 2,
+            "is_integer": false,
+            "value": 0.5,
+            "latex": "\\frac{1}{2}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 102,
+          "expression": {
+            "latex": "\\frac{3}{4} \\times \\frac{8}{15}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 8,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 5,
+            "is_integer": false,
+            "value": 0.4,
+            "latex": "\\frac{2}{5}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 103,
+          "expression": {
+            "latex": "\\frac{3}{8} \\times \\frac{4}{9}",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 1,
+            "denominator": 6,
+            "is_integer": false,
+            "value": 0.16666666666666666,
+            "latex": "\\frac{1}{6}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 104,
+          "expression": {
+            "latex": "\\frac{9}{16} \\times \\frac{8}{21}",
+            "left": {
+              "type": "fraction",
+              "num": 9,
+              "den": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 8,
+              "den": 21
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 14,
+            "is_integer": false,
+            "value": 0.21428571428571427,
+            "latex": "\\frac{3}{14}",
+            "mixed": null
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 105,
+          "expression": {
+            "latex": "\\frac{9}{14} \\times \\frac{4}{15}",
+            "left": {
+              "type": "fraction",
+              "num": 9,
+              "den": 14
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 15
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 35,
+            "is_integer": false,
+            "value": 0.17142857142857143,
+            "latex": "\\frac{6}{35}",
+            "mixed": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "真分数×整数（答えが整数）",
+      "description": "真分数に整数をかける計算（計算結果が整数になる問題）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 106,
+          "expression": {
+            "latex": "\\frac{1}{2} \\times 6",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 2
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 6
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 3.0,
+            "latex": "3",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 107,
+          "expression": {
+            "latex": "\\frac{2}{3} \\times 9",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 9
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 108,
+          "expression": {
+            "latex": "\\frac{1}{3} \\times 12",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 3
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 12
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 109,
+          "expression": {
+            "latex": "\\frac{3}{4} \\times 8",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 8
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 110,
+          "expression": {
+            "latex": "\\frac{1}{4} \\times 16",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 16
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 111,
+          "expression": {
+            "latex": "\\frac{2}{5} \\times 10",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 10
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 112,
+          "expression": {
+            "latex": "\\frac{3}{5} \\times 15",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 15
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 9.0,
+            "latex": "9",
+            "mixed": null
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 113,
+          "expression": {
+            "latex": "\\frac{4}{5} \\times 25",
+            "left": {
+              "type": "fraction",
+              "num": 4,
+              "den": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 25
+            }
+          },
+          "answer": {
+            "numerator": 20,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 20.0,
+            "latex": "20",
+            "mixed": null
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 114,
+          "expression": {
+            "latex": "\\frac{1}{6} \\times 18",
+            "left": {
+              "type": "fraction",
+              "num": 1,
+              "den": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 18
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 3.0,
+            "latex": "3",
+            "mixed": null
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 115,
+          "expression": {
+            "latex": "\\frac{5}{6} \\times 12",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 12
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 10.0,
+            "latex": "10",
+            "mixed": null
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 116,
+          "expression": {
+            "latex": "\\frac{2}{7} \\times 14",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 14
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 117,
+          "expression": {
+            "latex": "\\frac{3}{7} \\times 21",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 21
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 9.0,
+            "latex": "9",
+            "mixed": null
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 118,
+          "expression": {
+            "latex": "\\frac{5}{7} \\times 14",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 14
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 10.0,
+            "latex": "10",
+            "mixed": null
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 119,
+          "expression": {
+            "latex": "\\frac{3}{8} \\times 16",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 16
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 120,
+          "expression": {
+            "latex": "\\frac{7}{8} \\times 24",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 24
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 21.0,
+            "latex": "21",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 121,
+          "expression": {
+            "latex": "\\frac{2}{9} \\times 18",
+            "left": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 18
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 122,
+          "expression": {
+            "latex": "\\frac{5}{9} \\times 27",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 27
+            }
+          },
+          "answer": {
+            "numerator": 15,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 15.0,
+            "latex": "15",
+            "mixed": null
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 123,
+          "expression": {
+            "latex": "\\frac{3}{10} \\times 20",
+            "left": {
+              "type": "fraction",
+              "num": 3,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 20
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 124,
+          "expression": {
+            "latex": "\\frac{7}{10} \\times 30",
+            "left": {
+              "type": "fraction",
+              "num": 7,
+              "den": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 30
+            }
+          },
+          "answer": {
+            "numerator": 21,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 21.0,
+            "latex": "21",
+            "mixed": null
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 125,
+          "expression": {
+            "latex": "\\frac{5}{12} \\times 24",
+            "left": {
+              "type": "fraction",
+              "num": 5,
+              "den": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "integer",
+              "val": 24
+            }
+          },
+          "answer": {
+            "numerator": 10,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 10.0,
+            "latex": "10",
+            "mixed": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "整数×真分数（答えが整数）",
+      "description": "整数に真分数をかける計算（計算結果が整数になる問題）",
+      "problems": [
+        {
+          "id": 1,
+          "global_id": 126,
+          "expression": {
+            "latex": "4 \\times \\frac{1}{2}",
+            "left": {
+              "type": "integer",
+              "val": 4
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 2
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 2.0,
+            "latex": "2",
+            "mixed": null
+          }
+        },
+        {
+          "id": 2,
+          "global_id": 127,
+          "expression": {
+            "latex": "6 \\times \\frac{1}{3}",
+            "left": {
+              "type": "integer",
+              "val": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 3
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 2.0,
+            "latex": "2",
+            "mixed": null
+          }
+        },
+        {
+          "id": 3,
+          "global_id": 128,
+          "expression": {
+            "latex": "12 \\times \\frac{2}{3}",
+            "left": {
+              "type": "integer",
+              "val": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 3
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 8.0,
+            "latex": "8",
+            "mixed": null
+          }
+        },
+        {
+          "id": 4,
+          "global_id": 129,
+          "expression": {
+            "latex": "8 \\times \\frac{1}{4}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 2,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 2.0,
+            "latex": "2",
+            "mixed": null
+          }
+        },
+        {
+          "id": 5,
+          "global_id": 130,
+          "expression": {
+            "latex": "12 \\times \\frac{3}{4}",
+            "left": {
+              "type": "integer",
+              "val": 12
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 9.0,
+            "latex": "9",
+            "mixed": null
+          }
+        },
+        {
+          "id": 6,
+          "global_id": 131,
+          "expression": {
+            "latex": "20 \\times \\frac{1}{4}",
+            "left": {
+              "type": "integer",
+              "val": 20
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 4
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 5.0,
+            "latex": "5",
+            "mixed": null
+          }
+        },
+        {
+          "id": 7,
+          "global_id": 132,
+          "expression": {
+            "latex": "5 \\times \\frac{3}{5}",
+            "left": {
+              "type": "integer",
+              "val": 5
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 3,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 3.0,
+            "latex": "3",
+            "mixed": null
+          }
+        },
+        {
+          "id": 8,
+          "global_id": 133,
+          "expression": {
+            "latex": "15 \\times \\frac{2}{5}",
+            "left": {
+              "type": "integer",
+              "val": 15
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 9,
+          "global_id": 134,
+          "expression": {
+            "latex": "20 \\times \\frac{4}{5}",
+            "left": {
+              "type": "integer",
+              "val": 20
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 5
+            }
+          },
+          "answer": {
+            "numerator": 16,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 16.0,
+            "latex": "16",
+            "mixed": null
+          }
+        },
+        {
+          "id": 10,
+          "global_id": 135,
+          "expression": {
+            "latex": "6 \\times \\frac{5}{6}",
+            "left": {
+              "type": "integer",
+              "val": 6
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 5.0,
+            "latex": "5",
+            "mixed": null
+          }
+        },
+        {
+          "id": 11,
+          "global_id": 136,
+          "expression": {
+            "latex": "18 \\times \\frac{5}{6}",
+            "left": {
+              "type": "integer",
+              "val": 18
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 15,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 15.0,
+            "latex": "15",
+            "mixed": null
+          }
+        },
+        {
+          "id": 12,
+          "global_id": 137,
+          "expression": {
+            "latex": "24 \\times \\frac{1}{6}",
+            "left": {
+              "type": "integer",
+              "val": 24
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 1,
+              "den": 6
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 13,
+          "global_id": 138,
+          "expression": {
+            "latex": "7 \\times \\frac{4}{7}",
+            "left": {
+              "type": "integer",
+              "val": 7
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 14,
+          "global_id": 139,
+          "expression": {
+            "latex": "14 \\times \\frac{3}{7}",
+            "left": {
+              "type": "integer",
+              "val": 14
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 3,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 15,
+          "global_id": 140,
+          "expression": {
+            "latex": "28 \\times \\frac{2}{7}",
+            "left": {
+              "type": "integer",
+              "val": 28
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 7
+            }
+          },
+          "answer": {
+            "numerator": 8,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 8.0,
+            "latex": "8",
+            "mixed": null
+          }
+        },
+        {
+          "id": 16,
+          "global_id": 141,
+          "expression": {
+            "latex": "8 \\times \\frac{5}{8}",
+            "left": {
+              "type": "integer",
+              "val": 8
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 5,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 5,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 5.0,
+            "latex": "5",
+            "mixed": null
+          }
+        },
+        {
+          "id": 17,
+          "global_id": 142,
+          "expression": {
+            "latex": "16 \\times \\frac{7}{8}",
+            "left": {
+              "type": "integer",
+              "val": 16
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 7,
+              "den": 8
+            }
+          },
+          "answer": {
+            "numerator": 14,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 14.0,
+            "latex": "14",
+            "mixed": null
+          }
+        },
+        {
+          "id": 18,
+          "global_id": 143,
+          "expression": {
+            "latex": "9 \\times \\frac{4}{9}",
+            "left": {
+              "type": "integer",
+              "val": 9
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 4,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 4,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 4.0,
+            "latex": "4",
+            "mixed": null
+          }
+        },
+        {
+          "id": 19,
+          "global_id": 144,
+          "expression": {
+            "latex": "27 \\times \\frac{2}{9}",
+            "left": {
+              "type": "integer",
+              "val": 27
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 2,
+              "den": 9
+            }
+          },
+          "answer": {
+            "numerator": 6,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 6.0,
+            "latex": "6",
+            "mixed": null
+          }
+        },
+        {
+          "id": 20,
+          "global_id": 145,
+          "expression": {
+            "latex": "10 \\times \\frac{9}{10}",
+            "left": {
+              "type": "integer",
+              "val": 10
+            },
+            "operator": "times",
+            "right": {
+              "type": "fraction",
+              "num": 9,
+              "den": 10
+            }
+          },
+          "answer": {
+            "numerator": 9,
+            "denominator": 1,
+            "is_integer": true,
+            "value": 9.0,
+            "latex": "9",
+            "mixed": null
+          }
+        }
+      ]
+    }
+  ]
+}
