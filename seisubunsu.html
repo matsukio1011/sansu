@@ -1399,25 +1399,130 @@
     /* ================================================================
        6. 6択選択肢の動的生成ロジック
        ================================================================ */
+    // 値は合っているが約分が完全でないトラップ選択肢を生成する
+    function generateUnreducedTraps(q, count = 1) {
+      const traps = [];
+      const usedTrapTexts = new Set();
+      usedTrapTexts.add(q.answerText);
+
+      // 1. 問題の計算式から直接求まる「約分前の分数」(raw numerator / raw denominator)
+      if (q.left && q.right) {
+        let rawN = null;
+        let rawD = null;
+        const op = q.opSymbol || '×';
+
+        if (op === '×') {
+          if (q.left.type === 'fraction' && q.right.type === 'integer') {
+            rawN = q.left.num * q.right.val;
+            rawD = q.left.den;
+          } else if (q.left.type === 'integer' && q.right.type === 'fraction') {
+            rawN = q.left.val * q.right.num;
+            rawD = q.right.den;
+          } else if (q.left.type === 'fraction' && q.right.type === 'fraction') {
+            rawN = q.left.num * q.right.num;
+            rawD = q.left.den * q.right.den;
+          }
+        } else if (op === '÷') {
+          if (q.left.type === 'fraction' && q.right.type === 'integer') {
+            rawN = q.left.num;
+            rawD = q.left.den * q.right.val;
+          } else if (q.left.type === 'integer' && q.right.type === 'fraction') {
+            rawN = q.left.val * q.right.den;
+            rawD = q.right.num;
+          } else if (q.left.type === 'fraction' && q.right.type === 'fraction') {
+            rawN = q.left.num * q.right.den;
+            rawD = q.left.den * q.right.num;
+          }
+        }
+
+        if (rawN && rawD && rawD > 0) {
+          const g = gcd(rawN, rawD);
+          if (g > 1) {
+            const trapText = `${rawN}/${rawD}`;
+            if (!usedTrapTexts.has(trapText)) {
+              traps.push({
+                isInteger: false,
+                num: rawN,
+                den: rawD,
+                text: trapText,
+                isUnreduced: true
+              });
+              usedTrapTexts.add(trapText);
+            }
+          }
+        }
+      }
+
+      // 2. 正解の倍数 (k倍) による未約分分数の生成
+      const kCandidates = [2, 3, 4, 5, 6, 8, 10];
+      for (let i = kCandidates.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [kCandidates[i], kCandidates[j]] = [kCandidates[j], kCandidates[i]];
+      }
+
+      for (const k of kCandidates) {
+        if (traps.length >= count) break;
+        let uNum, uDen;
+
+        if (q.isInteger) {
+          // 正解が整数の場合: (整数 * k) / k (例: 3 -> 6/2, 9/3)
+          uNum = q.correctInt * k;
+          uDen = k;
+        } else {
+          // 正解が分数の場合: (分子 * k) / (分母 * k) (例: 1/4 -> 2/8, 3/12)
+          uNum = q.correctNum * k;
+          uDen = q.correctDen * k;
+        }
+
+        if (uDen <= 100 && uNum <= 200) {
+          const trapText = `${uNum}/${uDen}`;
+          if (!usedTrapTexts.has(trapText)) {
+            traps.push({
+              isInteger: false,
+              num: uNum,
+              den: uDen,
+              text: trapText,
+              isUnreduced: true
+            });
+            usedTrapTexts.add(trapText);
+          }
+        }
+      }
+
+      return traps;
+    }
+
     function generateSixChoices(q) {
       const choices = [];
       const usedTexts = new Set();
 
+      // 正解（必ず既約分数 または 整数）
       const correctOpt = {
         isInteger: q.isInteger,
         num: q.correctNum,
         den: q.correctDen,
-        text: q.answerText
+        text: q.answerText,
+        isUnreduced: false
       };
       choices.push(correctOpt);
       usedTexts.add(correctOpt.text);
+
+      // ユーザー要件: 選択肢の1つか2つは値は合っているが約分が完全でないものを入れる
+      const trapTargetCount = (Math.random() < 0.5) ? 1 : 2;
+      const unreducedTraps = generateUnreducedTraps(q, trapTargetCount);
+      unreducedTraps.forEach(trap => {
+        if (!usedTexts.has(trap.text) && choices.length < 6) {
+          choices.push(trap);
+          usedTexts.add(trap.text);
+        }
+      });
 
       if (q.isInteger) {
         const k = q.correctNum;
         [k + 1, Math.max(1, k - 1), k * 2, Math.max(1, Math.floor(k / 2))].forEach(v => {
           const text = String(v);
           if (!usedTexts.has(text) && choices.length < 4) {
-            choices.push({ isInteger: true, num: v, den: 1, text });
+            choices.push({ isInteger: true, num: v, den: 1, text, isUnreduced: false });
             usedTexts.add(text);
           }
         });
@@ -1425,7 +1530,7 @@
         if (q.correctNum !== q.correctDen) {
           const revText = `${q.correctDen}/${q.correctNum}`;
           if (!usedTexts.has(revText)) {
-            choices.push({ isInteger: false, num: q.correctDen, den: q.correctNum, text: revText });
+            choices.push({ isInteger: false, num: q.correctDen, den: q.correctNum, text: revText, isUnreduced: false });
             usedTexts.add(revText);
           }
         }
@@ -1443,7 +1548,7 @@
           const isInt = (simpD === 1);
           const text = isInt ? String(simpN) : `${simpN}/${simpD}`;
           if (!usedTexts.has(text) && choices.length < 5) {
-            choices.push({ isInteger: isInt, num: simpN, den: simpD, text });
+            choices.push({ isInteger: isInt, num: simpN, den: simpD, text, isUnreduced: false });
             usedTexts.add(text);
           }
         });
@@ -1458,7 +1563,7 @@
       for (const opt of pool) {
         if (choices.length >= 6) break;
         if (!usedTexts.has(opt.text)) {
-          choices.push(opt);
+          choices.push({ ...opt, isUnreduced: false });
           usedTexts.add(opt.text);
         }
       }
@@ -1507,7 +1612,7 @@
       if (isWaitingNext) return;
 
       totalAnswered++;
-      const isCorrect = (chosenOpt.text === currentQuestion.answerText);
+      const isCorrect = (chosenOpt.text === currentQuestion.answerText && !chosenOpt.isUnreduced);
       const btns = choiceButtonsGrid.querySelectorAll('.choice-opt-btn');
       const clickedBtn = btns[idx];
 
@@ -1527,7 +1632,25 @@
             b.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/50');
           }
         });
-        showResult(false, "惜しい！ちがうぞ！", `あなたの選択: ${chosenOpt.text}  |  正しい答え: ${currentQuestion.answerText}`, false, chosenOpt.text);
+
+        // 約分できるものを選択した場合は専用の警告メッセージを表示
+        if (chosenOpt.isUnreduced) {
+          showResult(
+            false,
+            "約分できます！もっと小さくできます！",
+            `あなたの選択: ${chosenOpt.text}（約分できます）  |  正しい答え: ${currentQuestion.answerText}`,
+            true, // isUnreduced = true
+            chosenOpt.text
+          );
+        } else {
+          showResult(
+            false,
+            "惜しい！ちがうぞ！",
+            `あなたの選択: ${chosenOpt.text}  |  正しい答え: ${currentQuestion.answerText}`,
+            false,
+            chosenOpt.text
+          );
+        }
       }
     }
 
