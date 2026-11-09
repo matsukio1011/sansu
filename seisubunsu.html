@@ -1067,6 +1067,8 @@
       correct: 0,
       bestStreak: 0
     };
+    let previousModeBeforeReview = 'practice'; // 復習テスト突入前のモード ('practice' または 'test')
+    let isPendingForceReview = false; // 間違えた問題が10問に達して強制復習テストへ遷移するフラグ
 
     // DOM要素
     const kaiLogo = document.getElementById('kaiLogo');
@@ -1819,11 +1821,20 @@
         clearTimeout(autoNextTimer);
         autoNextTimer = null;
       }
+
+      // 間違えた問題が10問に達した場合の強制復習テスト突入
+      if (isPendingForceReview) {
+        isPendingForceReview = false;
+        startForcedReviewTest();
+        return;
+      }
+
       isWaitingNext = false;
       selectedMode = null;
       currentQuestion = getNextQuestion();
 
       resultFeedback.classList.add('hidden');
+      btnNextQuestion.className = 'py-2 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-sm shadow-lg active:scale-95 transition';
       stepInput.classList.add('hidden');
       stepChoice.classList.remove('hidden');
       intAnswerInput.value = '';
@@ -2084,8 +2095,30 @@
         resultIcon.textContent = isUnreduced ? '⚡' : '💥';
         resultTitle.textContent = customMsg;
         resultTitle.className = isUnreduced ? "text-base sm:text-lg font-black mb-1 text-yellow-400" : "text-base sm:text-lg font-black mb-1 text-rose-400";
-        resultDetail.innerHTML = detail;
-        btnNextQuestion.textContent = "次の問題へ進む！ [Enter]";
+
+        // 復習（間違えた問題）が10個以上になった場合：強制復習テストへ！
+        if (appMode !== 'review' && wrongProblems.length >= 10) {
+          isPendingForceReview = true;
+          resultDetail.innerHTML = detail + `
+            <div class="mt-2.5 p-2.5 rounded-2xl bg-rose-500/25 border-2 border-rose-500/60 text-rose-200 text-xs text-left animate-pop">
+              <div class="font-black text-rose-300 flex items-center gap-1.5 mb-1">
+                <span class="text-base">🚨</span>
+                <span>間違えた問題が10問に達しました！【強制復習テスト】発動！</span>
+              </div>
+              <div class="text-[11px] leading-relaxed text-gray-200">
+                10問全問連続正解するまで終わらない復習テストに突入します。<br>
+                合格すると間違えた問題が0問になり、元の修行画面へ戻ります！
+              </div>
+            </div>
+          `;
+          btnNextQuestion.textContent = "🔥 強制復習テストへ突入！ [Enter]";
+          btnNextQuestion.className = "py-2.5 px-6 rounded-xl bg-gradient-to-r from-rose-500 via-red-500 to-orange-500 hover:from-rose-400 hover:to-orange-400 text-white font-black text-sm shadow-xl active:scale-95 transition animate-pulse cursor-pointer";
+        } else {
+          resultDetail.innerHTML = detail;
+          btnNextQuestion.textContent = "次の問題へ進む！ [Enter]";
+          btnNextQuestion.className = "py-2 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-sm shadow-lg active:scale-95 transition cursor-pointer";
+        }
+
         setTimeout(() => btnNextQuestion.focus(), 50);
 
         if (appMode === 'test' || appMode === 'review') {
@@ -2162,6 +2195,33 @@
       showUnlockToast("🔓 設定ロック解除：テスト準備画面に戻りました");
     }
 
+    function startForcedReviewTest() {
+      sounds.playFanfare();
+      previousModeBeforeReview = (appMode !== 'review') ? appMode : 'practice';
+      appMode = 'review';
+      testState = 'running';
+      currentCombo = 0;
+      targetConsecutiveStreak = 10;
+      updateScoreBoard();
+
+      enterFullScreen();
+
+      if (testReadyBar) testReadyBar.classList.add('hidden');
+      if (testProgressBarContainer) testProgressBarContainer.classList.remove('hidden');
+      updateTestProgressUI();
+
+      setTestControlsLocked(true);
+
+      btnModePractice.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
+      btnModeTest.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
+      btnModeReview.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-black transition bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow flex items-center space-x-1 cursor-pointer';
+
+      showUnlockToast("🔥 間違えた問題が10問に達しました！10問全問連続正解するまで強制復習テスト！");
+
+      rebuildActiveList();
+      loadNewQuestion();
+    }
+
     function setAppMode(mode) {
       sounds.playSelect();
 
@@ -2170,6 +2230,9 @@
         if (wrongProblems.length < 10) {
           alert(`間違えた問題が10問以上になると復習テストが受けられます！\n（現在: ${wrongProblems.length}問）\nまずは練習やテストで修行を重ねましょう！`);
           return;
+        }
+        if (appMode !== 'review') {
+          previousModeBeforeReview = appMode;
         }
       }
 
@@ -2269,9 +2332,20 @@
       passModalTargetNum.textContent = targetConsecutiveStreak;
 
       if (appMode === 'review') {
-        passModalMessage.innerHTML = `見事 <span class="text-rose-400 font-mono text-base sm:text-lg font-black">10</span> 問連続正解を達成！<br><span class="text-emerald-400 font-black">間違えた問題リストをすべて克服し、クリアしました！🎉</span>`;
+        const returnLabel = (previousModeBeforeReview === 'test') ? "テスト" : "練習";
+        passModalMessage.innerHTML = `見事 <span class="text-rose-400 font-mono text-base sm:text-lg font-black">10</span> 問全問連続正解を達成！<br><span class="text-emerald-400 font-black">間違えた問題が0問になりました！🎉</span><br><div class="mt-2 text-xs text-gray-300">復習テストに入ったときの【${returnLabel}】に戻ります！</div>`;
+        if (btnRetryTest) btnRetryTest.classList.add('hidden');
+        if (btnClosePassModal) {
+          btnClosePassModal.textContent = `${returnLabel}に戻る [Enter]`;
+          btnClosePassModal.className = "w-full py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-sm shadow-lg active:scale-95 transition cursor-pointer";
+        }
       } else {
         passModalMessage.innerHTML = `見事 <span class="text-yellow-400 font-mono text-base sm:text-lg font-black">${targetConsecutiveStreak}</span> 問連続正解を達成！<br>分数のかけ算・わり算を完璧にマスターしたぞ！`;
+        if (btnRetryTest) btnRetryTest.classList.remove('hidden');
+        if (btnClosePassModal) {
+          btnClosePassModal.textContent = "練習に戻る";
+          btnClosePassModal.className = "flex-1 py-2.5 sm:py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 font-bold text-sm transition active:scale-95 cursor-pointer";
+        }
       }
 
       // 紙吹雪エフェクト (canvas-confetti)
@@ -2305,8 +2379,10 @@
       updateScoreBoard();
       updateTestProgressUI();
       if (appMode === 'review') {
-        // 復習テスト合格後は練習モードへ自動復帰
-        setAppMode('practice');
+        // 復習テスト合格後は、復習テストに入ったときのモードに戻る！
+        const targetMode = previousModeBeforeReview || 'practice';
+        previousModeBeforeReview = 'practice';
+        setAppMode(targetMode);
       } else {
         loadNewQuestion();
       }
@@ -2518,10 +2594,7 @@
     }
 
     btnRetryTest.addEventListener('click', closePassModal);
-    btnClosePassModal.addEventListener('click', () => {
-      setAppMode('practice');
-      passModal.classList.add('hidden');
-    });
+    btnClosePassModal.addEventListener('click', closePassModal);
 
     /* ================================================================
        11. 問題の種類選択ポップアップ
@@ -2700,11 +2773,8 @@
 
       // 合格モーダル表示中のEnter/Esc
       if (!passModal.classList.contains('hidden')) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.key === 'Escape') {
           closePassModal();
-        } else if (e.key === 'Escape') {
-          setAppMode('practice');
-          passModal.classList.add('hidden');
         }
         return;
       }
