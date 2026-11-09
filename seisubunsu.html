@@ -191,16 +191,25 @@
       </div>
     </div>
 
-    <!-- 全画面表示切り替えボタン（明瞭・高視認性） -->
-    <button id="fullscreenBtn" class="flex items-center space-x-2 bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-gray-200 hover:text-white px-3 sm:px-3.5 py-1.5 rounded-xl border border-gray-600 hover:border-brand-cyan transition duration-150 active:scale-95 shadow-md cursor-pointer" title="全画面表示の切り替え (F11)">
-      <svg id="fsExpandIcon" class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-      </svg>
-      <svg id="fsCompressIcon" class="w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m10 7h6m-6 0V4m0 6l7-7" />
-      </svg>
-      <span id="fsText" class="text-xs font-black tracking-wider">全画面表示</span>
-    </button>
+    <!-- 右側ボタングループ（履歴ボタン ＆ 全画面表示ボタン） -->
+    <div class="flex items-center space-x-2">
+      <!-- 履歴モーダル表示ボタン（練習中はいつでも見れる） -->
+      <button id="btnOpenHistoryModal" class="flex items-center space-x-1.5 bg-[#14161f] hover:bg-gray-800 text-gray-200 hover:text-white px-3 sm:px-3.5 py-1.5 rounded-xl border border-gray-700 hover:border-brand-cyan transition duration-150 active:scale-95 shadow-md cursor-pointer" title="学習履歴と間違えた問題（練習中はいつでも確認可能）">
+        <span class="text-cyan-400 text-xs">📊</span>
+        <span class="text-xs font-black tracking-wider">履歴</span>
+      </button>
+
+      <!-- 全画面表示切り替えボタン（明瞭・高視認性） -->
+      <button id="fullscreenBtn" class="flex items-center space-x-2 bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-gray-200 hover:text-white px-3 sm:px-3.5 py-1.5 rounded-xl border border-gray-600 hover:border-brand-cyan transition duration-150 active:scale-95 shadow-md cursor-pointer" title="全画面表示の切り替え (F11)">
+        <svg id="fsExpandIcon" class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
+        <svg id="fsCompressIcon" class="w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M10 10H4m6 0V4m0 6L3 3m10 7h6m-6 0V4m0 6l7-7" />
+        </svg>
+        <span id="fsText" class="text-xs font-black tracking-wider">全画面表示</span>
+      </button>
+    </div>
   </header>
 
   <!-- メイン対戦・修行エリア（中央配置・PCスクロール絶対なし） -->
@@ -219,13 +228,17 @@
           </span>
         </button>
 
-        <!-- モード切替（練習 / テスト） -->
+        <!-- モード切替（練習 / テスト / 復習テスト） -->
         <div class="flex items-center bg-[#0c0d10] p-0.5 rounded-xl border border-gray-800">
           <button id="btnModePractice" class="mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-black transition bg-brand-orange text-slate-950 shadow">
             🥋 練習
           </button>
           <button id="btnModeTest" class="mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition">
             🏆 テスト
+          </button>
+          <button id="btnModeReview" class="mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition flex items-center space-x-1 cursor-pointer" title="間違えた問題が10問以上になると復習テストが受けられます">
+            <span>🔥 復習</span>
+            <span id="reviewCountBadge" class="bg-gray-800 text-gray-400 px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold">0</span>
           </button>
         </div>
 
@@ -275,12 +288,12 @@
       <!-- テストモード準備バー（テストモード選択時・開始前に問題の上に表示） -->
       <div id="testReadyBar" class="hidden w-full bg-[#10121a] px-3.5 py-2.5 rounded-2xl border-2 border-yellow-500/60 mb-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg animate-pop">
         <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
-          <span class="text-xs sm:text-sm font-black text-yellow-400 flex items-center gap-1.5">
+          <span id="testReadyTitle" class="text-xs sm:text-sm font-black text-yellow-400 flex items-center gap-1.5">
             <span>🏆</span>
             <span>テスト修行</span>
           </span>
           <!-- 連続正解目標設定 -->
-          <div class="flex items-center space-x-1.5 bg-[#161922] px-2.5 py-1 rounded-xl border border-yellow-500/40">
+          <div id="testTargetContainer" class="flex items-center space-x-1.5 bg-[#161922] px-2.5 py-1 rounded-xl border border-yellow-500/40">
             <span class="text-xs text-yellow-300 font-bold">🎯 連続正解目標:</span>
             <select id="testTargetSelect" class="bg-transparent text-yellow-300 font-mono font-black text-xs cursor-pointer focus:outline-none">
               <option value="5">5問連続</option>
@@ -289,6 +302,9 @@
               <option value="20">20問連続</option>
             </select>
           </div>
+          <span id="reviewTargetNotice" class="hidden text-xs text-rose-300 font-bold bg-rose-950/60 border border-rose-500/40 px-2.5 py-1 rounded-xl">
+            🎯 連続10問正解で合格＆リスト消去
+          </span>
           <!-- 出題問題設定ボタン -->
           <button id="btnTestModalOpen" type="button" class="flex items-center space-x-1 px-2.5 py-1 rounded-xl bg-gray-800 hover:bg-gray-700 text-yellow-300 hover:text-white font-bold text-xs border border-yellow-500/30 transition active:scale-95 cursor-pointer">
             <span>⚙️</span>
@@ -712,6 +728,103 @@
     </div>
   </div>
 
+  <!-- 学習データ ＆ 解答履歴モーダル -->
+  <div id="historyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4 transition-opacity">
+    <div class="bg-[#161922] border-2 border-gray-700 rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
+      <!-- ヘッダー -->
+      <div class="px-5 py-3.5 border-b border-gray-800 flex items-center justify-between bg-[#0e1015]">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-cyan to-blue-500 flex items-center justify-center text-base text-black font-black shadow">
+            📊
+          </div>
+          <div>
+            <h2 class="text-base font-black text-white">学習データ ＆ 解答履歴</h2>
+            <p class="text-[11px] text-gray-400">これまでの練習記録と、間違えた問題の復習</p>
+          </div>
+        </div>
+        <button id="btnCloseHistoryModal" class="w-8 h-8 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-sm font-bold border border-gray-700 transition cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <!-- スクロール可能な本文コンテンツ -->
+      <div class="p-4 sm:p-5 space-y-3.5 overflow-y-auto max-h-[72vh]">
+        <!-- 通算サマリー指標 (4枚カード) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="bg-[#0e1015] p-2.5 sm:p-3 rounded-2xl border border-gray-800 text-center">
+            <div class="text-[10px] font-bold text-gray-400 mb-0.5">累計解答数</div>
+            <div id="histLifetimeTotal" class="text-xl sm:text-2xl font-mono font-black text-white">0</div>
+          </div>
+          <div class="bg-[#0e1015] p-2.5 sm:p-3 rounded-2xl border border-gray-800 text-center">
+            <div class="text-[10px] font-bold text-gray-400 mb-0.5">通算正解率</div>
+            <div id="histLifetimeAcc" class="text-xl sm:text-2xl font-mono font-black text-brand-cyan">0%</div>
+          </div>
+          <div class="bg-[#0e1015] p-2.5 sm:p-3 rounded-2xl border border-gray-800 text-center">
+            <div class="text-[10px] font-bold text-gray-400 mb-0.5">最高連撃数</div>
+            <div id="histLifetimeStreak" class="text-xl sm:text-2xl font-mono font-black text-brand-orange">0</div>
+          </div>
+          <div class="bg-[#0e1015] p-2.5 sm:p-3 rounded-2xl border border-gray-800 text-center">
+            <div class="text-[10px] font-bold text-gray-400 mb-0.5">間違えた問題</div>
+            <div id="histWrongCount" class="text-xl sm:text-2xl font-mono font-black text-rose-400">0問</div>
+          </div>
+        </div>
+
+        <!-- 間違えた問題セクション（復習テストへの導線） -->
+        <div class="bg-[#0e1015] p-3.5 rounded-2xl border border-rose-500/30">
+          <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs sm:text-sm font-black text-rose-400 flex items-center gap-1.5">
+                <span>🔥</span>
+                <span>間違えた問題リスト</span>
+              </span>
+              <span id="wrongProblemsBadge" class="text-xs px-2 py-0.5 rounded-full font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                0問
+              </span>
+            </div>
+            <!-- 復習テストボタン (10問以上で有効化) -->
+            <button id="btnStartReviewFromHistory" class="px-3 py-1 rounded-xl font-black text-xs transition shadow flex items-center space-x-1.5 cursor-pointer bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-400 hover:to-orange-400 text-white disabled:opacity-40 disabled:cursor-not-allowed">
+              <span>🔥</span>
+              <span>復習テストを開始</span>
+              <span class="text-[9px] bg-black/30 px-1.5 py-0.2 rounded font-mono font-bold">10連続合格で消去</span>
+            </button>
+          </div>
+          <p id="wrongHelpText" class="text-[10px] sm:text-[11px] text-gray-400 mb-2 leading-relaxed">
+            ※間違えた問題が10個以上たまると、間違えた問題からだけ出題するテストができます（連続10問正解で合格するとリストから自動消去）。
+          </p>
+
+          <!-- 間違えた問題一覧リスト -->
+          <div id="wrongProblemsList" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+            <!-- JSで挿入 -->
+          </div>
+        </div>
+
+        <!-- 解答履歴（直近ログ） -->
+        <div class="bg-[#0e1015] p-3.5 rounded-2xl border border-gray-800">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span>🕒</span>
+              <span>直近の解答履歴</span>
+            </h4>
+            <span class="text-[10px] text-gray-500">直近30件</span>
+          </div>
+          <div id="recentHistoryList" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+            <!-- JSで挿入 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- フッター -->
+      <div class="px-5 py-2.5 border-t border-gray-800 bg-[#0e1015] flex items-center justify-between">
+        <button id="btnClearAllHistory" class="text-xs text-rose-400 hover:text-rose-300 font-bold hover:underline transition cursor-pointer">
+          🗑️ 履歴をクリア
+        </button>
+        <button id="btnCloseHistoryFooter" class="px-4 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700 font-bold text-xs transition active:scale-95 cursor-pointer">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- 合格画面モーダル (目標達成時・画像gif使用) -->
   <div id="passModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
     <div class="bg-[#161922] border-2 border-yellow-500/80 rounded-3xl w-full max-w-sm sm:max-w-md p-5 sm:p-7 shadow-2xl flex flex-col items-center text-center relative overflow-hidden animate-pop">
@@ -927,7 +1040,7 @@
        4. アプリの状態管理 (State)
        ================================================================ */
     let showMultConversion = (localStorage.getItem('sansu_show_mult_conversion') !== '0'); // わり算の掛け算変換式表示 (デフォルト表示)
-    let appMode = 'practice'; // 'practice' (練習) | 'test' (テスト)
+    let appMode = 'practice'; // 'practice' (練習) | 'test' (テスト) | 'review' (間違えた問題の復習テスト)
     let testState = 'idle'; // 'idle' (練習時) | 'ready' (テスト開始前・準備) | 'running' (テスト中・解答以外ロック)
     let targetConsecutiveStreak = 10;
     let kaiClickCount = 0;
@@ -946,11 +1059,26 @@
     let isWaitingNext = false;
     let autoNextTimer = null;
 
+    // 永続化データ（間違えた問題リスト、解答履歴ログ、通算スコア）
+    let wrongProblems = []; // 練習中・テスト中に間違えた問題一覧
+    let answerHistory = []; // 解答ログ（最新50件程度）
+    let lifetimeStats = {
+      total: 0,
+      correct: 0,
+      bestStreak: 0
+    };
+
     // DOM要素
     const kaiLogo = document.getElementById('kaiLogo');
     const btnModePractice = document.getElementById('btnModePractice');
     const btnModeTest = document.getElementById('btnModeTest');
+    const btnModeReview = document.getElementById('btnModeReview');
+    const reviewCountBadge = document.getElementById('reviewCountBadge');
+
     const testReadyBar = document.getElementById('testReadyBar');
+    const testReadyTitle = document.getElementById('testReadyTitle');
+    const testTargetContainer = document.getElementById('testTargetContainer');
+    const reviewTargetNotice = document.getElementById('reviewTargetNotice');
     const testTargetSelect = document.getElementById('testTargetSelect');
     const btnStartTest = document.getElementById('btnStartTest');
     const btnCancelTestReady = document.getElementById('btnCancelTestReady');
@@ -964,6 +1092,22 @@
     const passModalMessage = document.getElementById('passModalMessage');
     const btnRetryTest = document.getElementById('btnRetryTest');
     const btnClosePassModal = document.getElementById('btnClosePassModal');
+
+    // 履歴モーダル関連 DOM要素
+    const btnOpenHistoryModal = document.getElementById('btnOpenHistoryModal');
+    const historyModal = document.getElementById('historyModal');
+    const btnCloseHistoryModal = document.getElementById('btnCloseHistoryModal');
+    const btnCloseHistoryFooter = document.getElementById('btnCloseHistoryFooter');
+    const btnClearAllHistory = document.getElementById('btnClearAllHistory');
+    const histLifetimeTotal = document.getElementById('histLifetimeTotal');
+    const histLifetimeAcc = document.getElementById('histLifetimeAcc');
+    const histLifetimeStreak = document.getElementById('histLifetimeStreak');
+    const histWrongCount = document.getElementById('histWrongCount');
+    const wrongProblemsBadge = document.getElementById('wrongProblemsBadge');
+    const wrongHelpText = document.getElementById('wrongHelpText');
+    const wrongProblemsList = document.getElementById('wrongProblemsList');
+    const btnStartReviewFromHistory = document.getElementById('btnStartReviewFromHistory');
+    const recentHistoryList = document.getElementById('recentHistoryList');
 
     const btnInputModeChoice = document.getElementById('btnInputModeChoice');
     const btnInputModeKeyboard = document.getElementById('btnInputModeKeyboard');
@@ -1012,6 +1156,163 @@
     const fsExpandIcon = document.getElementById('fsExpandIcon');
     const fsCompressIcon = document.getElementById('fsCompressIcon');
     const fsText = document.getElementById('fsText');
+
+    /* ================================================================
+       履歴 ＆ 間違えた問題データの永続化
+       ================================================================ */
+    const STORAGE_KEY_WRONG = 'sansu_seisubunsu_wrong_v1';
+    const STORAGE_KEY_HISTORY = 'sansu_seisubunsu_history_v1';
+    const STORAGE_KEY_STATS = 'sansu_seisubunsu_stats_v1';
+
+    function loadAllStorageData() {
+      try {
+        const rawWrong = localStorage.getItem(STORAGE_KEY_WRONG);
+        if (rawWrong) {
+          wrongProblems = JSON.parse(rawWrong) || [];
+        }
+      } catch (e) {
+        wrongProblems = [];
+      }
+
+      try {
+        const rawHist = localStorage.getItem(STORAGE_KEY_HISTORY);
+        if (rawHist) {
+          answerHistory = JSON.parse(rawHist) || [];
+        }
+      } catch (e) {
+        answerHistory = [];
+      }
+
+      try {
+        const rawStats = localStorage.getItem(STORAGE_KEY_STATS);
+        if (rawStats) {
+          lifetimeStats = Object.assign({ total: 0, correct: 0, bestStreak: 0 }, JSON.parse(rawStats));
+        }
+      } catch (e) {
+        lifetimeStats = { total: 0, correct: 0, bestStreak: 0 };
+      }
+
+      updateReviewBadge();
+    }
+
+    function saveWrongProblems() {
+      try {
+        localStorage.setItem(STORAGE_KEY_WRONG, JSON.stringify(wrongProblems));
+      } catch (e) {}
+      updateReviewBadge();
+    }
+
+    function saveHistory() {
+      try {
+        localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(answerHistory.slice(0, 50)));
+      } catch (e) {}
+    }
+
+    function saveLifetimeStats() {
+      try {
+        localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(lifetimeStats));
+      } catch (e) {}
+    }
+
+    function getQuestionKey(q) {
+      if (q.globalId != null) return `g_${q.globalId}`;
+      if (q.problemId != null) return `p_${q.categoryTitle}_${q.problemId}`;
+      return `f_${q.formulaText}`;
+    }
+
+    // 間違えた問題をリストに記録
+    function addWrongProblem(q, userAnswer) {
+      if (!q) return;
+      const key = getQuestionKey(q);
+      const existingIdx = wrongProblems.findIndex(p => p.key === key);
+
+      const itemData = {
+        key: key,
+        type: q.type || 'json',
+        categoryTitle: q.categoryTitle || '分数計算',
+        problemId: q.problemId || null,
+        globalId: q.globalId || null,
+        opSymbol: q.opSymbol || '×',
+        left: q.left,
+        right: q.right,
+        isInteger: q.isInteger,
+        correctInt: q.correctInt,
+        correctNum: q.correctNum,
+        correctDen: q.correctDen,
+        formulaText: q.formulaText,
+        answerText: q.answerText,
+        lastWrongUserAnswer: userAnswer || '',
+        lastWrongTime: Date.now(),
+        wrongCount: 1
+      };
+
+      if (existingIdx >= 0) {
+        itemData.wrongCount = (wrongProblems[existingIdx].wrongCount || 1) + 1;
+        wrongProblems[existingIdx] = itemData;
+      } else {
+        wrongProblems.push(itemData);
+      }
+
+      saveWrongProblems();
+    }
+
+    // 解答履歴ログの追加
+    function addAnswerHistory(q, userAnswer, isCorrect) {
+      if (!q) return;
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+      answerHistory.unshift({
+        id: Date.now() + Math.random(),
+        formulaText: q.formulaText,
+        categoryTitle: q.categoryTitle || '',
+        answerText: q.answerText,
+        userAnswer: userAnswer || '-',
+        isCorrect: isCorrect,
+        mode: appMode,
+        timestamp: timeStr
+      });
+
+      if (answerHistory.length > 60) {
+        answerHistory = answerHistory.slice(0, 60);
+      }
+      saveHistory();
+
+      // 通算統計の更新
+      lifetimeStats.total++;
+      if (isCorrect) {
+        lifetimeStats.correct++;
+        if (currentCombo > lifetimeStats.bestStreak) {
+          lifetimeStats.bestStreak = currentCombo;
+        }
+      }
+      saveLifetimeStats();
+    }
+
+    // 復習テストバッジとボタン状態の更新
+    function updateReviewBadge() {
+      const count = wrongProblems.length;
+      if (reviewCountBadge) {
+        reviewCountBadge.textContent = count;
+        if (count >= 10) {
+          reviewCountBadge.className = 'bg-rose-500 text-white px-1.5 py-0.2 rounded-full text-[10px] font-mono font-black animate-pulse';
+          btnModeReview.classList.remove('opacity-60');
+          btnModeReview.title = `間違えた問題が${count}問あります！クリックで復習テスト開始！`;
+        } else {
+          reviewCountBadge.className = 'bg-gray-800 text-gray-400 px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold';
+          btnModeReview.title = `間違えた問題が10問以上になると復習テストが受けられます（現在: ${count}問）`;
+        }
+      }
+      if (histWrongCount) {
+        histWrongCount.textContent = `${count}問`;
+      }
+      if (wrongProblemsBadge) {
+        wrongProblemsBadge.textContent = `${count}問`;
+      }
+      if (btnStartReviewFromHistory) {
+        btnStartReviewFromHistory.disabled = (count < 10);
+      }
+    }
 
     /* ================================================================
        5. 問題フォーマット変換・生成
@@ -1214,7 +1515,7 @@
         if (clickedBtn) {
           clickedBtn.className = 'choice-opt-btn relative h-13 sm:h-14 px-3 rounded-xl bg-emerald-500 text-slate-950 border-2 border-emerald-400 shadow-xl transition-all flex items-center justify-center scale-105';
         }
-        showResult(true, "大正解！見事だ！", `正解: ${currentQuestion.answerText}`, false);
+        showResult(true, "大正解！見事だ！", `正解: ${currentQuestion.answerText}`, false, chosenOpt.text);
       } else {
         if (clickedBtn) {
           clickedBtn.className = 'choice-opt-btn relative h-13 sm:h-14 px-3 rounded-xl bg-rose-500/20 text-rose-400 border-2 border-rose-500/50 shadow-md transition-all flex items-center justify-center opacity-70 cursor-not-allowed';
@@ -1226,7 +1527,7 @@
             b.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/50');
           }
         });
-        showResult(false, "惜しい！ちがうぞ！", `あなたの選択: ${chosenOpt.text}  |  正しい答え: ${currentQuestion.answerText}`, false);
+        showResult(false, "惜しい！ちがうぞ！", `あなたの選択: ${chosenOpt.text}  |  正しい答え: ${currentQuestion.answerText}`, false, chosenOpt.text);
       }
     }
 
@@ -1235,6 +1536,27 @@
        ================================================================ */
     function rebuildActiveList() {
       currentActiveList = [];
+
+      // 復習テストモード時は「間違えた問題リスト」からのみ出題
+      if (appMode === 'review') {
+        if (wrongProblems.length === 0) {
+          currentActiveList = [];
+        } else {
+          // シャッフルして出題リスト作成
+          currentActiveList = wrongProblems.map(p => ({ ...p }));
+          for (let i = currentActiveList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [currentActiveList[i], currentActiveList[j]] = [currentActiveList[j], currentActiveList[i]];
+          }
+        }
+        selectedTypesCountBadge.textContent = '苦手復習';
+        if (currentActiveList.length === 0) {
+          problemProgressText.textContent = '0/0';
+        } else {
+          problemProgressText.textContent = `${currentProblemIndex + 1}/${currentActiveList.length}`;
+        }
+        return;
+      }
 
       selectedCategories.forEach(key => {
         if (key === 'legacy') {
@@ -1515,6 +1837,7 @@
       let feedbackDetail = "";
       let message = "";
       let isUnreducedFraction = false;
+      let userAnswerText = "";
       const correctAnswerStr = currentQuestion.answerText;
 
       if (selectedMode === 'integer') {
@@ -1524,6 +1847,7 @@
           totalAnswered--;
           return;
         }
+        userAnswerText = String(userVal);
 
         if (currentQuestion.isInteger && userVal === currentQuestion.correctInt) {
           isCorrect = true;
@@ -1546,6 +1870,7 @@
           totalAnswered--;
           return;
         }
+        userAnswerText = `${uNum}/${uDen}`;
 
         if (currentQuestion.isInteger) {
           if (uNum / uDen === currentQuestion.correctInt) {
@@ -1573,10 +1898,10 @@
         }
       }
 
-      showResult(isCorrect, message, feedbackDetail, isUnreducedFraction);
+      showResult(isCorrect, message, feedbackDetail, isUnreducedFraction, userAnswerText);
     }
 
-    function showResult(isCorrect, customMsg, detail, isUnreduced) {
+    function showResult(isCorrect, customMsg, detail, isUnreduced, userAnswerText = "") {
       if (autoNextTimer) {
         clearTimeout(autoNextTimer);
         autoNextTimer = null;
@@ -1586,6 +1911,9 @@
       sectionMultipleChoice.classList.add('hidden');
       sectionKeyboardInput.classList.add('hidden');
       resultFeedback.classList.remove('hidden');
+
+      // 解答履歴に記録
+      addAnswerHistory(currentQuestion, userAnswerText, isCorrect);
 
       if (isCorrect) {
         sounds.playCorrect();
@@ -1601,10 +1929,15 @@
           currentProblemIndex = (currentProblemIndex + 1) % currentActiveList.length;
         }
 
-        // テストモードの合格判定！
-        if (appMode === 'test') {
+        // テストモード / 復習テストモードの合格判定！
+        if (appMode === 'test' || appMode === 'review') {
           updateTestProgressUI();
           if (currentCombo >= targetConsecutiveStreak) {
+            // 復習テスト合格時: 間違えた問題リストをすべてクリア！
+            if (appMode === 'review') {
+              wrongProblems = [];
+              saveWrongProblems();
+            }
             setTimeout(() => {
               showPassModal();
             }, 300);
@@ -1621,6 +1954,10 @@
       } else {
         sounds.playWrong();
         currentCombo = 0;
+
+        // 不正解の問題を「間違えた問題リスト」に記録（練習中もテスト中も復習テスト中も記録）
+        addWrongProblem(currentQuestion, userAnswerText);
+
         resultIcon.textContent = isUnreduced ? '⚡' : '💥';
         resultTitle.textContent = customMsg;
         resultTitle.className = isUnreduced ? "text-base sm:text-lg font-black mb-1 text-yellow-400" : "text-base sm:text-lg font-black mb-1 text-rose-400";
@@ -1628,7 +1965,7 @@
         btnNextQuestion.textContent = "次の問題へ進む！ [Enter]";
         setTimeout(() => btnNextQuestion.focus(), 50);
 
-        if (appMode === 'test') {
+        if (appMode === 'test' || appMode === 'review') {
           updateTestProgressUI();
         }
       }
@@ -1651,6 +1988,8 @@
         btnOpenTypeSelectModal,
         btnModePractice,
         btnModeTest,
+        btnModeReview,
+        btnOpenHistoryModal,
         btnInputModeChoice,
         btnInputModeKeyboard,
         btnOrderRandom,
@@ -1702,28 +2041,70 @@
 
     function setAppMode(mode) {
       sounds.playSelect();
+
+      // 復習テストモード選択時の条件チェック（間違えた問題が10問以上）
+      if (mode === 'review') {
+        if (wrongProblems.length < 10) {
+          alert(`間違えた問題が10問以上になると復習テストが受けられます！\n（現在: ${wrongProblems.length}問）\nまずは練習やテストで修行を重ねましょう！`);
+          return;
+        }
+      }
+
       appMode = mode;
       currentCombo = 0;
       updateScoreBoard();
 
+      // タブボタンスタイルのリセットとアクティブ化
+      btnModePractice.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
+      btnModeTest.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
+      btnModeReview.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition flex items-center space-x-1 cursor-pointer';
+
       if (mode === 'test') {
         testState = 'ready'; // テスト開始前の準備画面
         btnModeTest.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-black transition bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow';
-        btnModePractice.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
+
+        if (testReadyTitle) {
+          testReadyTitle.innerHTML = '<span>🏆</span><span>テスト修行</span>';
+          testReadyTitle.className = 'text-xs sm:text-sm font-black text-yellow-400 flex items-center gap-1.5';
+        }
+        if (testTargetContainer) testTargetContainer.classList.remove('hidden');
+        if (reviewTargetNotice) reviewTargetNotice.classList.add('hidden');
+        if (btnTestModalOpen) btnTestModalOpen.classList.remove('hidden');
 
         if (testReadyBar) testReadyBar.classList.remove('hidden');
         if (testProgressBarContainer) testProgressBarContainer.classList.add('hidden');
         setTestControlsLocked(false);
+
+      } else if (mode === 'review') {
+        testState = 'ready'; // 復習テスト準備画面
+        btnModeReview.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-black transition bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow flex items-center space-x-1 cursor-pointer';
+
+        if (testReadyTitle) {
+          testReadyTitle.innerHTML = '<span>🔥</span><span>苦手克服・復習テスト</span>';
+          testReadyTitle.className = 'text-xs sm:text-sm font-black text-rose-400 flex items-center gap-1.5';
+        }
+        targetConsecutiveStreak = 10;
+        if (testTargetSelect) testTargetSelect.value = '10';
+
+        if (testTargetContainer) testTargetContainer.classList.add('hidden');
+        if (reviewTargetNotice) reviewTargetNotice.classList.remove('hidden');
+        if (btnTestModalOpen) btnTestModalOpen.classList.add('hidden');
+
+        if (testReadyBar) testReadyBar.classList.remove('hidden');
+        if (testProgressBarContainer) testProgressBarContainer.classList.add('hidden');
+        setTestControlsLocked(false);
+
       } else {
+        // practice
         testState = 'idle';
         btnModePractice.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-black transition bg-brand-orange text-slate-950 shadow';
-        btnModeTest.className = 'mode-tab-btn px-2.5 py-0.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white transition';
 
         if (testReadyBar) testReadyBar.classList.add('hidden');
         if (testProgressBarContainer) testProgressBarContainer.classList.add('hidden');
         setTestControlsLocked(false);
       }
 
+      rebuildActiveList();
       loadNewQuestion();
     }
 
@@ -1743,11 +2124,12 @@
       // テスト中は解答以外のコントロールを完全ロック！
       setTestControlsLocked(true);
 
+      rebuildActiveList();
       loadNewQuestion();
     }
 
     function updateTestProgressUI() {
-      if (appMode !== 'test') return;
+      if (appMode !== 'test' && appMode !== 'review') return;
       const streak = Math.min(currentCombo, targetConsecutiveStreak);
       const pct = Math.min(100, Math.round((streak / targetConsecutiveStreak) * 100));
       testStreakProgressText.textContent = `${streak} / ${targetConsecutiveStreak}問`;
@@ -1762,7 +2144,12 @@
       }
       passModal.classList.remove('hidden');
       passModalTargetNum.textContent = targetConsecutiveStreak;
-      passModalMessage.innerHTML = `見事 <span class="text-yellow-400 font-mono text-base sm:text-lg font-black">${targetConsecutiveStreak}</span> 問連続正解を達成！<br>分数のかけ算を完璧にマスターしたぞ！`;
+
+      if (appMode === 'review') {
+        passModalMessage.innerHTML = `見事 <span class="text-rose-400 font-mono text-base sm:text-lg font-black">10</span> 問連続正解を達成！<br><span class="text-emerald-400 font-black">間違えた問題リストをすべて克服し、クリアしました！🎉</span>`;
+      } else {
+        passModalMessage.innerHTML = `見事 <span class="text-yellow-400 font-mono text-base sm:text-lg font-black">${targetConsecutiveStreak}</span> 問連続正解を達成！<br>分数のかけ算・わり算を完璧にマスターしたぞ！`;
+      }
 
       // 紙吹雪エフェクト (canvas-confetti)
       if (typeof confetti === 'function') {
@@ -1794,11 +2181,173 @@
       currentCombo = 0;
       updateScoreBoard();
       updateTestProgressUI();
-      loadNewQuestion();
+      if (appMode === 'review') {
+        // 復習テスト合格後は練習モードへ自動復帰
+        setAppMode('practice');
+      } else {
+        loadNewQuestion();
+      }
+    }
+
+    /* ================================================================
+       11. 履歴モーダル ＆ 間違えた問題管理
+       ================================================================ */
+    function openHistoryModal() {
+      // 練習中・準備中はいつでも見れる（テスト本番中はsetTestControlsLockedでボタン無効）
+      sounds.playSelect();
+      renderHistoryModal();
+      historyModal.classList.remove('hidden');
+    }
+
+    function closeHistoryModal() {
+      sounds.playSelect();
+      historyModal.classList.add('hidden');
+    }
+
+    function renderHistoryModal() {
+      // サマリー指標
+      if (histLifetimeTotal) histLifetimeTotal.textContent = lifetimeStats.total;
+      const acc = lifetimeStats.total > 0 ? Math.round((lifetimeStats.correct / lifetimeStats.total) * 100) : 0;
+      if (histLifetimeAcc) histLifetimeAcc.textContent = `${acc}%`;
+      if (histLifetimeStreak) histLifetimeStreak.textContent = `${lifetimeStats.bestStreak}連撃`;
+      if (histWrongCount) histWrongCount.textContent = `${wrongProblems.length}問`;
+      if (wrongProblemsBadge) wrongProblemsBadge.textContent = `${wrongProblems.length}問`;
+
+      // 復習テストボタンの状態
+      if (btnStartReviewFromHistory) {
+        if (wrongProblems.length >= 10) {
+          btnStartReviewFromHistory.disabled = false;
+          btnStartReviewFromHistory.className = 'px-3 py-1 rounded-xl font-black text-xs transition shadow flex items-center space-x-1.5 cursor-pointer bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-400 hover:to-orange-400 text-white';
+          if (wrongHelpText) {
+            wrongHelpText.innerHTML = `🔥 <span class="text-rose-400 font-bold">間違えた問題が10問以上あります！</span> 復習テストに合格（10問連続正解）するとリストから消去されます。`;
+          }
+        } else {
+          btnStartReviewFromHistory.disabled = true;
+          btnStartReviewFromHistory.className = 'px-3 py-1 rounded-xl font-bold text-xs transition shadow flex items-center space-x-1.5 cursor-not-allowed bg-gray-800 text-gray-500 border border-gray-700 opacity-60';
+          if (wrongHelpText) {
+            wrongHelpText.innerHTML = `※間違えた問題が10個以上たまると復習テストが受けられます。<span class="text-yellow-400 font-bold">（あと ${10 - wrongProblems.length} 問）</span>`;
+          }
+        }
+      }
+
+      // 間違えた問題リストの描画
+      if (wrongProblemsList) {
+        if (wrongProblems.length === 0) {
+          wrongProblemsList.innerHTML = `
+            <div class="text-center py-6 text-xs text-gray-500">
+              <span>🎉 現在間違えた問題はありません！素晴らしい集中力です！</span>
+            </div>
+          `;
+        } else {
+          wrongProblemsList.innerHTML = wrongProblems.map((item, idx) => {
+            return `
+              <div class="flex items-center justify-between p-2 rounded-xl bg-[#14161f] border border-gray-800/90 hover:border-gray-700 text-xs transition">
+                <div class="flex items-center space-x-2.5 overflow-hidden">
+                  <span class="w-5 h-5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center font-mono font-bold text-[10px] shrink-0">
+                    ${idx + 1}
+                  </span>
+                  <span class="font-mono font-black text-sm text-white tracking-wide shrink-0">
+                    ${item.formulaText}
+                  </span>
+                  <span class="text-[10px] text-gray-400 px-1.5 py-0.5 rounded bg-gray-800 border border-gray-700 truncate max-w-[120px] sm:max-w-[180px]">
+                    ${item.categoryTitle}
+                  </span>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                  <span class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                    正解: ${item.answerText}
+                  </span>
+                  <span class="text-[10px] font-mono text-rose-400 font-bold">
+                    ミス: ${item.wrongCount || 1}回
+                  </span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // 直近解答履歴の描画
+      if (recentHistoryList) {
+        if (answerHistory.length === 0) {
+          recentHistoryList.innerHTML = `
+            <div class="text-center py-6 text-xs text-gray-500">
+              <span>まだ解答履歴がありません</span>
+            </div>
+          `;
+        } else {
+          recentHistoryList.innerHTML = answerHistory.map(item => {
+            const isCor = item.isCorrect;
+            const icon = isCor ? '⭕' : '❌';
+            const iconColor = isCor ? 'text-emerald-400' : 'text-rose-400';
+            let modeLabel = '🥋練習';
+            if (item.mode === 'test') modeLabel = '🏆テスト';
+            if (item.mode === 'review') modeLabel = '🔥復習';
+
+            return `
+              <div class="flex items-center justify-between p-2 rounded-xl bg-[#14161f] border border-gray-800 text-xs">
+                <div class="flex items-center space-x-2 overflow-hidden">
+                  <span class="${iconColor} text-xs font-bold shrink-0">${icon}</span>
+                  <span class="font-mono font-black text-xs text-white shrink-0">${item.formulaText}</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-gray-800 text-gray-400 border border-gray-700">${modeLabel}</span>
+                </div>
+                <div class="flex items-center space-x-2 text-[11px] font-mono shrink-0">
+                  <span class="text-gray-400">答: <span class="${isCor ? 'text-emerald-300 font-bold' : 'text-rose-300'}">${item.userAnswer}</span></span>
+                  ${!isCor ? `<span class="text-emerald-400 font-bold">[正: ${item.answerText}]</span>` : ''}
+                  <span class="text-[9px] text-gray-500">${item.timestamp}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    function clearAllHistory() {
+      if (!confirm("これまでの学習履歴と間違えた問題リストをすべて初期化しますか？")) {
+        return;
+      }
+      sounds.playSelect();
+      wrongProblems = [];
+      answerHistory = [];
+      lifetimeStats = { total: 0, correct: 0, bestStreak: 0 };
+      saveWrongProblems();
+      saveHistory();
+      saveLifetimeStats();
+      renderHistoryModal();
     }
 
     btnModePractice.addEventListener('click', () => setAppMode('practice'));
     btnModeTest.addEventListener('click', () => setAppMode('test'));
+    if (btnModeReview) {
+      btnModeReview.addEventListener('click', () => setAppMode('review'));
+    }
+
+    if (btnOpenHistoryModal) {
+      btnOpenHistoryModal.addEventListener('click', openHistoryModal);
+    }
+    if (btnCloseHistoryModal) {
+      btnCloseHistoryModal.addEventListener('click', closeHistoryModal);
+    }
+    if (btnCloseHistoryFooter) {
+      btnCloseHistoryFooter.addEventListener('click', closeHistoryModal);
+    }
+    if (btnClearAllHistory) {
+      btnClearAllHistory.addEventListener('click', clearAllHistory);
+    }
+    if (btnStartReviewFromHistory) {
+      btnStartReviewFromHistory.addEventListener('click', () => {
+        closeHistoryModal();
+        setAppMode('review');
+      });
+    }
+    if (historyModal) {
+      historyModal.addEventListener('click', (e) => {
+        if (e.target === historyModal) {
+          closeHistoryModal();
+        }
+      });
+    }
     if (testTargetSelect) {
       testTargetSelect.addEventListener('change', (e) => {
         sounds.playSelect();
@@ -2045,6 +2594,14 @@
         return;
       }
 
+      // 履歴モーダル表示中のEsc
+      if (historyModal && !historyModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') {
+          closeHistoryModal();
+        }
+        return;
+      }
+
       // Enterキー: 結果画面なら次へ、キーボード入力中なら解答
       if (e.key === 'Enter') {
         if (isWaitingNext) {
@@ -2113,6 +2670,7 @@
 
     // 起動時の初期化
     window.onload = function() {
+      loadAllStorageData();
       updateMultConversionUI();
       rebuildActiveList();
       loadNewQuestion();
