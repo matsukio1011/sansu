@@ -1,0 +1,629 @@
+{
+    "title":  "0がついた割り算（暗算）",
+    "sections":  [
+                     {
+                         "id":  1,
+                         "title":  "大問1：何十でわる暗算",
+                         "instruction":  "次の計算を暗算でしなさい。",
+                         "type":  "tens",
+                         "problems":  [
+                                          {
+                                              "id":  "1-1",
+                                              "number":  1,
+                                              "dividend":  80,
+                                              "divisor":  20,
+                                              "answer":  4,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "8 ÷ 2",
+                                              "expression":  "80 ÷ 20"
+                                          },
+                                          {
+                                              "id":  "1-2",
+                                              "number":  2,
+                                              "dividend":  810,
+                                              "divisor":  90,
+                                              "answer":  9,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "81 ÷ 9",
+                                              "expression":  "810 ÷ 90"
+                                          },
+                                          {
+                                              "id":  "1-3",
+                                              "number":  3,
+                                              "dividend":  720,
+                                              "divisor":  80,
+                                              "answer":  9,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "72 ÷ 8",
+                                              "expression":  "720 ÷ 80"
+                                          },
+                                          {
+                                              "id":  "1-4",
+                                              "number":  4,
+                                              "dividend":  40,
+                                              "divisor":  20,
+                                              "answer":  2,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "4 ÷ 2",
+                                              "expression":  "40 ÷ 20"
+                                          },
+                                          {
+                                              "id":  "1-5",
+                                              "number":  5,
+                                              "dividend":  490,
+                                              "divisor":  70,
+                                              "answer":  7,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "49 ÷ 7",
+                                              "expression":  "490 ÷ 70"
+                                          },
+                                          {
+                                              "id":  "1-6",
+                                              "number":  6,
+                                              "dividend":  150,
+                                              "divisor":  30,
+                                              "answer":  5,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "15 ÷ 3",
+                                              "expression":  "150 ÷ 30"
+                                          },
+                                          {
+                                              "id":  "1-7",
+                                              "number":  7,
+                                              "dividend":  240,
+                                              "divisor":  60,
+                                              "answer":  4,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "24 ÷ 6",
+                                              "expression":  "240 ÷ 60"
+                                          },
+                                          {
+                                              "id":  "1-8",
+                                              "number":  8,
+                                              "dividend":  360,
+                                              "divisor":  90,
+                                              "answer":  4,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "36 ÷ 9",
+                                              "expression":  "360 ÷ 90"
+                                          },
+                                          {
+                                              "id":  "1-9",
+                                              "number":  9,
+                                              "dividend":  120,
+                                              "divisor":  20,
+                                              "answer":  6,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "12 ÷ 2",
+                                              "expression":  "120 ÷ 20"
+                                          },
+                                          {
+                                              "id":  "1-10",
+                                              "number":  10,
+                                              "dividend":  210,
+                                              "divisor":  70,
+                                              "answer":  3,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "21 ÷ 7",
+                                              "expression":  "210 ÷ 70"
+                                          },
+                                          {
+                                              "id":  "1-11",
+                                              "number":  11,
+                                              "dividend":  180,
+                                              "divisor":  90,
+                                              "answer":  2,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "18 ÷ 9",
+                                              "expression":  "180 ÷ 90"
+                                          },
+                                          {
+                                              "id":  "1-12",
+                                              "number":  12,
+                                              "dividend":  350,
+                                              "divisor":  70,
+                                              "answer":  5,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "35 ÷ 7",
+                                              "expression":  "350 ÷ 70"
+                                          },
+                                          {
+                                              "id":  "1-13",
+                                              "number":  13,
+                                              "dividend":  60,
+                                              "divisor":  20,
+                                              "answer":  3,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "6 ÷ 2",
+                                              "expression":  "60 ÷ 20"
+                                          },
+                                          {
+                                              "id":  "1-14",
+                                              "number":  14,
+                                              "dividend":  560,
+                                              "divisor":  70,
+                                              "answer":  8,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "56 ÷ 7",
+                                              "expression":  "560 ÷ 70"
+                                          },
+                                          {
+                                              "id":  "1-15",
+                                              "number":  15,
+                                              "dividend":  120,
+                                              "divisor":  60,
+                                              "answer":  2,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "12 ÷ 6",
+                                              "expression":  "120 ÷ 60"
+                                          },
+                                          {
+                                              "id":  "1-16",
+                                              "number":  16,
+                                              "dividend":  400,
+                                              "divisor":  50,
+                                              "answer":  8,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "40 ÷ 5",
+                                              "expression":  "400 ÷ 50"
+                                          },
+                                          {
+                                              "id":  "1-17",
+                                              "number":  17,
+                                              "dividend":  450,
+                                              "divisor":  90,
+                                              "answer":  5,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "45 ÷ 9",
+                                              "expression":  "450 ÷ 90"
+                                          },
+                                          {
+                                              "id":  "1-18",
+                                              "number":  18,
+                                              "dividend":  100,
+                                              "divisor":  50,
+                                              "answer":  2,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "10 ÷ 5",
+                                              "expression":  "100 ÷ 50"
+                                          },
+                                          {
+                                              "id":  "1-19",
+                                              "number":  19,
+                                              "dividend":  560,
+                                              "divisor":  80,
+                                              "answer":  7,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "56 ÷ 8",
+                                              "expression":  "560 ÷ 80"
+                                          },
+                                          {
+                                              "id":  "1-20",
+                                              "number":  20,
+                                              "dividend":  90,
+                                              "divisor":  30,
+                                              "answer":  3,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "9 ÷ 3",
+                                              "expression":  "90 ÷ 30"
+                                          }
+                                      ]
+                     },
+                     {
+                         "id":  2,
+                         "title":  "大問2：何百でわる暗算",
+                         "instruction":  "次の計算を暗算でしなさい。",
+                         "type":  "hundreds",
+                         "problems":  [
+                                          {
+                                              "id":  "2-1",
+                                              "number":  1,
+                                              "dividend":  5600,
+                                              "divisor":  800,
+                                              "answer":  7,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "56 ÷ 8",
+                                              "expression":  "5600 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "2-2",
+                                              "number":  2,
+                                              "dividend":  6300,
+                                              "divisor":  700,
+                                              "answer":  9,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "63 ÷ 7",
+                                              "expression":  "6300 ÷ 700"
+                                          },
+                                          {
+                                              "id":  "2-3",
+                                              "number":  3,
+                                              "dividend":  1000,
+                                              "divisor":  200,
+                                              "answer":  5,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "10 ÷ 2",
+                                              "expression":  "1000 ÷ 200"
+                                          },
+                                          {
+                                              "id":  "2-4",
+                                              "number":  4,
+                                              "dividend":  7200,
+                                              "divisor":  900,
+                                              "answer":  8,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "72 ÷ 9",
+                                              "expression":  "7200 ÷ 900"
+                                          },
+                                          {
+                                              "id":  "2-5",
+                                              "number":  5,
+                                              "dividend":  400,
+                                              "divisor":  200,
+                                              "answer":  2,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "4 ÷ 2",
+                                              "expression":  "400 ÷ 200"
+                                          },
+                                          {
+                                              "id":  "2-6",
+                                              "number":  6,
+                                              "dividend":  1800,
+                                              "divisor":  300,
+                                              "answer":  6,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "18 ÷ 3",
+                                              "expression":  "1800 ÷ 300"
+                                          },
+                                          {
+                                              "id":  "2-7",
+                                              "number":  7,
+                                              "dividend":  7200,
+                                              "divisor":  800,
+                                              "answer":  9,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "72 ÷ 8",
+                                              "expression":  "7200 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "2-8",
+                                              "number":  8,
+                                              "dividend":  2800,
+                                              "divisor":  700,
+                                              "answer":  4,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "28 ÷ 7",
+                                              "expression":  "2800 ÷ 700"
+                                          },
+                                          {
+                                              "id":  "2-9",
+                                              "number":  9,
+                                              "dividend":  6400,
+                                              "divisor":  800,
+                                              "answer":  8,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "64 ÷ 8",
+                                              "expression":  "6400 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "2-10",
+                                              "number":  10,
+                                              "dividend":  3200,
+                                              "divisor":  400,
+                                              "answer":  8,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "32 ÷ 4",
+                                              "expression":  "3200 ÷ 400"
+                                          },
+                                          {
+                                              "id":  "2-11",
+                                              "number":  11,
+                                              "dividend":  600,
+                                              "divisor":  200,
+                                              "answer":  3,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "6 ÷ 2",
+                                              "expression":  "600 ÷ 200"
+                                          },
+                                          {
+                                              "id":  "2-12",
+                                              "number":  12,
+                                              "dividend":  1800,
+                                              "divisor":  600,
+                                              "answer":  3,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "18 ÷ 6",
+                                              "expression":  "1800 ÷ 600"
+                                          },
+                                          {
+                                              "id":  "2-13",
+                                              "number":  13,
+                                              "dividend":  5400,
+                                              "divisor":  600,
+                                              "answer":  9,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "54 ÷ 6",
+                                              "expression":  "5400 ÷ 600"
+                                          },
+                                          {
+                                              "id":  "2-14",
+                                              "number":  14,
+                                              "dividend":  2700,
+                                              "divisor":  900,
+                                              "answer":  3,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "27 ÷ 9",
+                                              "expression":  "2700 ÷ 900"
+                                          },
+                                          {
+                                              "id":  "2-15",
+                                              "number":  15,
+                                              "dividend":  4900,
+                                              "divisor":  700,
+                                              "answer":  7,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "49 ÷ 7",
+                                              "expression":  "4900 ÷ 700"
+                                          },
+                                          {
+                                              "id":  "2-16",
+                                              "number":  16,
+                                              "dividend":  3600,
+                                              "divisor":  900,
+                                              "answer":  4,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "36 ÷ 9",
+                                              "expression":  "3600 ÷ 900"
+                                          },
+                                          {
+                                              "id":  "2-17",
+                                              "number":  17,
+                                              "dividend":  3500,
+                                              "divisor":  700,
+                                              "answer":  5,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "35 ÷ 7",
+                                              "expression":  "3500 ÷ 700"
+                                          },
+                                          {
+                                              "id":  "2-18",
+                                              "number":  18,
+                                              "dividend":  800,
+                                              "divisor":  400,
+                                              "answer":  2,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "8 ÷ 4",
+                                              "expression":  "800 ÷ 400"
+                                          },
+                                          {
+                                              "id":  "2-19",
+                                              "number":  19,
+                                              "dividend":  4200,
+                                              "divisor":  700,
+                                              "answer":  6,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "42 ÷ 7",
+                                              "expression":  "4200 ÷ 700"
+                                          },
+                                          {
+                                              "id":  "2-20",
+                                              "number":  20,
+                                              "dividend":  2400,
+                                              "divisor":  300,
+                                              "answer":  8,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "24 ÷ 3",
+                                              "expression":  "2400 ÷ 300"
+                                          }
+                                      ]
+                     },
+                     {
+                         "id":  3,
+                         "title":  "大問3：何十・何百でわる暗算（ミックス）",
+                         "instruction":  "次の計算を暗算でしなさい。",
+                         "type":  "mixed",
+                         "problems":  [
+                                          {
+                                              "id":  "3-1",
+                                              "number":  1,
+                                              "dividend":  360,
+                                              "divisor":  60,
+                                              "answer":  6,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "36 ÷ 6",
+                                              "expression":  "360 ÷ 60"
+                                          },
+                                          {
+                                              "id":  "3-2",
+                                              "number":  2,
+                                              "dividend":  1600,
+                                              "divisor":  800,
+                                              "answer":  2,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "16 ÷ 8",
+                                              "expression":  "1600 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "3-3",
+                                              "number":  3,
+                                              "dividend":  350,
+                                              "divisor":  50,
+                                              "answer":  7,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "35 ÷ 5",
+                                              "expression":  "350 ÷ 50"
+                                          },
+                                          {
+                                              "id":  "3-4",
+                                              "number":  4,
+                                              "dividend":  1200,
+                                              "divisor":  300,
+                                              "answer":  4,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "12 ÷ 3",
+                                              "expression":  "1200 ÷ 300"
+                                          },
+                                          {
+                                              "id":  "3-5",
+                                              "number":  5,
+                                              "dividend":  640,
+                                              "divisor":  80,
+                                              "answer":  8,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "64 ÷ 8",
+                                              "expression":  "640 ÷ 80"
+                                          },
+                                          {
+                                              "id":  "3-6",
+                                              "number":  6,
+                                              "dividend":  4000,
+                                              "divisor":  800,
+                                              "answer":  5,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "40 ÷ 8",
+                                              "expression":  "4000 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "3-7",
+                                              "number":  7,
+                                              "dividend":  120,
+                                              "divisor":  30,
+                                              "answer":  4,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "12 ÷ 3",
+                                              "expression":  "120 ÷ 30"
+                                          },
+                                          {
+                                              "id":  "3-8",
+                                              "number":  8,
+                                              "dividend":  1200,
+                                              "divisor":  400,
+                                              "answer":  3,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "12 ÷ 4",
+                                              "expression":  "1200 ÷ 400"
+                                          },
+                                          {
+                                              "id":  "3-9",
+                                              "number":  9,
+                                              "dividend":  200,
+                                              "divisor":  50,
+                                              "answer":  4,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "20 ÷ 5",
+                                              "expression":  "200 ÷ 50"
+                                          },
+                                          {
+                                              "id":  "3-10",
+                                              "number":  10,
+                                              "dividend":  2400,
+                                              "divisor":  400,
+                                              "answer":  6,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "24 ÷ 4",
+                                              "expression":  "2400 ÷ 400"
+                                          },
+                                          {
+                                              "id":  "3-11",
+                                              "number":  11,
+                                              "dividend":  450,
+                                              "divisor":  50,
+                                              "answer":  9,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "45 ÷ 5",
+                                              "expression":  "450 ÷ 50"
+                                          },
+                                          {
+                                              "id":  "3-12",
+                                              "number":  12,
+                                              "dividend":  2700,
+                                              "divisor":  300,
+                                              "answer":  9,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "27 ÷ 3",
+                                              "expression":  "2700 ÷ 300"
+                                          },
+                                          {
+                                              "id":  "3-13",
+                                              "number":  13,
+                                              "dividend":  160,
+                                              "divisor":  80,
+                                              "answer":  2,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "16 ÷ 8",
+                                              "expression":  "160 ÷ 80"
+                                          },
+                                          {
+                                              "id":  "3-14",
+                                              "number":  14,
+                                              "dividend":  1200,
+                                              "divisor":  200,
+                                              "answer":  6,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "12 ÷ 2",
+                                              "expression":  "1200 ÷ 200"
+                                          },
+                                          {
+                                              "id":  "3-15",
+                                              "number":  15,
+                                              "dividend":  360,
+                                              "divisor":  40,
+                                              "answer":  9,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "36 ÷ 4",
+                                              "expression":  "360 ÷ 40"
+                                          },
+                                          {
+                                              "id":  "3-16",
+                                              "number":  16,
+                                              "dividend":  1600,
+                                              "divisor":  400,
+                                              "answer":  4,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "16 ÷ 4",
+                                              "expression":  "1600 ÷ 400"
+                                          },
+                                          {
+                                              "id":  "3-17",
+                                              "number":  17,
+                                              "dividend":  100,
+                                              "divisor":  20,
+                                              "answer":  5,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "10 ÷ 2",
+                                              "expression":  "100 ÷ 20"
+                                          },
+                                          {
+                                              "id":  "3-18",
+                                              "number":  18,
+                                              "dividend":  2400,
+                                              "divisor":  800,
+                                              "answer":  3,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "24 ÷ 8",
+                                              "expression":  "2400 ÷ 800"
+                                          },
+                                          {
+                                              "id":  "3-19",
+                                              "number":  19,
+                                              "dividend":  240,
+                                              "divisor":  30,
+                                              "answer":  8,
+                                              "zerosToCancel":  1,
+                                              "baseExpression":  "24 ÷ 3",
+                                              "expression":  "240 ÷ 30"
+                                          },
+                                          {
+                                              "id":  "3-20",
+                                              "number":  20,
+                                              "dividend":  1800,
+                                              "divisor":  900,
+                                              "answer":  2,
+                                              "zerosToCancel":  2,
+                                              "baseExpression":  "18 ÷ 9",
+                                              "expression":  "1800 ÷ 900"
+                                          }
+                                      ]
+                     }
+                 ]
+}
