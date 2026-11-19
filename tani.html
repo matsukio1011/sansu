@@ -1,0 +1,2969 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>単位変換マスター（6択トレーニング）</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --surface-hover: #eff6ff;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --border-light: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: #dbeafe;
+      --next-bg: #059669;
+      --next-hover: #047857;
+      --correct-bg: #dcfce7;
+      --correct-border: #22c55e;
+      --correct-text: #14532d;
+      --wrong-bg: #fee2e2;
+      --wrong-border: #ef4444;
+      --wrong-text: #7f1d1d;
+      --badge-level-bg: #e0e7ff;
+      --badge-level-text: #3730a3;
+      --badge-cat-bg: #dcfce7;
+      --badge-cat-text: #166534;
+      --badge-sub-bg: #fef3c7;
+      --badge-sub-text: #92400e;
+      --shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+      --key-bg: #e2e8f0;
+      --key-text: #334155;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1120;
+      --surface: #1e293b;
+      --surface-alt: #0f172a;
+      --surface-hover: #1e3a5f;
+      --text: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-light: #293548;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --accent-soft: #1e3a8a;
+      --next-bg: #10b981;
+      --next-hover: #059669;
+      --correct-bg: #064e3b;
+      --correct-border: #10b981;
+      --correct-text: #a7f3d0;
+      --wrong-bg: #7f1d1d;
+      --wrong-border: #f87171;
+      --wrong-text: #fecaca;
+      --badge-level-bg: #312e81;
+      --badge-level-text: #c7d2fe;
+      --badge-cat-bg: #065f46;
+      --badge-cat-text: #a7f3d0;
+      --badge-sub-bg: #78350f;
+      --badge-sub-text: #fde68a;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --key-bg: #334155;
+      --key-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      gap: 14px;
+    }
+
+    /* ヘッダーバー */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 10px 18px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: nowrap;
+      position: relative;
+    }
+
+    .menu-wrap {
+      position: relative;
+    }
+
+    .menu-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .menu-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .menu-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 320px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.2);
+      z-index: 900;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .menu-dropdown.is-open {
+      display: flex;
+    }
+
+    .menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .menu-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .menu-dropdown select,
+    .menu-dropdown .tool-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .current-mode-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    select {
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .stats {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      background: var(--surface-alt);
+      padding: 6px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+    }
+
+    .stats strong {
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .icon-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .tool-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .tool-btn:active {
+      transform: scale(0.97);
+    }
+
+    .tool-btn:disabled,
+    .menu-btn:disabled,
+    .hint-toggle-inline:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .bolt-secret {
+      cursor: default;
+      user-select: none;
+    }
+
+    .test-badge {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #dc2626;
+      color: #ffffff;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+    }
+
+    .test-badge.is-active {
+      display: inline-flex;
+    }
+
+    .test-badge.is-review {
+      background: #ea580c;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
+    }
+
+    /* メイン3カラム（左：電卓、中央：問題＋解説、右：6択） */
+    .main {
+      display: grid;
+      grid-template-columns: 290px 1.05fr 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* 左カラム：電卓 */
+    .calc-pane {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .calc-lock-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(4px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      padding: 20px;
+      color: #ffffff;
+      font-weight: 800;
+      z-index: 10;
+    }
+
+    .calc-lock-overlay.is-active {
+      display: flex;
+    }
+
+    /* テスト設定・結果モーダル用 */
+    .test-modal-card {
+      max-width: 460px;
+    }
+
+    .test-form {
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .test-radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .test-radio-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .test-radio-label:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    [data-theme="dark"] .test-radio-label:has(input:checked) {
+      color: #93c5fd;
+    }
+
+    .test-start-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .test-start-btn:hover {
+      background: #b91c1c;
+    }
+
+    .calc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .calc-screen {
+      background: var(--surface-alt);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 82px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .calc-expr {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      min-height: 1.2em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .calc-display {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin-top: 2px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .calc-btn {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.12s, border-color 0.12s, transform 0.08s;
+      user-select: none;
+    }
+
+    .calc-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .calc-btn:active {
+      transform: scale(0.95);
+    }
+
+    .calc-btn.op {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: transparent;
+      font-size: 1.25rem;
+    }
+
+    [data-theme="dark"] .calc-btn.op {
+      color: #93c5fd;
+    }
+
+    .calc-btn.clear {
+      background: var(--wrong-bg);
+      color: var(--wrong-text);
+      border-color: transparent;
+    }
+
+    .calc-btn.eq {
+      grid-row: span 2;
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+      font-size: 1.35rem;
+    }
+
+    .calc-btn.eq:hover {
+      background: var(--accent-hover);
+    }
+
+    /* 中央カラム：問題＋解説 */
+    .center-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1.15;
+      min-height: 0;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .badge-level { background: var(--badge-level-bg); color: var(--badge-level-text); }
+    .badge-cat { background: var(--badge-cat-bg); color: var(--badge-cat-text); }
+    .badge-sub { background: var(--badge-sub-bg); color: var(--badge-sub-text); }
+
+    .context-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .question-text {
+      font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+      font-weight: 800;
+      text-align: center;
+      color: var(--text);
+      background: var(--surface-alt);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 20px 16px;
+      letter-spacing: 0.02em;
+    }
+
+    /* 解説カード（常に高さを確保してガタつき・スクロールを防ぐ） */
+    .feedback-card {
+      position: relative;
+      background: var(--surface);
+      border: 1.5px solid var(--border-light);
+      border-radius: 16px;
+      padding: 16px 22px;
+      box-shadow: var(--shadow);
+      flex: 0.85;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .hint-toggle-inline {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s, opacity 0.15s;
+      z-index: 2;
+    }
+
+    .hint-toggle-inline:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .hint-toggle-inline.is-off {
+      opacity: 0.65;
+    }
+
+    .feedback-card.is-correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+      color: var(--correct-text);
+    }
+
+    .feedback-card.is-wrong {
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+      color: var(--wrong-text);
+    }
+
+    .feedback-idle {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hint-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hint-chip {
+      background: var(--surface-alt);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hint-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .feedback-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-answer {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feedback-exp {
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .note-bar {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* 右カラム：6択グリッド＋次へボタン */
+    .right-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .choice-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.1s, border-color 0.15s, background-color 0.15s, opacity 0.15s;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .choice-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+    }
+
+    .choice-key {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--key-bg);
+      color: var(--key-text);
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .choice-btn.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+      color: var(--correct-text);
+    }
+
+    .choice-btn.correct .choice-key {
+      background: var(--correct-border);
+      color: #ffffff;
+    }
+
+    .choice-btn.wrong {
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+      color: var(--wrong-text);
+    }
+
+    .choice-btn.wrong .choice-key {
+      background: var(--wrong-border);
+      color: #ffffff;
+    }
+
+    .choice-btn.dimmed {
+      opacity: 0.45;
+    }
+
+    .next-btn {
+      height: 54px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--next-bg);
+      color: #ffffff;
+      box-shadow: var(--shadow);
+      transition: background-color 0.15s, opacity 0.15s, transform 0.1s;
+    }
+
+    .next-btn:hover:not(:disabled) {
+      background: var(--next-hover);
+    }
+
+    .next-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .next-btn:disabled {
+      background: var(--border);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.7;
+    }
+
+    sup {
+      font-size: 0.72em;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .tool-btn.is-off {
+      opacity: 0.65;
+    }
+
+    /* 履歴モーダル */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .modal-overlay.is-open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface-alt);
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface);
+    }
+
+    .tab-btn {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .modal-body {
+      padding: 14px 20px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .history-empty {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px 16px;
+      font-size: 0.95rem;
+    }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: var(--surface-alt);
+    }
+
+    .history-item.is-wrong {
+      border-color: var(--wrong-border);
+      background: var(--wrong-bg);
+      color: var(--wrong-text);
+    }
+
+    .history-mark {
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .history-q {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .history-meta {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .history-ans {
+      text-align: right;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    /* 指数解説モーダル */
+    .guide-section {
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .guide-section h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .guide-section p,
+    .guide-section li {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .guide-section ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .guide-example {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .guide-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .guide-table th,
+    .guide-table td {
+      border: 1px solid var(--border-light);
+      padding: 7px 10px;
+      text-align: left;
+    }
+
+    .guide-table th {
+      background: var(--surface);
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <div class="menu-wrap" id="menuWrap">
+          <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-expanded="false" aria-label="設定メニュー">☰ メニュー</button>
+          <div class="menu-dropdown" id="menuDropdown">
+            <div class="menu-group">
+              <div class="menu-label">コース選択</div>
+              <select id="levelSelect" onchange="nextProblem(true); closeMenu();" aria-label="レベル選択">
+                <option value="elementary">小学校レベル（算数・理科）</option>
+                <option value="junior">中学校レベル（数学・理科）</option>
+                <option value="high">高校生レベル（物・化・生・地）</option>
+                <option value="space">宇宙コース（年・光年マスター）</option>
+                <option value="dbz">🐉 ドラゴンボールコース（修行・宇宙・バトル）</option>
+              </select>
+            </div>
+            <div class="menu-group">
+              <div class="menu-label">ジャンル選択</div>
+              <select id="categorySelect" onchange="nextProblem(); closeMenu();" aria-label="ジャンル選択">
+                <option value="all">ジャンル：すべて</option>
+                <option value="time">時間（秒・分・時間・日・年）</option>
+                <option value="length">長さ（mm・cm・m・km・光年）</option>
+                <option value="speed">速さ（秒速・分速・時速）</option>
+                <option value="weight">重さ（mg・g・kg・t）</option>
+                <option value="volume">かさ・体積（mL・dL・L・m³）</option>
+                <option value="area">面積（cm²・m²・a・ha・km²）</option>
+              </select>
+            </div>
+            <div class="menu-group">
+              <div class="menu-label">サウンド</div>
+              <button class="tool-btn" id="soundBtn" onclick="toggleSound()" title="効果音ON/OFF切り替え">🔊 音ON</button>
+            </div>
+            <div class="menu-group">
+              <div class="menu-label">チャレンジ</div>
+              <button class="tool-btn" id="testMenuBtn" onclick="openTestModal()" style="border-color:#dc2626; color:#dc2626;">📝 テストモード</button>
+            </div>
+            <div class="menu-group">
+              <div class="menu-label">学習ガイド</div>
+              <button class="tool-btn" id="guideMenuBtn" onclick="openGuide()">📘 指数（10ⁿ）の解説</button>
+            </div>
+          </div>
+        </div>
+        <div class="title"><span id="boltSecret" class="bolt-secret" onclick="onBoltClick()">⚡</span> 単位変換マスター（6択）</div>
+        <span class="current-mode-pill" id="currentModePill">小学校 ・ すべて</span>
+        <span class="test-badge" id="testBadge">🔥 テスト中：連続 0 / 10</span>
+      </div>
+
+      <div class="header-right">
+        <div class="stats">
+          <span>正解: <strong id="score">0</strong> / <span id="total">0</span></span>
+          <span>連続: <strong id="streak">0</strong> 回</span>
+          <span>間違い: <strong id="wrongCount">0</strong> / 10</span>
+        </div>
+        <div class="icon-btns">
+          <button class="tool-btn" id="historyBtn" onclick="openHistory()" title="解答履歴を見る">📜 履歴 (0)</button>
+          <button class="tool-btn" id="themeBtn" onclick="toggleTheme()" title="ダークモード切り替え">🌙 ダーク</button>
+          <button class="tool-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="全画面表示切り替え">⛶ 全画面</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="calc-pane" aria-label="計算用電卓">
+        <div class="calc-lock-overlay" id="calcLockOverlay">
+          <div style="font-size:2rem;">🚫</div>
+          <div>テストモード中</div>
+          <div style="font-size:0.85rem; font-weight:600; opacity:0.85;">電卓は使用できません</div>
+        </div>
+        <div class="calc-header">
+          <span>🧮 計算用電卓</span>
+          <span style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">メモ代わりにどうぞ</span>
+        </div>
+        <div class="calc-screen">
+          <div class="calc-expr" id="calcExpr"></div>
+          <div class="calc-display" id="calcDisplay">0</div>
+        </div>
+        <div class="calc-grid">
+          <button class="calc-btn clear" onclick="calcClear()">C</button>
+          <button class="calc-btn" onclick="calcBackspace()">⌫</button>
+          <button class="calc-btn op" onclick="calcOp('/')">÷</button>
+          <button class="calc-btn op" onclick="calcOp('*')">×</button>
+
+          <button class="calc-btn" onclick="calcDigit('7')">7</button>
+          <button class="calc-btn" onclick="calcDigit('8')">8</button>
+          <button class="calc-btn" onclick="calcDigit('9')">9</button>
+          <button class="calc-btn op" onclick="calcOp('-')">−</button>
+
+          <button class="calc-btn" onclick="calcDigit('4')">4</button>
+          <button class="calc-btn" onclick="calcDigit('5')">5</button>
+          <button class="calc-btn" onclick="calcDigit('6')">6</button>
+          <button class="calc-btn op" onclick="calcOp('+')">＋</button>
+
+          <button class="calc-btn" onclick="calcDigit('1')">1</button>
+          <button class="calc-btn" onclick="calcDigit('2')">2</button>
+          <button class="calc-btn" onclick="calcDigit('3')">3</button>
+          <button class="calc-btn eq" onclick="calcEqual()">＝</button>
+
+          <button class="calc-btn" onclick="calcDigit('0')">0</button>
+          <button class="calc-btn" onclick="calcDigit('00')">00</button>
+          <button class="calc-btn" onclick="calcDot()">.</button>
+        </div>
+      </aside>
+
+      <section class="center-pane">
+        <div class="question-card">
+          <div class="badges">
+            <span class="badge badge-level" id="badgeLevel">小学校</span>
+            <span class="badge badge-cat" id="badgeCat">時間</span>
+            <span class="badge badge-sub" id="badgeSub">算数</span>
+          </div>
+          <div class="context-text" id="contextText">問題を読み込み中...</div>
+          <div class="question-text" id="questionText">---</div>
+        </div>
+
+        <div class="feedback-card" id="feedbackCard">
+          <button class="hint-toggle-inline" id="hintBtn" onclick="toggleHint()" title="ヒントの表示/非表示切り替え">💡 ヒントON</button>
+          <div id="feedbackBody"></div>
+        </div>
+
+        <div class="note-bar">
+          <strong>【基準ルール】</strong> 1年 ＝ 365日（31,536,000秒） / 1光年 ＝ 9.46 × 10<sup>15</sup> m（9.46 × 10<sup>12</sup> km）として計算しています。
+        </div>
+      </section>
+
+      <section class="right-pane">
+        <div class="choices-grid" id="choicesGrid"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextProblem()" disabled>次の問題へ ➔（Enter）</button>
+      </section>
+    </main>
+  </div>
+
+  <!-- 解答履歴モーダル -->
+  <div class="modal-overlay" id="historyModal" onclick="if(event.target===this) closeHistory()">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="解答履歴">
+      <div class="modal-header">
+        <div class="modal-title">📜 解答履歴 <span id="historySummary" style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"></span></div>
+        <div class="modal-actions">
+          <button class="tool-btn" onclick="clearHistory()">🗑️ 履歴クリア</button>
+          <button class="tool-btn" onclick="closeHistory()">✕ 閉じる</button>
+        </div>
+      </div>
+      <div class="filter-tabs">
+        <button class="tab-btn active" id="tabAll" onclick="setHistoryFilter('all')">すべて</button>
+        <button class="tab-btn" id="tabWrong" onclick="setHistoryFilter('wrong')">間違いのみ</button>
+        <button class="tab-btn" id="tabCorrect" onclick="setHistoryFilter('correct')">正解のみ</button>
+      </div>
+      <div class="modal-body" id="historyBody"></div>
+    </div>
+  </div>
+
+  <!-- テストモード設定モーダル -->
+  <div class="modal-overlay" id="testModal" onclick="if(event.target===this) closeTestModal()">
+    <div class="modal-card test-modal-card" role="dialog" aria-modal="true" aria-label="テストモード設定">
+      <div class="modal-header">
+        <div class="modal-title">📝 テストモード設定</div>
+        <button class="tool-btn" onclick="closeTestModal()">✕ 閉じる</button>
+      </div>
+      <div class="test-form">
+        <div class="menu-group">
+          <div class="menu-label">コース選択</div>
+          <select id="testLevelSelect">
+            <option value="elementary">小学校レベル（算数・理科）</option>
+            <option value="junior">中学校レベル（数学・理科）</option>
+            <option value="high">高校生レベル（物・化・生・地）</option>
+            <option value="space">宇宙コース（年・光年マスター）</option>
+            <option value="dbz">🐉 ドラゴンボールコース（修行・宇宙・バトル）</option>
+          </select>
+        </div>
+        <div class="menu-group">
+          <div class="menu-label">ジャンル選択</div>
+          <select id="testCatSelect">
+            <option value="all">ジャンル：すべて</option>
+            <option value="time">時間（秒・分・時間・日・年）</option>
+            <option value="length">長さ（mm・cm・m・km・光年）</option>
+            <option value="speed">速さ（秒速・分速・時速）</option>
+            <option value="weight">重さ（mg・g・kg・t）</option>
+            <option value="volume">かさ・体積（mL・dL・L・m³）</option>
+            <option value="area">面積（cm²・m²・a・ha・km²）</option>
+          </select>
+        </div>
+        <div class="menu-group">
+          <div class="menu-label">電卓の使用</div>
+          <div class="test-radio-group">
+            <label class="test-radio-label"><input type="radio" name="testCalc" value="use" checked> 🧮 電卓を使用する</label>
+            <label class="test-radio-label"><input type="radio" name="testCalc" value="nouse"> 🚫 使用しない</label>
+          </div>
+        </div>
+        <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
+          ※ <strong>連続10問正解</strong>するまでテストモードから抜けられません。テスト中は他の操作がロックされます。
+        </div>
+        <button class="test-start-btn" onclick="startTestMode()">テスト開始！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- テスト合格モーダル -->
+  <div class="modal-overlay" id="testClearModal">
+    <div class="modal-card test-modal-card" role="dialog" aria-modal="true" aria-label="テスト合格">
+      <div class="modal-header">
+        <div class="modal-title" id="clearModalTitle">🎉 テスト合格！</div>
+      </div>
+      <div class="test-form" style="text-align:center;">
+        <div style="font-size:2.6rem;">🏆</div>
+        <div id="clearModalHeading" style="font-size:1.2rem; font-weight:800;">連続10問正解達成！</div>
+        <div id="testClearDesc" style="font-size:0.92rem; color:var(--text-secondary); line-height:1.6;"></div>
+        <button class="next-btn" style="height:46px;" onclick="closeTestClearModal()">通常モードへ戻る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 指数（10^n）解説モーダル -->
+  <div class="modal-overlay" id="guideModal" onclick="if(event.target===this) closeGuide()">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="指数表記の解説">
+      <div class="modal-header">
+        <div class="modal-title">📘 「9.46 × 10<sup>12</sup>」などの指数表記と計算方法</div>
+        <button class="tool-btn" onclick="closeGuide()">✕ 閉じる</button>
+      </div>
+      <div class="modal-body" style="gap: 14px;">
+        <div class="guide-section">
+          <h3>1. 「9.46 × 10<sup>12</sup>」ってどんな数？</h3>
+          <p>
+            <strong>10<sup>n</sup></strong>（10のn乗）は、<strong>「10を n 回掛けた数（1の後ろに 0 が n 個ならぶ数）」</strong>という意味です。<br>
+            大きな数を「0」をたくさん書かずにスッキリ表すための書き方です。
+          </p>
+          <div class="guide-example">
+            10<sup>1</sup> ＝ 10<br>
+            10<sup>3</sup> ＝ 1,000（10 × 10 × 10）<br>
+            10<sup>6</sup> ＝ 1,000,000（100万）<br>
+            9.46 × 10<sup>12</sup> ＝ 9.46 に 0を12個分（1兆）掛けた数 ＝ 約9兆4,600億
+          </div>
+          <p>※ 小数点を<strong>右に12回</strong>動かした数、と覚えてもOKです！</p>
+        </div>
+
+        <div class="guide-section">
+          <h3>2. マイナスがついた「4.0 × 10<sup>-7</sup>」ってどんな数？</h3>
+          <p>
+            <strong>10<sup>-n</sup></strong>（10のマイナスn乗）は、<strong>「10で n 回割った数（0.00…1）」</strong>という意味です。<br>
+            原子やウイルスなど、とても小さな数を表すときに使います。
+          </p>
+          <div class="guide-example">
+            10<sup>-1</sup> ＝ 0.1（1 ÷ 10）<br>
+            10<sup>-3</sup> ＝ 0.001（1 ÷ 1,000）<br>
+            4.0 × 10<sup>-7</sup> ＝ 0.0000004（小数点を<strong>左に7回</strong>動かした数）
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>3. 単位変換で使う「3つの簡単計算ルール」</h3>
+          <ul>
+            <li>
+              <strong>① 掛け算は「右上の数字を足す」だけ！（10<sup>a</sup> × 10<sup>b</sup> ＝ 10<sup>a+b</sup>）</strong>
+              <div class="guide-example" style="margin:6px 0;">
+                例）1光年（9.46 × 10<sup>15</sup> m）を mm（× 10<sup>3</sup>）に直す：<br>
+                9.46 × 10<sup>15</sup> × 10<sup>3</sup> ＝ 9.46 × 10<sup>15＋3</sup> ＝ <strong>9.46 × 10<sup>18</sup> mm</strong><br><br>
+                例）4.0 × 10<sup>-10</sup> m を mm（× 10<sup>3</sup>）に直す：<br>
+                4.0 × 10<sup>-10</sup> × 10<sup>3</sup> ＝ 4.0 × 10<sup>-10＋3</sup> ＝ <strong>4.0 × 10<sup>-7</sup> mm</strong>
+              </div>
+            </li>
+            <li>
+              <strong>② 割り算は「右上の数字を引く」だけ！（10<sup>a</sup> ÷ 10<sup>b</sup> ＝ 10<sup>a−b</sup>）</strong>
+              <div class="guide-example" style="margin:6px 0;">
+                例）光の速さ 3.0 × 10<sup>8</sup> m/s を km/s（÷ 10<sup>3</sup>）に直す：<br>
+                3.0 × 10<sup>8</sup> ÷ 10<sup>3</sup> ＝ 3.0 × 10<sup>8−3</sup> ＝ <strong>3.0 × 10<sup>5</sup> km/s</strong>
+              </div>
+            </li>
+            <li>
+              <strong>③ 前の数字が「10以上」になったら桁を1つ調整する</strong>
+              <div class="guide-example" style="margin:6px 0;">
+                例）4.2 × 9.46 × 10<sup>12</sup> ＝ 39.732 × 10<sup>12</sup><br>
+                → 前の数字を10で割って 3.97 にしたぶん、右上の指数を <strong>＋1</strong> して <strong>3.97 × 10<sup>13</sup></strong> にします！
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>4. よく使う単位と 10<sup>n</sup> の早見表</h3>
+          <table class="guide-table">
+            <thead>
+              <tr><th>単位の関係</th><th>10<sup>n</sup> を使った表し方</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 km ＝ 1,000 m</td><td>1 km ＝ 10<sup>3</sup> m</td></tr>
+              <tr><td>1 m ＝ 100 cm</td><td>1 m ＝ 10<sup>2</sup> cm （逆は 1 cm ＝ 10<sup>-2</sup> m）</td></tr>
+              <tr><td>1 m ＝ 1,000 mm</td><td>1 m ＝ 10<sup>3</sup> mm （逆は 1 mm ＝ 10<sup>-3</sup> m）</td></tr>
+              <tr><td>1 m ＝ 1,000,000 μm</td><td>1 m ＝ 10<sup>6</sup> μm （1 μm ＝ 10<sup>-6</sup> m）</td></tr>
+              <tr><td>1 m ＝ 1,000,000,000 nm</td><td>1 m ＝ 10<sup>9</sup> nm （1 nm ＝ 10<sup>-9</sup> m）</td></tr>
+              <tr><td>1 m² ＝ 10,000 cm²</td><td>1 m² ＝ 10<sup>4</sup> cm² （1 cm² ＝ 10<sup>-4</sup> m²）</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 教科書・理科 問題データベース（6択・よくある誤答付き）
+    // ==========================================
+    const PROBLEM_DB = [
+      // --- 小学校レベル（算数・理科） ---
+      {
+        level: 'elementary', levelName: '小学校', cat: 'time', catName: '時間', sub: '算数',
+        context: '授業やテストでよく出る時間の変換です。',
+        q: '1時間45分 ＝ ？ 分',
+        ans: '105 分',
+        wrong: ['145 分', '1.45 分', '75 分', '165 分', '95 分'],
+        exp: '1時間 ＝ 60分 なので、60 ＋ 45 ＝ 105分 です。（1と45をそのまま並べて「145分」としてしまうミスに注意！）'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'time', catName: '時間', sub: '算数',
+        context: '小数の時間を分に直してみましょう。',
+        q: '0.4時間 ＝ ？ 分',
+        ans: '24 分',
+        wrong: ['40 分', '4 分', '2.4 分', '15 分', '240 分'],
+        exp: '1時間 ＝ 60分 なので、60 × 0.4 ＝ 24分 です。（100倍して「40分」にしてしまう間違いが非常に多いので注意！）'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'time', catName: '時間', sub: '算数',
+        context: '1日は何秒あるか計算してみましょう。',
+        q: '1日 ＝ ？ 秒',
+        ans: '86,400 秒',
+        wrong: ['1,440 秒', '3,600 秒', '8,640 秒', '24,000 秒', '864,000 秒'],
+        exp: '1日 ＝ 24時間、1時間 ＝ 3,600秒なので、24 × 3,600 ＝ 86,400秒 です。（1,440は「分」、3,600は「1時間の秒」です）'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'length', catName: '長さ', sub: '算数',
+        context: 'マラソンや遠足の距離の単位変換です。',
+        q: '2.5 km ＝ ？ m',
+        ans: '2,500 m',
+        wrong: ['250 m', '25,000 m', '25 m', '0.0025 m', '250,000 m'],
+        exp: '1 km ＝ 1,000 m なので、2.5 × 1,000 ＝ 2,500 m です。'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'length', catName: '長さ', sub: '算数',
+        context: '定規で測る小さな長さの変換です。',
+        q: '35.8 cm ＝ ？ mm',
+        ans: '358 mm',
+        wrong: ['3,580 mm', '3.58 mm', '0.358 mm', '35,800 mm', '35.8 mm'],
+        exp: '1 cm ＝ 10 mm なので、35.8 × 10 ＝ 358 mm です。（100倍したり、逆に10で割ったりしないように注意！）'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'speed', catName: '速さ', sub: '算数',
+        context: '不動産のチラシでも使われる「人の歩く速さ」です。',
+        q: '分速 80 m ＝ 時速 ？ km',
+        ans: '4.8 km/時',
+        wrong: ['48 km/時', '4,800 km/時', '0.48 km/時', '1.33 km/時', '8 km/時'],
+        exp: '1時間（60分）では 80 × 60 ＝ 4,800 m。1,000 m ＝ 1 km なので、時速 4.8 km です。'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'speed', catName: '速さ', sub: '算数',
+        context: '自転車で走る速さを分速に直してみましょう。',
+        q: '時速 15 km ＝ 分速 ？ m',
+        ans: '250 m/分',
+        wrong: ['900 m/分', '25 m/分', '2,500 m/分', '0.25 m/分', '4 m/分'],
+        exp: '時速 15 km ＝ 時速 15,000 m。1時間は60分なので、15,000 ÷ 60 ＝ 分速 250 m です。'
+      },
+      {
+        level: 'elementary', levelName: '小学校', cat: 'speed', catName: '速さ', sub: '算数・理科',
+        context: '新幹線の速さを1分間あたりに直してみましょう。',
+        q: '時速 240 km ＝ 分速 ？ km',
+        ans: '4 km/分',
+        wrong: ['40 km/分', '14,400 km/分', '4,000 km/分', '0.25 km/分', '2.4 km/分'],
+        exp: '1時間は60分なので、240 ÷ 60 ＝ 分速 4 km です。'
+      },
+
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"カップラーメンの待ち時間などでも使う、分から秒への変換です。","q":"3分 ＝ ？ 秒","ans":"180 秒","wrong":["300 秒","30 秒","90 秒","120 秒","1,800 秒"],"exp":"1分 ＝ 60秒なので、3 × 60 ＝ 180秒 です。（1分＝100秒と勘違いして300秒にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"分と秒が混ざった時間をすべて秒に直してみましょう。","q":"2分30秒 ＝ ？ 秒","ans":"150 秒","wrong":["230 秒","130 秒","250 秒","90 秒","1,500 秒"],"exp":"2分 ＝ 120秒なので、120 ＋ 30 ＝ 150秒 です。（2と30をそのまま並べて230秒とするミスに注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"50m走や持久走の記録で使う「秒から分」への変換です。","q":"180秒 ＝ ？ 分","ans":"3 分","wrong":["1.8 分","18 分","30 分","0.3 分","10,800 分"],"exp":"60秒 ＝ 1分なので、180 ÷ 60 ＝ 3分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"少し長めの時間を分に直してみましょう。","q":"420秒 ＝ ？ 分","ans":"7 分","wrong":["4.2 分","42 分","70 分","6 分","0.7 分"],"exp":"420 ÷ 60 ＝ 7分 です。（100で割って4.2分にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"小数の分を秒に直してみましょう。","q":"0.5分 ＝ ？ 秒","ans":"30 秒","wrong":["50 秒","5 秒","0.5 秒","300 秒","15 秒"],"exp":"1分 ＝ 60秒の半分なので、60 × 0.5 ＝ 30秒 です。（50秒にしてしまう定番ミスに注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"1分より少し長い小数の時間を秒に直してみましょう。","q":"1.5分 ＝ ？ 秒","ans":"90 秒","wrong":["150 秒","105 秒","75 秒","65 秒","900 秒"],"exp":"1分 ＝ 60秒、0.5分 ＝ 30秒なので、60 ＋ 30 ＝ 90秒 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"学校の時間割やテストでよく出る時間から分への変換です。","q":"2時間15分 ＝ ？ 分","ans":"135 分","wrong":["215 分","115 分","75 分","155 分","225 分"],"exp":"2時間 ＝ 120分なので、120 ＋ 15 ＝ 135分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"3時間と少しを分に直してみましょう。","q":"3時間20分 ＝ ？ 分","ans":"200 分","wrong":["320 分","180 分","220 分","140 分","300 分"],"exp":"3時間 ＝ 180分なので、180 ＋ 20 ＝ 200分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"0.5時間は何分でしょうか？","q":"0.5時間 ＝ ？ 分","ans":"30 分","wrong":["50 分","5 分","300 分","15 分","45 分"],"exp":"1時間 ＝ 60分の半分なので、60 × 0.5 ＝ 30分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"映画や授業1コマ半の長さを分に直してみましょう。","q":"1.5時間 ＝ ？ 分","ans":"90 分","wrong":["150 分","105 分","75 分","110 分","900 分"],"exp":"60 × 1.5 ＝ 90分 です。（1.5を1時間50分と勘違いして110分にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"0.25時間は1時間の4分の1です。何分でしょうか？","q":"0.25時間 ＝ ？ 分","ans":"15 分","wrong":["25 分","2.5 分","12 分","20 分","45 分"],"exp":"60 × 0.25 ＝ 15分 です。（そのまま25分にしてしまうミスが多いので注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"0.75時間は何分でしょうか？","q":"0.75時間 ＝ ？ 分","ans":"45 分","wrong":["75 分","7.5 分","35 分","50 分","450 分"],"exp":"60 × 0.75 ＝ 45分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"分を小数の時間に直す問題です。","q":"90分 ＝ ？ 時間","ans":"1.5 時間","wrong":["0.9 時間","1.3 時間","1.9 時間","5.4 時間","15 時間"],"exp":"90 ÷ 60 ＝ 1.5時間 です。（1時間30分だからといって1.3時間にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"2時間半より長い150分を時間に直してみましょう。","q":"150分 ＝ ？ 時間","ans":"2.5 時間","wrong":["1.5 時間","2.3 時間","25 時間","3.5 時間","15 時間"],"exp":"150 ÷ 60 ＝ 2.5時間 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"日数を時間に直してみましょう。","q":"2日 ＝ ？ 時間","ans":"48 時間","wrong":["24 時間","120 時間","200 時間","72 時間","36 時間"],"exp":"1日 ＝ 24時間なので、2 × 24 ＝ 48時間 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"時間を日数に直す問題です。","q":"72時間 ＝ ？ 日","ans":"3 日","wrong":["7.2 日","2 日","4 日","1.2 日","30 日"],"exp":"1日 ＝ 24時間なので、72 ÷ 24 ＝ 3日 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"time","catName":"時間","sub":"算数","context":"1週間＝7日を使って日数を計算しましょう。","q":"3週間 ＝ ？ 日","ans":"21 日","wrong":["30 日","18 日","24 日","14 日","28 日"],"exp":"1週間 ＝ 7日なので、3 × 7 ＝ 21日 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"定規の目盛りを読むときの基本の変換です。","q":"4.5 cm ＝ ？ mm","ans":"45 mm","wrong":["450 mm","0.45 mm","4,500 mm","4.5 mm","405 mm"],"exp":"1 cm ＝ 10 mm なので、4.5 × 10 ＝ 45 mm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"mmをcmに直してみましょう。","q":"85 mm ＝ ？ cm","ans":"8.5 cm","wrong":["850 cm","0.85 cm","8,500 cm","0.085 cm","85 cm"],"exp":"10 mm ＝ 1 cm なので、85 ÷ 10 ＝ 8.5 cm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"1 cmより短い長さをmmに直してみましょう。","q":"0.6 cm ＝ ？ mm","ans":"6 mm","wrong":["60 mm","0.06 mm","600 mm","0.6 mm","16 mm"],"exp":"1 cm ＝ 10 mm なので、0.6 × 10 ＝ 6 mm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"cmとmmが混ざった長さをmmに直してみましょう。","q":"12 cm 4 mm ＝ ？ mm","ans":"124 mm","wrong":["1,204 mm","1,240 mm","12.4 mm","16 mm","104 mm"],"exp":"12 cm ＝ 120 mm なので、120 ＋ 4 ＝ 124 mm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"身長や部屋の広さを測るときの基本です。","q":"3 m ＝ ？ cm","ans":"300 cm","wrong":["30 cm","3,000 cm","0.03 cm","30,000 cm","0.3 cm"],"exp":"1 m ＝ 100 cm なので、3 × 100 ＝ 300 cm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"小数のmをcmに直してみましょう。","q":"1.25 m ＝ ？ cm","ans":"125 cm","wrong":["12.5 cm","1,250 cm","0.0125 cm","12,500 cm","102.5 cm"],"exp":"1 m ＝ 100 cm なので、1.25 × 100 ＝ 125 cm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"とても短いmをcmに直してみましょう。","q":"0.08 m ＝ ？ cm","ans":"8 cm","wrong":["80 cm","0.8 cm","800 cm","0.008 cm","8000 cm"],"exp":"1 m ＝ 100 cm なので、0.08 × 100 ＝ 8 cm です。（10倍と間違えて0.8 cmにしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"mとcmが混ざった表記をcmだけに直しましょう。","q":"2 m 5 cm ＝ ？ cm","ans":"205 cm","wrong":["25 cm","250 cm","2,005 cm","2,050 cm","20.5 cm"],"exp":"2 m ＝ 200 cm なので、200 ＋ 5 ＝ 205 cm です。（25 cmや250 cmにしてしまうミスに注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"cmをmに直す問題です。","q":"450 cm ＝ ？ m","ans":"4.5 m","wrong":["45 m","0.45 m","45,000 m","4,500 m","0.045 m"],"exp":"100 cm ＝ 1 m なので、450 ÷ 100 ＝ 4.5 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"1 mより短いcmを小数のmに直してみましょう。","q":"60 cm ＝ ？ m","ans":"0.6 m","wrong":["6 m","0.06 m","6,000 m","600 m","0.006 m"],"exp":"60 ÷ 100 ＝ 0.6 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"mからmmへの変換です。1 m ＝ 1,000 mm を使います。","q":"1.5 m ＝ ？ mm","ans":"1,500 mm","wrong":["150 mm","15 mm","15,000 mm","0.0015 mm","150,000 mm"],"exp":"1 m ＝ 100 cm ＝ 1,000 mm なので、1.5 × 1,000 ＝ 1,500 mm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"小数のmをmmに直してみましょう。","q":"0.2 m ＝ ？ mm","ans":"200 mm","wrong":["20 mm","2 mm","2,000 mm","0.02 mm","20,000 mm"],"exp":"1 m ＝ 1,000 mm なので、0.2 × 1,000 ＝ 200 mm です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"1 km未満の道のりをmに直してみましょう。","q":"0.8 km ＝ ？ m","ans":"800 m","wrong":["80 m","8,000 m","8 m","0.0008 m","80,000 m"],"exp":"1 km ＝ 1,000 m なので、0.8 × 1,000 ＝ 800 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"「0」の入れ忘れに気をつけたい変換です。","q":"3 km 60 m ＝ ？ m","ans":"3,060 m","wrong":["360 m","3,600 m","30,060 m","306 m","36,000 m"],"exp":"3 km ＝ 3,000 m なので、3,000 ＋ 60 ＝ 3,060 m です。（360 m や 3,600 m にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"少し長めのkmをmに直してみましょう。","q":"1.05 km ＝ ？ m","ans":"1,050 m","wrong":["105 m","1,500 m","10,500 m","1,005 m","10.5 m"],"exp":"1.05 × 1,000 ＝ 1,050 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"mをkmに直す問題です。","q":"4,200 m ＝ ？ km","ans":"4.2 km","wrong":["42 km","0.42 km","420 km","4,200,000 km","0.042 km"],"exp":"1,000 m ＝ 1 km なので、4,200 ÷ 1,000 ＝ 4.2 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"1 kmより短い距離をkmで表してみましょう。","q":"350 m ＝ ？ km","ans":"0.35 km","wrong":["3.5 km","0.035 km","35 km","350,000 km","0.0035 km"],"exp":"350 ÷ 1,000 ＝ 0.35 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"length","catName":"長さ","sub":"算数","context":"500 mは1 kmの半分です。小数で表すと？","q":"500 m ＝ ？ km","ans":"0.5 km","wrong":["5 km","0.05 km","50 km","0.005 km","500,000 km"],"exp":"500 ÷ 1,000 ＝ 0.5 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"ゆっくり歩く速さ（分速60m）を時速に直してみましょう。","q":"分速 60 m ＝ 時速 ？ km","ans":"3.6 km/時","wrong":["36 km/時","3,600 km/時","0.36 km/時","1 km/時","6 km/時"],"exp":"1時間（60分）では 60 × 60 ＝ 3,600 m ＝ 3.6 km 進みます。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"早歩きの速さ（分速100m）は時速何kmでしょうか？","q":"分速 100 m ＝ 時速 ？ km","ans":"6 km/時","wrong":["60 km/時","6,000 km/時","0.6 km/時","1.67 km/時","10 km/時"],"exp":"100 × 60 ＝ 6,000 m ＝ 時速 6 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"ジョギングの速さ（分速200m）を時速に直してみましょう。","q":"分速 200 m ＝ 時速 ？ km","ans":"12 km/時","wrong":["120 km/時","12,000 km/時","1.2 km/時","3.33 km/時","20 km/時"],"exp":"200 × 60 ＝ 12,000 m ＝ 時速 12 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"ハイキングの速さ（時速3km）を分速に直してみましょう。","q":"時速 3 km ＝ 分速 ？ m","ans":"50 m/分","wrong":["180 m/分","5 m/分","500 m/分","0.05 m/分","20 m/分"],"exp":"時速 3 km ＝ 時速 3,000 m。3,000 ÷ 60 ＝ 分速 50 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"自転車の速さ（時速18km）は分速何mでしょうか？","q":"時速 18 km ＝ 分速 ？ m","ans":"300 m/分","wrong":["1,080 m/分","30 m/分","3,000 m/分","0.3 m/分","180 m/分"],"exp":"時速 18 km ＝ 時速 18,000 m。18,000 ÷ 60 ＝ 分速 300 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"自動車の速さ（時速60km）を分速kmに直してみましょう。","q":"時速 60 km ＝ 分速 ？ km","ans":"1 km/分","wrong":["10 km/分","3,600 km/分","1,000 km/分","0.1 km/分","6 km/分"],"exp":"1時間は60分なので、60 ÷ 60 ＝ 分速 1 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"特急電車の速さ（時速120km）は1分間に何km進みますか？","q":"時速 120 km ＝ 分速 ？ km","ans":"2 km/分","wrong":["20 km/分","7,200 km/分","2,000 km/分","0.2 km/分","0.5 km/分"],"exp":"120 ÷ 60 ＝ 分速 2 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"50mを10秒で走る速さ（秒速5m）を分速に直してみましょう。","q":"秒速 5 m ＝ 分速 ？ m","ans":"300 m/分","wrong":["30 m/分","3,000 m/分","12 m/分","0.3 m/分","500 m/分"],"exp":"1分 ＝ 60秒なので、5 × 60 ＝ 分速 300 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"強い風（秒速12m）は1分間で何m進みますか？","q":"秒速 12 m ＝ 分速 ？ m","ans":"720 m/分","wrong":["72 m/分","7,200 m/分","0.2 m/分","43,200 m/分","120 m/分"],"exp":"12 × 60 ＝ 分速 720 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"分速から秒速への変換です。","q":"分速 360 m ＝ 秒速 ？ m","ans":"6 m/秒","wrong":["60 m/秒","21,600 m/秒","0.6 m/秒","36 m/秒","10 m/秒"],"exp":"1分 ＝ 60秒なので、360 ÷ 60 ＝ 秒速 6 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"分速900mの乗り物は1秒間に何m進みますか？","q":"分速 900 m ＝ 秒速 ？ m","ans":"15 m/秒","wrong":["150 m/秒","54,000 m/秒","1.5 m/秒","90 m/秒","9 m/秒"],"exp":"900 ÷ 60 ＝ 秒速 15 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"秒速を分速kmに直してみましょう。","q":"秒速 25 m ＝ 分速 ？ km","ans":"1.5 km/分","wrong":["1,500 km/分","15 km/分","0.15 km/分","90 km/分","2.5 km/分"],"exp":"25 × 60 ＝ 1,500 m/分。1,000 m ＝ 1 km なので 1.5 km/分 です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"チーターが走る速さ（秒速30m）を時速に直してみましょう。","q":"秒速 30 m ＝ 時速 ？ km","ans":"108 km/時","wrong":["1.8 km/時","1,080 km/時","10.8 km/時","108,000 km/時","8.33 km/時"],"exp":"1時間 ＝ 3,600秒なので、30 × 3,600 ＝ 108,000 m ＝ 時速 108 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"100m走のトップ選手並みの速さ（秒速10m）を時速にすると？","q":"秒速 10 m ＝ 時速 ？ km","ans":"36 km/時","wrong":["3.6 km/時","360 km/時","0.6 km/時","36,000 km/時","2.78 km/時"],"exp":"10 × 3,600 ＝ 36,000 m ＝ 時速 36 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"秒速20mを時速kmに直してみましょう。","q":"秒速 20 m ＝ 時速 ？ km","ans":"72 km/時","wrong":["7.2 km/時","720 km/時","1.2 km/時","72,000 km/時","5.56 km/時"],"exp":"20 × 3,600 ＝ 72,000 m ＝ 時速 72 km です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"時速54kmで走る電車は1秒間に何m進みますか？","q":"時速 54 km ＝ 秒速 ？ m","ans":"15 m/秒","wrong":["150 m/秒","1.5 m/秒","900 m/秒","194.4 m/秒","0.9 m/秒"],"exp":"54,000 m ÷ 3,600秒 ＝ 秒速 15 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"speed","catName":"速さ","sub":"算数","context":"時速108kmで走る車の速さを秒速に直してみましょう。","q":"時速 108 km ＝ 秒速 ？ m","ans":"30 m/秒","wrong":["300 m/秒","3 m/秒","1,800 m/秒","388.8 m/秒","1.8 m/秒"],"exp":"108,000 m ÷ 3,600秒 ＝ 秒速 30 m です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"お米や荷物の重さを表す基本の変換です。","q":"1.5 kg ＝ ？ g","ans":"1,500 g","wrong":["150 g","15,000 g","15 g","0.0015 g","150,000 g"],"exp":"1 kg ＝ 1,000 g なので、1.5 × 1,000 ＝ 1,500 g です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"kgとgが混ざった重さをgに直してみましょう。","q":"2 kg 300 g ＝ ？ g","ans":"2,300 g","wrong":["230 g","23,000 g","2,030 g","500 g","2.3 g"],"exp":"2 kg ＝ 2,000 g なので、2,000 ＋ 300 ＝ 2,300 g です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"「0」の桁を間違えやすい問題です。","q":"2 kg 50 g ＝ ？ g","ans":"2,050 g","wrong":["250 g","2,500 g","20,050 g","205 g","25,000 g"],"exp":"2 kg ＝ 2,000 g なので、2,000 ＋ 50 ＝ 2,050 g です。（250 g や 2,500 g にしないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"1 kgより軽い重さをgに直してみましょう。","q":"0.4 kg ＝ ？ g","ans":"400 g","wrong":["40 g","4,000 g","4 g","0.0004 g","40,000 g"],"exp":"0.4 × 1,000 ＝ 400 g です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"とても軽いkgをgに直してみましょう。","q":"0.05 kg ＝ ？ g","ans":"50 g","wrong":["5 g","500 g","0.5 g","5,000 g","0.005 g"],"exp":"0.05 × 1,000 ＝ 50 g です。（小数点の位置に注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"gをkgに直す問題です。","q":"3,500 g ＝ ？ kg","ans":"3.5 kg","wrong":["35 kg","0.35 kg","350 kg","0.035 kg","3,500,000 kg"],"exp":"1,000 g ＝ 1 kg なので、3,500 ÷ 1,000 ＝ 3.5 kg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"1 kg未満の重さをkgで表してみましょう。","q":"850 g ＝ ？ kg","ans":"0.85 kg","wrong":["8.5 kg","0.085 kg","85 kg","850,000 kg","0.0085 kg"],"exp":"850 ÷ 1,000 ＝ 0.85 kg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"さらに軽い重さをkgで表すと？","q":"70 g ＝ ？ kg","ans":"0.07 kg","wrong":["0.7 kg","7 kg","0.007 kg","70,000 kg","0.0007 kg"],"exp":"70 ÷ 1,000 ＝ 0.07 kg です。（0.7 kgと間違えやすいので注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"トラックや象など、とても重いものを測る単位「t（トン）」です。","q":"3 t ＝ ？ kg","ans":"3,000 kg","wrong":["300 kg","30,000 kg","30 kg","0.003 kg","300,000 kg"],"exp":"1 t ＝ 1,000 kg なので、3 × 1,000 ＝ 3,000 kg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"小数のtをkgに直してみましょう。","q":"1.2 t ＝ ？ kg","ans":"1,200 kg","wrong":["120 kg","12,000 kg","12 kg","0.0012 kg","120,000 kg"],"exp":"1.2 × 1,000 ＝ 1,200 kg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"1 t未満の重さをkgに直してみましょう。","q":"0.8 t ＝ ？ kg","ans":"800 kg","wrong":["80 kg","8,000 kg","8 kg","0.0008 kg","80,000 kg"],"exp":"0.8 × 1,000 ＝ 800 kg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"kgをtに直す問題です。","q":"4,500 kg ＝ ？ t","ans":"4.5 t","wrong":["45 t","0.45 t","450 t","0.045 t","4,500,000 t"],"exp":"1,000 kg ＝ 1 t なので、4,500 ÷ 1,000 ＝ 4.5 t です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"薬や栄養成分表などでよく見る「mg（ミリグラム）」の変換です。","q":"1.5 g ＝ ？ mg","ans":"1,500 mg","wrong":["150 mg","15 mg","15,000 mg","0.0015 mg","150,000 mg"],"exp":"1 g ＝ 1,000 mg なので、1.5 × 1,000 ＝ 1,500 mg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"0.6 gをmgに直してみましょう。","q":"0.6 g ＝ ？ mg","ans":"600 mg","wrong":["60 mg","6 mg","6,000 mg","0.0006 mg","60,000 mg"],"exp":"0.6 × 1,000 ＝ 600 mg です。"},
+      {"level":"elementary","levelName":"小学校","cat":"weight","catName":"重さ","sub":"算数","context":"mgをgに直してみましょう。","q":"250 mg ＝ ？ g","ans":"0.25 g","wrong":["2.5 g","0.025 g","25 g","250,000 g","0.0025 g"],"exp":"1,000 mg ＝ 1 g なので、250 ÷ 1,000 ＝ 0.25 g です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"小学校2年生で習う「L（リットル）」と「dL（デシリットル）」の変換です。","q":"2 L ＝ ？ dL","ans":"20 dL","wrong":["200 dL","2,000 dL","0.2 dL","20,000 dL","0.02 dL"],"exp":"1 L ＝ 10 dL なので、2 × 10 ＝ 20 dL です。（100や1,000を掛けないよう注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"小数のLをdLに直してみましょう。","q":"1.5 L ＝ ？ dL","ans":"15 dL","wrong":["150 dL","1,500 dL","0.15 dL","1.5 dL","105 dL"],"exp":"1 L ＝ 10 dL なので、1.5 × 10 ＝ 15 dL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"dLをLに直してみましょう。","q":"35 dL ＝ ？ L","ans":"3.5 L","wrong":["350 L","0.35 L","0.035 L","3,500 L","35 L"],"exp":"10 dL ＝ 1 L なので、35 ÷ 10 ＝ 3.5 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"1 L未満のdLをLで表してみましょう。","q":"8 dL ＝ ？ L","ans":"0.8 L","wrong":["80 L","0.08 L","0.008 L","800 L","8,000 L"],"exp":"8 ÷ 10 ＝ 0.8 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"ペットボトルや牛乳パックでおなじみの「L」と「mL」の変換です。","q":"1.2 L ＝ ？ mL","ans":"1,200 mL","wrong":["120 mL","12 mL","12,000 mL","0.0012 mL","120,000 mL"],"exp":"1 L ＝ 1,000 mL なので、1.2 × 1,000 ＝ 1,200 mL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"500mLペットボトルでおなじみの変換を逆から考えてみましょう。","q":"0.5 L ＝ ？ mL","ans":"500 mL","wrong":["50 mL","5 mL","5,000 mL","0.0005 mL","50,000 mL"],"exp":"0.5 × 1,000 ＝ 500 mL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"「0」の位置に気をつけてmLに直しましょう。","q":"2 L 50 mL ＝ ？ mL","ans":"2,050 mL","wrong":["250 mL","2,500 mL","20,050 mL","205 mL","25,000 mL"],"exp":"2 L ＝ 2,000 mL なので、2,000 ＋ 50 ＝ 2,050 mL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"mLをLに直してみましょう。","q":"2,500 mL ＝ ？ L","ans":"2.5 L","wrong":["25 L","0.25 L","250 L","0.025 L","2,500,000 L"],"exp":"1,000 mL ＝ 1 L なので、2,500 ÷ 1,000 ＝ 2.5 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"缶ジュース1本分（350mL）は何Lでしょうか？","q":"350 mL ＝ ？ L","ans":"0.35 L","wrong":["3.5 L","0.035 L","35 L","350,000 L","0.0035 L"],"exp":"350 ÷ 1,000 ＝ 0.35 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"dLをmLに直す問題です。1 dL ＝ 100 mL を使います。","q":"3 dL ＝ ？ mL","ans":"300 mL","wrong":["30 mL","3,000 mL","0.03 mL","30,000 mL","0.3 mL"],"exp":"1 dL ＝ 100 mL なので、3 × 100 ＝ 300 mL です。（10倍や1,000倍と間違えやすいので注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"小数のdLをmLに直してみましょう。","q":"1.5 dL ＝ ？ mL","ans":"150 mL","wrong":["15 mL","1,500 mL","0.015 mL","15,000 mL","1.5 mL"],"exp":"1 dL ＝ 100 mL なので、1.5 × 100 ＝ 150 mL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"mLをdLに直してみましょう。","q":"450 mL ＝ ？ dL","ans":"4.5 dL","wrong":["45 dL","0.45 dL","4,500 dL","45,000 dL","0.045 dL"],"exp":"100 mL ＝ 1 dL なので、450 ÷ 100 ＝ 4.5 dL です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"体積の単位「m³（立方メートル）」と「L」の関係です。","q":"1 m³ ＝ ？ L","ans":"1,000 L","wrong":["100 L","10,000 L","1,000,000 L","10 L","0.001 L"],"exp":"1 m × 1 m × 1 m の立方体には、1 L の水がちょうど 1,000個 入ります。（1 m³ ＝ 1,000 L）"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"0.5 m³は何Lでしょうか？","q":"0.5 m³ ＝ ？ L","ans":"500 L","wrong":["50 L","5,000 L","500,000 L","5 L","0.05 L"],"exp":"1 m³ ＝ 1,000 L なので、0.5 × 1,000 ＝ 500 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"volume","catName":"かさ・体積","sub":"算数","context":"「cm³（立方センチメートル）」と「mL」は同じ大きさ（1 cm³ ＝ 1 mL）です。","q":"2,000 cm³ ＝ ？ L","ans":"2 L","wrong":["20 L","200 L","0.2 L","0.002 L","2,000 L"],"exp":"1,000 cm³ ＝ 1,000 mL ＝ 1 L なので、2,000 cm³ ＝ 2 L です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"1辺が1m（100cm）の正方形の面積です。100倍と間違えやすいので要注意！","q":"1 m² ＝ ？ cm²","ans":"10,000 cm²","wrong":["100 cm²","1,000 cm²","100,000 cm²","1,000,000 cm²","10 cm²"],"exp":"1 m ＝ 100 cm なので、1 m² ＝ 100 cm × 100 cm ＝ 10,000 cm² です。（100 cm² ではないので注意！）"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"小数のm²をcm²に直してみましょう。","q":"2.5 m² ＝ ？ cm²","ans":"25,000 cm²","wrong":["250 cm²","2,500 cm²","250,000 cm²","25 cm²","0.00025 cm²"],"exp":"1 m² ＝ 10,000 cm² なので、2.5 × 10,000 ＝ 25,000 cm² です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"cm²をm²に直してみましょう。","q":"30,000 cm² ＝ ？ m²","ans":"3 m²","wrong":["300 m²","30 m²","0.3 m²","3,000 m²","0.03 m²"],"exp":"10,000 cm² ＝ 1 m² なので、30,000 ÷ 10,000 ＝ 3 m² です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"土地の広さを表す単位「a（アール）」です。1辺10mの正方形の面積です。","q":"1 a ＝ ？ m²","ans":"100 m²","wrong":["10 m²","1,000 m²","10,000 m²","100,000 m²","0.01 m²"],"exp":"1 a ＝ 10 m × 10 m ＝ 100 m² です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"小数のaをm²に直してみましょう。","q":"3.5 a ＝ ？ m²","ans":"350 m²","wrong":["35 m²","3,500 m²","35,000 m²","0.35 m²","0.035 m²"],"exp":"1 a ＝ 100 m² なので、3.5 × 100 ＝ 350 m² です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"m²をaに直してみましょう。","q":"800 m² ＝ ？ a","ans":"8 a","wrong":["80 a","0.8 a","0.08 a","80,000 a","800 a"],"exp":"100 m² ＝ 1 a なので、800 ÷ 100 ＝ 8 a です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"さらに広い土地を表す「ha（ヘクタール）」です。1辺100mの正方形の面積です。","q":"1 ha ＝ ？ m²","ans":"10,000 m²","wrong":["100 m²","1,000 m²","100,000 m²","1,000,000 m²","10 m²"],"exp":"1 ha ＝ 100 m × 100 m ＝ 10,000 m² です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"「ha」と「a」の関係を覚えておきましょう。","q":"2 ha ＝ ？ a","ans":"200 a","wrong":["20 a","2,000 a","20,000 a","0.02 a","200,000 a"],"exp":"1 ha ＝ 100 a なので、2 × 100 ＝ 200 a です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"「km²（平方キロメートル）」と「ha」の関係です。1 km ＝ 1,000 m を思い出そう！","q":"1 km² ＝ ？ ha","ans":"100 ha","wrong":["10 ha","1,000 ha","10,000 ha","100,000 ha","1,000,000 ha"],"exp":"1 km² ＝ 1,000 m × 1,000 m ＝ 1,000,000 m²。1 ha ＝ 10,000 m² なので、100 ha です。"},
+      {"level":"elementary","levelName":"小学校","cat":"area","catName":"面積","sub":"算数","context":"km²をm²に直す問題です。1,000倍ではないので注意！","q":"2 km² ＝ ？ m²","ans":"2,000,000 m²","wrong":["2,000 m²","20,000 m²","200,000 m²","20,000,000 m²","200 m²"],"exp":"1 km² ＝ 1,000 m × 1,000 m ＝ 1,000,000 m² なので、2 km² ＝ 2,000,000 m² です。"},
+
+      // --- 中学校レベル（数学・理科） ---
+      {
+        level: 'junior', levelName: '中学校', cat: 'speed', catName: '速さ', sub: '理科（音）',
+        context: '空気中を伝わる「音の速さ」は秒速約340mです。1分間では何km進みますか？',
+        q: '秒速 340 m ＝ 分速 ？ km',
+        ans: '20.4 km/分',
+        wrong: ['20,400 km/分', '204 km/分', '2.04 km/分', '5.67 km/分', '1,224 km/分'],
+        exp: '60秒では 340 × 60 ＝ 20,400 m。kmに直すと 1,000 で割って 20.4 km/分 です。'
+      },
+      {
+        level: 'junior', levelName: '中学校', cat: 'speed', catName: '速さ', sub: '理科（地震）',
+        context: '地震の初期微動（P波）の速さです。1分間で何km伝わりますか？',
+        q: '秒速 7 km ＝ 分速 ？ km',
+        ans: '420 km/分',
+        wrong: ['4,200 km/分', '25,200 km/分', '700 km/分', '42 km/分', '0.12 km/分'],
+        exp: '1分 ＝ 60秒なので、7 × 60 ＝ 420 km/分 です。（時速と勘違いして3,600を掛けないよう注意！）'
+      },
+      {
+        level: 'junior', levelName: '中学校', cat: 'speed', catName: '速さ', sub: '数学',
+        context: '中学数学の文章題で頻出の「時速 → 秒速」の変換です。',
+        q: '時速 36 km ＝ 秒速 ？ m',
+        ans: '10 m/秒',
+        wrong: ['129.6 m/秒', '100 m/秒', '600 m/秒', '1 m/秒', '0.6 m/秒'],
+        exp: '36 km ＝ 36,000 m、1時間 ＝ 3,600秒。36,000 ÷ 3,600 ＝ 秒速 10 m です。（3.6で割る計算です）'
+      },
+      {
+        level: 'junior', levelName: '中学校', cat: 'speed', catName: '速さ', sub: '数学',
+        context: '高速道路を走る車の速さ（時速72km）は秒速何mですか？',
+        q: '時速 72 km ＝ 秒速 ？ m',
+        ans: '20 m/秒',
+        wrong: ['259.2 m/秒', '200 m/秒', '1.2 m/秒', '1,200 m/秒', '2 m/秒'],
+        exp: '72,000 m ÷ 3,600秒 ＝ 秒速 20 m です。（3.6を掛けて259.2にしてしまう逆転ミスに注意！）'
+      },
+      {
+        level: 'junior', levelName: '中学校', cat: 'time', catName: '時間', sub: '数学',
+        context: '方程式の文章題でよく出る「分を時間に直す」計算です。',
+        q: '45分 ＝ ？ 時間',
+        ans: '0.75 時間',
+        wrong: ['0.45 時間', '4.5 時間', '1.33 時間', '0.65 時間', '2,700 時間'],
+        exp: '45 ÷ 60 ＝ 3/4 ＝ 0.75 時間です。（そのまま「0.45時間」にしてしまうミスが非常に多いです！）'
+      },
+      {
+        level: 'junior', levelName: '中学校', cat: 'length', catName: '長さ', sub: '理科',
+        context: '大気圧（1気圧）を支える水銀柱の高さは76cmです。mmに直すと？',
+        q: '76 cm ＝ ？ mm',
+        ans: '760 mm',
+        wrong: ['7.6 mm', '7,600 mm', '0.76 mm', '76,000 mm', '76 mm'],
+        exp: '1 cm ＝ 10 mm なので、76 × 10 ＝ 760 mm（760 mmHg）です。'
+      },
+
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"一次方程式の速さの問題でよく出る「分 → 時間」の変換です。","q":"15分 ＝ ？ 時間","ans":"0.25 時間","wrong":["0.15 時間","1.5 時間","4 時間","0.4 時間","2.5 時間"],"exp":"15 ÷ 60 ＝ 1/4 ＝ 0.25 時間です。（そのまま0.15時間にしないよう注意！）"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"20分を小数の時間に直してみましょう。","q":"12分 ＝ ？ 時間","ans":"0.2 時間","wrong":["0.12 時間","1.2 時間","5 時間","0.5 時間","2 時間"],"exp":"12 ÷ 60 ＝ 1/5 ＝ 0.2 時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"24分を時間に直してみましょう。","q":"24分 ＝ ？ 時間","ans":"0.4 時間","wrong":["0.24 時間","2.4 時間","2.5 時間","0.6 時間","4 時間"],"exp":"24 ÷ 60 ＝ 2/5 ＝ 0.4 時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"36分を小数の時間に直してみましょう。","q":"36分 ＝ ？ 時間","ans":"0.6 時間","wrong":["0.36 時間","3.6 時間","0.4 時間","1.6 時間","6 時間"],"exp":"36 ÷ 60 ＝ 3/5 ＝ 0.6 時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"48分を時間に直してみましょう。","q":"48分 ＝ ？ 時間","ans":"0.8 時間","wrong":["0.48 時間","4.8 時間","1.25 時間","0.75 時間","8 時間"],"exp":"48 ÷ 60 ＝ 4/5 ＝ 0.8 時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"時間と分が混ざった表記を小数で「時間」に直してみましょう。","q":"1時間15分 ＝ ？ 時間","ans":"1.25 時間","wrong":["1.15 時間","1.5 時間","1.4 時間","7.5 時間","0.75 時間"],"exp":"15分 ＝ 15 ÷ 60 ＝ 0.25時間なので、1 ＋ 0.25 ＝ 1.25時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"2時間45分を小数の時間に直してみましょう。","q":"2時間45分 ＝ ？ 時間","ans":"2.75 時間","wrong":["2.45 時間","2.5 時間","2.35 時間","1.65 時間","27.5 時間"],"exp":"45分 ＝ 45 ÷ 60 ＝ 0.75時間なので、2 ＋ 0.75 ＝ 2.75時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"1時間12分を小数の時間に直してみましょう。","q":"1時間12分 ＝ ？ 時間","ans":"1.2 時間","wrong":["1.12 時間","1.5 時間","0.72 時間","12 時間","7.2 時間"],"exp":"12分 ＝ 12 ÷ 60 ＝ 0.2時間なので、1.2時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"3時間36分を小数の時間に直してみましょう。","q":"3時間36分 ＝ ？ 時間","ans":"3.6 時間","wrong":["3.36 時間","3.5 時間","2.16 時間","36 時間","0.36 時間"],"exp":"36分 ＝ 36 ÷ 60 ＝ 0.6時間なので、3.6時間です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"理科","context":"理科の実験でストップウォッチの記録を「分」に直します。","q":"15秒 ＝ ？ 分","ans":"0.25 分","wrong":["0.15 分","1.5 分","4 分","0.4 分","900 分"],"exp":"15 ÷ 60 ＝ 0.25分です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"理科","context":"45秒を小数の分に直してみましょう。","q":"45秒 ＝ ？ 分","ans":"0.75 分","wrong":["0.45 分","4.5 分","1.33 分","0.65 分","2,700 分"],"exp":"45 ÷ 60 ＝ 0.75分です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"理科","context":"90秒を分に直してみましょう。","q":"90秒 ＝ ？ 分","ans":"1.5 分","wrong":["0.9 分","1.3 分","15 分","5,400 分","1.9 分"],"exp":"90 ÷ 60 ＝ 1.5分です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"理科","context":"150秒を分に直してみましょう。","q":"150秒 ＝ ？ 分","ans":"2.5 分","wrong":["1.5 分","2.3 分","25 分","9,000 分","0.25 分"],"exp":"150 ÷ 60 ＝ 2.5分です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"小数の時間を秒に直してみましょう。","q":"0.2時間 ＝ ？ 秒","ans":"720 秒","wrong":["200 秒","12 秒","120 秒","72 秒","7,200 秒"],"exp":"0.2時間 ＝ 0.2 × 60 ＝ 12分。12 × 60 ＝ 720秒です。"},
+      {"level":"junior","levelName":"中学校","cat":"time","catName":"時間","sub":"数学","context":"0.05時間は何秒でしょうか？","q":"0.05時間 ＝ ？ 秒","ans":"180 秒","wrong":["50 秒","3 秒","18 秒","300 秒","1,800 秒"],"exp":"0.05時間 ＝ 0.05 × 60 ＝ 3分。3 × 60 ＝ 180秒です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"とても小さいmをcmに直してみましょう。","q":"0.05 m ＝ ？ cm","ans":"5 cm","wrong":["50 cm","0.5 cm","500 cm","0.005 cm","0.05 cm"],"exp":"1 m ＝ 100 cm なので、0.05 × 100 ＝ 5 cm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"実験器具の寸法などをmmに直してみましょう。","q":"0.025 m ＝ ？ mm","ans":"25 mm","wrong":["2.5 mm","250 mm","0.25 mm","2,500 mm","0.025 mm"],"exp":"0.025 m ＝ 2.5 cm。1 cm ＝ 10 mm なので、2.5 × 10 ＝ 25 mm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"降水量や積雪量などで使うmmからcmへの変換です。","q":"240 mm ＝ ？ cm","ans":"24 cm","wrong":["2.4 cm","2,400 cm","0.24 cm","24,000 cm","240 cm"],"exp":"10 mm ＝ 1 cm なので、240 ÷ 10 ＝ 24 cm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"駅までの距離などをkmに直してみましょう。","q":"1,250 m ＝ ？ km","ans":"1.25 km","wrong":["12.5 km","0.125 km","125 km","1,250,000 km","0.0125 km"],"exp":"1,000 m ＝ 1 km なので、1,250 ÷ 1,000 ＝ 1.25 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"短い距離のkmをmに直してみましょう。","q":"0.04 km ＝ ？ m","ans":"40 m","wrong":["4 m","400 m","0.4 m","4,000 m","0.004 m"],"exp":"1 km ＝ 1,000 m なので、0.04 × 1,000 ＝ 40 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"3.6 kmをmに直してみましょう。","q":"3.6 km ＝ ？ m","ans":"3,600 m","wrong":["360 m","36,000 m","36 m","0.0036 m","360,000 m"],"exp":"3.6 × 1,000 ＝ 3,600 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"mmをmに直す問題です。","q":"450 mm ＝ ？ m","ans":"0.45 m","wrong":["4.5 m","45 m","0.045 m","450,000 m","0.0045 m"],"exp":"450 mm ＝ 45 cm。100 cm ＝ 1 m なので、45 ÷ 100 ＝ 0.45 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"0.75 mをcmに直してみましょう。","q":"0.75 m ＝ ？ cm","ans":"75 cm","wrong":["7.5 cm","750 cm","0.075 cm","7,500 cm","0.75 cm"],"exp":"0.75 × 100 ＝ 75 cm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"18.5 cmをmmに直してみましょう。","q":"18.5 cm ＝ ？ mm","ans":"185 mm","wrong":["1,850 mm","1.85 mm","18,500 mm","0.185 mm","18.5 mm"],"exp":"18.5 × 10 ＝ 185 mm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"とても小さいkmをmに直してみましょう。","q":"0.008 km ＝ ？ m","ans":"8 m","wrong":["80 m","0.8 m","800 m","0.08 m","8,000 m"],"exp":"0.008 × 1,000 ＝ 8 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"65 mをkmで表してみましょう。","q":"65 m ＝ ？ km","ans":"0.065 km","wrong":["0.65 km","6.5 km","0.0065 km","65,000 km","650 km"],"exp":"65 ÷ 1,000 ＝ 0.065 km です。（0.65 kmと間違えやすいので注意！）"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"12.4 mをcmに直してみましょう。","q":"12.4 m ＝ ？ cm","ans":"1,240 cm","wrong":["124 cm","12,400 cm","1.24 cm","0.124 cm","124,000 cm"],"exp":"12.4 × 100 ＝ 1,240 cm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"3,200 mmをmに直してみましょう。","q":"3,200 mm ＝ ？ m","ans":"3.2 m","wrong":["32 m","320 m","0.32 m","3,200,000 m","0.032 m"],"exp":"3,200 mm ＝ 320 cm ＝ 3.2 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"理科","context":"1 mm前後の小さい長さをcmからmmに直してみましょう。","q":"0.15 cm ＝ ？ mm","ans":"1.5 mm","wrong":["15 mm","0.015 mm","150 mm","0.15 mm","1,500 mm"],"exp":"0.15 × 10 ＝ 1.5 mm です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"82 cmをmに直してみましょう。","q":"82 cm ＝ ？ m","ans":"0.82 m","wrong":["8.2 m","0.082 m","820 m","8,200 m","0.0082 m"],"exp":"82 ÷ 100 ＝ 0.82 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"length","catName":"長さ","sub":"数学","context":"2.04 kmをmに直してみましょう。","q":"2.04 km ＝ ？ m","ans":"2,040 m","wrong":["204 m","2,400 m","20,400 m","2,004 m","20.4 m"],"exp":"2.04 × 1,000 ＝ 2,040 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"自転車の速さ（時速18km）を秒速に直してみましょう。","q":"時速 18 km ＝ 秒速 ？ m","ans":"5 m/秒","wrong":["64.8 m/秒","50 m/秒","0.3 m/秒","300 m/秒","0.5 m/秒"],"exp":"18 km ＝ 18,000 m、1時間 ＝ 3,600秒なので、18,000 ÷ 3,600 ＝ 秒速 5 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"普通電車の速さ（時速90km）は秒速何mでしょうか？","q":"時速 90 km ＝ 秒速 ？ m","ans":"25 m/秒","wrong":["324 m/秒","250 m/秒","1.5 m/秒","1,500 m/秒","2.5 m/秒"],"exp":"90,000 m ÷ 3,600秒 ＝ 秒速 25 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"高速道路を走る特急バスの速さ（時速108km）を秒速に直すと？","q":"時速 108 km ＝ 秒速 ？ m","ans":"30 m/秒","wrong":["388.8 m/秒","300 m/秒","1.8 m/秒","1,800 m/秒","3 m/秒"],"exp":"108,000 m ÷ 3,600秒 ＝ 秒速 30 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"時速144kmを秒速mに直してみましょう。","q":"時速 144 km ＝ 秒速 ？ m","ans":"40 m/秒","wrong":["518.4 m/秒","400 m/秒","2.4 m/秒","2,400 m/秒","4 m/秒"],"exp":"144,000 m ÷ 3,600秒 ＝ 秒速 40 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科・数学","context":"新幹線の速さ（時速216km）は1秒間に何m進みますか？","q":"時速 216 km ＝ 秒速 ？ m","ans":"60 m/秒","wrong":["777.6 m/秒","600 m/秒","3.6 m/秒","3,600 m/秒","6 m/秒"],"exp":"216,000 m ÷ 3,600秒 ＝ 秒速 60 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科・数学","context":"高速鉄道の速さ（時速288km）を秒速に直してみましょう。","q":"時速 288 km ＝ 秒速 ？ m","ans":"80 m/秒","wrong":["1,036.8 m/秒","800 m/秒","4.8 m/秒","4,800 m/秒","8 m/秒"],"exp":"288,000 m ÷ 3,600秒 ＝ 秒速 80 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"秒速5mを時速kmに直してみましょう。","q":"秒速 5 m ＝ 時速 ？ km","ans":"18 km/時","wrong":["1.39 km/時","1.8 km/時","180 km/時","0.3 km/時","18,000 km/時"],"exp":"5 m × 3,600秒 ＝ 18,000 m ＝ 時速 18 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"秒速12mで走る速さを時速に直してみましょう。","q":"秒速 12 m ＝ 時速 ？ km","ans":"43.2 km/時","wrong":["3.33 km/時","432 km/時","4.32 km/時","0.72 km/時","43,200 km/時"],"exp":"12 × 3,600 ＝ 43,200 m ＝ 時速 43.2 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"秒速15mを時速kmに直してみましょう。","q":"秒速 15 m ＝ 時速 ？ km","ans":"54 km/時","wrong":["4.17 km/時","5.4 km/時","540 km/時","0.9 km/時","54,000 km/時"],"exp":"15 × 3,600 ＝ 54,000 m ＝ 時速 54 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"秒速25mを時速kmに直してみましょう。","q":"秒速 25 m ＝ 時速 ？ km","ans":"90 km/時","wrong":["6.94 km/時","9 km/時","900 km/時","1.5 km/時","90,000 km/時"],"exp":"25 × 3,600 ＝ 90,000 m ＝ 時速 90 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"秒速35mを時速kmに直してみましょう。","q":"秒速 35 m ＝ 時速 ？ km","ans":"126 km/時","wrong":["9.72 km/時","12.6 km/時","1,260 km/時","2.1 km/時","126,000 km/時"],"exp":"35 × 3,600 ＝ 126,000 m ＝ 時速 126 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（音）","context":"空気中を伝わる音の速さ（秒速340m）を時速に直すと、ジェット機並みの速さになります！","q":"秒速 340 m ＝ 時速 ？ km","ans":"1,224 km/時","wrong":["20.4 km/時","122.4 km/時","12,240 km/時","94.4 km/時","1,224,000 km/時"],"exp":"340 × 3,600 ＝ 1,224,000 m ＝ 時速 1,224 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（地震）","context":"地震の主要動（S波）の速さです。1分間で何km伝わりますか？","q":"秒速 4 km ＝ 分速 ？ km","ans":"240 km/分","wrong":["24 km/分","2,400 km/分","14,400 km/分","0.07 km/分","400 km/分"],"exp":"1分 ＝ 60秒なので、4 × 60 ＝ 240 km/分 です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（地震）","context":"地震の初期微動（P波）の速さ（秒速8km）を分速に直してみましょう。","q":"秒速 8 km ＝ 分速 ？ km","ans":"480 km/分","wrong":["48 km/分","4,800 km/分","28,800 km/分","0.13 km/分","800 km/分"],"exp":"8 × 60 ＝ 480 km/分 です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（地震）","context":"秒速3.5kmで伝わるS波は1分間に何km進みますか？","q":"秒速 3.5 km ＝ 分速 ？ km","ans":"210 km/分","wrong":["21 km/分","2,100 km/分","12,600 km/分","350 km/分","180 km/分"],"exp":"3.5 × 60 ＝ 210 km/分 です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（気象）","context":"台風の強い風（秒速18m）を時速に直してみましょう。","q":"秒速 18 m ＝ 時速 ？ km","ans":"64.8 km/時","wrong":["5 km/時","6.48 km/時","648 km/時","1.08 km/時","64,800 km/時"],"exp":"18 × 3,600 ＝ 64,800 m ＝ 時速 64.8 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"理科（気象）","context":"非常に強い風（秒速22m）は時速何kmでしょうか？","q":"秒速 22 m ＝ 時速 ？ km","ans":"79.2 km/時","wrong":["6.11 km/時","7.92 km/時","792 km/時","1.32 km/時","79,200 km/時"],"exp":"22 × 3,600 ＝ 79,200 m ＝ 時速 79.2 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速から時速への変換です。","q":"分速 1,200 m ＝ 時速 ？ km","ans":"72 km/時","wrong":["7.2 km/時","720 km/時","20 km/時","72,000 km/時","2 km/時"],"exp":"1,200 × 60 ＝ 72,000 m ＝ 時速 72 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速450mを時速kmに直してみましょう。","q":"分速 450 m ＝ 時速 ？ km","ans":"27 km/時","wrong":["2.7 km/時","270 km/時","7.5 km/時","27,000 km/時","0.75 km/時"],"exp":"450 × 60 ＝ 27,000 m ＝ 時速 27 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速480mを秒速mに直してみましょう。","q":"分速 480 m ＝ 秒速 ？ m","ans":"8 m/秒","wrong":["80 m/秒","0.8 m/秒","28,800 m/秒","48 m/秒","0.48 m/秒"],"exp":"1分 ＝ 60秒なので、480 ÷ 60 ＝ 秒速 8 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速720mを秒速mに直してみましょう。","q":"分速 720 m ＝ 秒速 ？ m","ans":"12 m/秒","wrong":["120 m/秒","1.2 m/秒","43,200 m/秒","72 m/秒","0.72 m/秒"],"exp":"720 ÷ 60 ＝ 秒速 12 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速1,500mを秒速mに直してみましょう。","q":"分速 1,500 m ＝ 秒速 ？ m","ans":"25 m/秒","wrong":["250 m/秒","2.5 m/秒","90,000 m/秒","15 m/秒","150 m/秒"],"exp":"1,500 ÷ 60 ＝ 秒速 25 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速2,400mを秒速mに直してみましょう。","q":"分速 2,400 m ＝ 秒速 ？ m","ans":"40 m/秒","wrong":["400 m/秒","4 m/秒","144,000 m/秒","24 m/秒","240 m/秒"],"exp":"2,400 ÷ 60 ＝ 秒速 40 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"時速45kmを分速mに直してみましょう。","q":"時速 45 km ＝ 分速 ？ m","ans":"750 m/分","wrong":["75 m/分","7,500 m/分","2,700 m/分","0.75 m/分","12.5 m/分"],"exp":"45 km ＝ 45,000 m。45,000 ÷ 60 ＝ 分速 750 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"時速84kmを分速mに直してみましょう。","q":"時速 84 km ＝ 分速 ？ m","ans":"1,400 m/分","wrong":["140 m/分","14,000 m/分","5,040 m/分","1.4 m/分","23.3 m/分"],"exp":"84,000 m ÷ 60 ＝ 分速 1,400 m です。"},
+      {"level":"junior","levelName":"中学校","cat":"speed","catName":"速さ","sub":"数学","context":"分速250mで走る自転車を時速kmに直してみましょう。","q":"分速 250 m ＝ 時速 ？ km","ans":"15 km/時","wrong":["1.5 km/時","150 km/時","15,000 km/時","4.17 km/時","25 km/時"],"exp":"250 × 60 ＝ 15,000 m ＝ 時速 15 km です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科","context":"理科の計算でよく使う「kg → g」の変換です。","q":"0.25 kg ＝ ？ g","ans":"250 g","wrong":["25 g","2,500 g","2.5 g","0.00025 g","25,000 g"],"exp":"1 kg ＝ 1,000 g なので、0.25 × 1,000 ＝ 250 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科","context":"45 gをkgに直してみましょう。","q":"45 g ＝ ？ kg","ans":"0.045 kg","wrong":["0.45 kg","4.5 kg","0.0045 kg","45,000 kg","450 kg"],"exp":"45 ÷ 1,000 ＝ 0.045 kg です。（0.45 kg と間違えやすいので注意！）"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科","context":"0.08 kgをgに直してみましょう。","q":"0.08 kg ＝ ？ g","ans":"80 g","wrong":["8 g","800 g","0.8 g","8,000 g","0.008 g"],"exp":"0.08 × 1,000 ＝ 80 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科（化学）","context":"化学の実験で量った物質の質量をgに直してみましょう。","q":"1,250 mg ＝ ？ g","ans":"1.25 g","wrong":["12.5 g","0.125 g","125 g","1,250,000 g","0.0125 g"],"exp":"1,000 mg ＝ 1 g なので、1,250 ÷ 1,000 ＝ 1.25 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科（化学）","context":"0.45 gをmgに直してみましょう。","q":"0.45 g ＝ ？ mg","ans":"450 mg","wrong":["45 mg","4,500 mg","4.5 mg","0.00045 mg","45,000 mg"],"exp":"0.45 × 1,000 ＝ 450 mg です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科（化学）","context":"35 mgをgで表してみましょう。","q":"35 mg ＝ ？ g","ans":"0.035 g","wrong":["0.35 g","3.5 g","0.0035 g","35,000 g","350 g"],"exp":"35 ÷ 1,000 ＝ 0.035 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"数学","context":"2.4 tをkgに直してみましょう。","q":"2.4 t ＝ ？ kg","ans":"2,400 kg","wrong":["240 kg","24,000 kg","24 kg","0.0024 kg","240,000 kg"],"exp":"1 t ＝ 1,000 kg なので、2.4 × 1,000 ＝ 2,400 kg です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"数学","context":"650 kgをtに直してみましょう。","q":"650 kg ＝ ？ t","ans":"0.65 t","wrong":["6.5 t","0.065 t","65 t","650,000 t","0.0065 t"],"exp":"650 ÷ 1,000 ＝ 0.65 t です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"数学","context":"0.05 tをkgに直してみましょう。","q":"0.05 t ＝ ？ kg","ans":"50 kg","wrong":["5 kg","500 kg","0.5 kg","5,000 kg","0.005 kg"],"exp":"0.05 × 1,000 ＝ 50 kg です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科","context":"3.08 kgをgに直してみましょう。","q":"3.08 kg ＝ ？ g","ans":"3,080 g","wrong":["308 g","3,800 g","30,800 g","3,008 g","30.8 g"],"exp":"3.08 × 1,000 ＝ 3,080 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科（化学）","context":"120 gをmgに直してみましょう。","q":"120 g ＝ ？ mg","ans":"120,000 mg","wrong":["12,000 mg","1,200 mg","1,200,000 mg","0.12 mg","120 mg"],"exp":"120 × 1,000 ＝ 120,000 mg です。"},
+      {"level":"junior","levelName":"中学校","cat":"weight","catName":"重さ","sub":"理科","context":"とても軽いkgをgに直してみましょう。","q":"0.006 kg ＝ ？ g","ans":"6 g","wrong":["60 g","0.6 g","600 g","0.06 g","6,000 g"],"exp":"0.006 × 1,000 ＝ 6 g です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"理科の密度や水溶液の計算でよく使う「cm³ → L」の変換です。","q":"250 cm³ ＝ ？ L","ans":"0.25 L","wrong":["2.5 L","0.025 L","25 L","250,000 L","0.0025 L"],"exp":"1 cm³ ＝ 1 mL、1,000 mL ＝ 1 L なので、250 ÷ 1,000 ＝ 0.25 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"0.4 Lをcm³に直してみましょう。","q":"0.4 L ＝ ？ cm³","ans":"400 cm³","wrong":["40 cm³","4,000 cm³","4 cm³","0.0004 cm³","40,000 cm³"],"exp":"0.4 L ＝ 400 mL ＝ 400 cm³ です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"1.8 LをmLに直してみましょう。","q":"1.8 L ＝ ？ mL","ans":"1,800 mL","wrong":["180 mL","18,000 mL","18 mL","0.0018 mL","180,000 mL"],"exp":"1.8 × 1,000 ＝ 1,800 mL です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科（化学）","context":"45 mLをLで表してみましょう。","q":"45 mL ＝ ？ L","ans":"0.045 L","wrong":["0.45 L","4.5 L","0.0045 L","45,000 L","450 L"],"exp":"45 ÷ 1,000 ＝ 0.045 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"0.02 m³をLに直してみましょう。","q":"0.02 m³ ＝ ？ L","ans":"20 L","wrong":["2 L","200 L","0.2 L","2,000 L","0.002 L"],"exp":"1 m³ ＝ 1,000 L なので、0.02 × 1,000 ＝ 20 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"3,500 Lをm³に直してみましょう。","q":"3,500 L ＝ ？ m³","ans":"3.5 m³","wrong":["35 m³","0.35 m³","350 m³","0.035 m³","3,500,000 m³"],"exp":"1,000 L ＝ 1 m³ なので、3,500 ÷ 1,000 ＝ 3.5 m³ です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"0.15 m³をLに直してみましょう。","q":"0.15 m³ ＝ ？ L","ans":"150 L","wrong":["15 L","1,500 L","1.5 L","15,000 L","0.015 L"],"exp":"0.15 × 1,000 ＝ 150 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"1,200 cm³をLに直してみましょう。","q":"1,200 cm³ ＝ ？ L","ans":"1.2 L","wrong":["12 L","0.12 L","120 L","1,200,000 L","0.012 L"],"exp":"1,200 cm³ ＝ 1,200 mL ＝ 1.2 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"0.005 m³をLに直してみましょう。","q":"0.005 m³ ＝ ？ L","ans":"5 L","wrong":["50 L","0.5 L","500 L","0.05 L","5,000 L"],"exp":"0.005 × 1,000 ＝ 5 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"2.4 Lの体積をcm³に直してみましょう。","q":"2.4 L ＝ ？ cm³","ans":"2,400 cm³","wrong":["240 cm³","24,000 cm³","24 cm³","0.0024 cm³","240,000 cm³"],"exp":"1 L ＝ 1,000 mL ＝ 1,000 cm³ なので、2.4 × 1,000 ＝ 2,400 cm³ です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科（化学）","context":"750 mLの水溶液をLに直してみましょう。","q":"750 mL ＝ ？ L","ans":"0.75 L","wrong":["7.5 L","0.075 L","75 L","750,000 L","0.0075 L"],"exp":"1,000 mL ＝ 1 L なので、750 ÷ 1,000 ＝ 0.75 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"0.08 m³の体積をLに直してみましょう。","q":"0.08 m³ ＝ ？ L","ans":"80 L","wrong":["8 L","800 L","0.8 L","8,000 L","0.008 L"],"exp":"1 m³ ＝ 1,000 L なので、0.08 × 1,000 ＝ 80 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"600 Lの水槽の容積をm³に直してみましょう。","q":"600 L ＝ ？ m³","ans":"0.6 m³","wrong":["6 m³","0.06 m³","60 m³","600,000 m³","0.006 m³"],"exp":"1,000 L ＝ 1 m³ なので、600 ÷ 1,000 ＝ 0.6 m³ です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"数学","context":"1.25 m³をLに直してみましょう。","q":"1.25 m³ ＝ ？ L","ans":"1,250 L","wrong":["125 L","12,500 L","12.5 L","0.00125 L","125,000 L"],"exp":"1.25 × 1,000 ＝ 1,250 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"volume","catName":"かさ・体積","sub":"理科","context":"80 cm³をLに直してみましょう。","q":"80 cm³ ＝ ？ L","ans":"0.08 L","wrong":["0.8 L","8 L","0.008 L","80,000 L","800 L"],"exp":"80 cm³ ＝ 80 mL ＝ 0.08 L です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"圧力の計算（Pa）でよく使う「m² → cm²」の変換です。","q":"0.5 m² ＝ ？ cm²","ans":"5,000 cm²","wrong":["50 cm²","500 cm²","50,000 cm²","5 cm²","0.00005 cm²"],"exp":"1 m ＝ 100 cm なので、1 m² ＝ 10,000 cm²。0.5 × 10,000 ＝ 5,000 cm² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"圧力の問題で最頻出の「cm² → m²」の変換です！","q":"2,500 cm² ＝ ？ m²","ans":"0.25 m²","wrong":["25 m²","2.5 m²","0.025 m²","250 m²","0.0025 m²"],"exp":"10,000 cm² ＝ 1 m² なので、2,500 ÷ 10,000 ＝ 0.25 m² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"0.04 m²をcm²に直してみましょう。","q":"0.04 m² ＝ ？ cm²","ans":"400 cm²","wrong":["4 cm²","40 cm²","4,000 cm²","0.4 cm²","40,000 cm²"],"exp":"0.04 × 10,000 ＝ 400 cm² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"とても小さい面積150 cm²をm²に直してみましょう。","q":"150 cm² ＝ ？ m²","ans":"0.015 m²","wrong":["1.5 m²","0.15 m²","0.0015 m²","15 m²","1,500,000 m²"],"exp":"150 ÷ 10,000 ＝ 0.015 m² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"数学","context":"1.2 m²をcm²に直してみましょう。","q":"1.2 m² ＝ ？ cm²","ans":"12,000 cm²","wrong":["120 cm²","1,200 cm²","120,000 cm²","12 cm²","0.00012 cm²"],"exp":"1.2 × 10,000 ＝ 12,000 cm² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"数学","context":"3.2 m²をcm²に直してみましょう。","q":"3.2 m² ＝ ？ cm²","ans":"32,000 cm²","wrong":["320 cm²","3,200 cm²","320,000 cm²","32 cm²","0.00032 cm²"],"exp":"1 m ＝ 100 cm なので、1 m² ＝ 10,000 cm²。3.2 × 10,000 ＝ 32,000 cm² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"小さな面積0.025 m²をcm²に直してみましょう。","q":"0.025 m² ＝ ？ cm²","ans":"250 cm²","wrong":["25 cm²","2.5 cm²","2,500 cm²","25,000 cm²","0.25 cm²"],"exp":"1 m ＝ 100 cm なので、1 m² ＝ 10,000 cm²。0.025 × 10,000 ＝ 250 cm² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"理科（圧力）","context":"800 cm²をm²に直してみましょう。","q":"800 cm² ＝ ？ m²","ans":"0.08 m²","wrong":["0.8 m²","8 m²","0.008 m²","80 m²","8,000,000 m²"],"exp":"10,000 cm² ＝ 1 m² なので、800 ÷ 10,000 ＝ 0.08 m² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"数学","context":"0.35 km²をm²に直してみましょう。","q":"0.35 km² ＝ ？ m²","ans":"350,000 m²","wrong":["350 m²","3,500 m²","35,000 m²","3,500,000 m²","35 m²"],"exp":"1 km ＝ 1,000 m なので、1 km² ＝ 1,000,000 m²。0.35 × 1,000,000 ＝ 350,000 m² です。"},
+      {"level":"junior","levelName":"中学校","cat":"area","catName":"面積","sub":"数学","context":"450,000 m²をkm²に直してみましょう。","q":"450,000 m² ＝ ？ km²","ans":"0.45 km²","wrong":["450 km²","45 km²","4.5 km²","0.045 km²","0.0045 km²"],"exp":"1,000,000 m² ＝ 1 km² なので、450,000 ÷ 1,000,000 ＝ 0.45 km² です。"},
+
+      // --- 高校生レベル（物理・化学・生物・地学） ---
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '物理',
+        context: '【物理】真空中の光の速さ c ＝ 3.0×10^8 m/s を km/s に直してください。',
+        q: '3.0×10<sup>8</sup> m/s ＝ ？ km/s',
+        ans: '3.0 × 10<sup>5</sup> km/s',
+        wrong: [
+          '3.0 × 10<sup>11</sup> km/s',
+          '3.0 × 10<sup>6</sup> km/s',
+          '3.0 × 10<sup>4</sup> km/s',
+          '3.0 × 10<sup>2</sup> km/s',
+          '3.0 × 10<sup>10</sup> km/s'
+        ],
+        exp: '1 km ＝ 1,000 m（10^3 m）なので、10^3 で割って 3.0 × 10^5 km/s（秒速30万km）になります。'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '物理',
+        context: '【物理】第一宇宙速度（地表すれすれを回る人工衛星の速さ）は約7.9km/sです。時速にすると？',
+        q: '秒速 7.9 km ＝ 時速 ？ km',
+        ans: '28,440 km/時',
+        wrong: ['474 km/時', '2,844 km/時', '284,400 km/時', '2.19 km/時', '79,000 km/時'],
+        exp: '1時間 ＝ 3,600秒なので、7.9 × 3,600 ＝ 時速 28,440 km です。（60倍だけで止まると474になります）'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '化学',
+        context: '【化学】常温の窒素分子の熱運動の平均の速さは約500m/sです。時速何kmになりますか？',
+        q: '秒速 500 m ＝ 時速 ？ km',
+        ans: '1,800 km/時',
+        wrong: ['138.9 km/時', '180 km/時', '18,000 km/時', '30 km/時', '1,800,000 km/時'],
+        exp: '500 × 3,600秒 ＝ 1,800,000 m ＝ 時速 1,800 km（500 × 3.6）です。ジェット機より速い速度です！'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'length', catName: '長さ', sub: '化学',
+        context: '【化学】結晶格子の一辺の長さ 0.40 nm（4.0×10^-10 m）を mm に直すと？',
+        q: '4.0×10<sup>-10</sup> m ＝ ？ mm',
+        ans: '4.0 × 10<sup>-7</sup> mm',
+        wrong: [
+          '4.0 × 10<sup>-13</sup> mm',
+          '4.0 × 10<sup>-8</sup> mm',
+          '4.0 × 10<sup>-12</sup> mm',
+          '4.0 × 10<sup>-6</sup> mm',
+          '4.0 × 10<sup>-4</sup> mm'
+        ],
+        exp: '1 m ＝ 1,000 mm（10^3 mm）なので、4.0×10^-10 × 10^3 ＝ 4.0 × 10^-7 mm です。（負の指数で-13にしてしまうミスに注意！）'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '生物',
+        context: '【生物】ヒトの有髄神経の興奮伝導速度は約100m/sです。時速に直すと何km？',
+        q: '秒速 100 m ＝ 時速 ？ km',
+        ans: '360 km/時',
+        wrong: ['27.8 km/時', '36 km/時', '3,600 km/時', '6 km/時', '360,000 km/時'],
+        exp: '100 × 3.6 ＝ 時速 360 km です。F1マシン並みの速さで神経の信号が伝わっています。'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '生物',
+        context: '【生物】オオカナダモの原形質流動の速さは秒速約0.01mmです。1時間では何cm進みますか？',
+        q: '秒速 0.01 mm ＝ 時速 ？ cm',
+        ans: '3.6 cm/時',
+        wrong: ['36 cm/時', '0.36 cm/時', '0.06 cm/時', '360 cm/時', '0.036 cm/時'],
+        exp: '1時間（3,600秒）では 0.01 × 3,600 ＝ 36 mm。10mm ＝ 1cm なので 3.6 cm/時 です。'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '地学',
+        context: '【地学】海洋プレートは年間約5cm移動します。100万年（10^6年）では何km移動しますか？',
+        q: '年速 5 cm で 100万年 ＝ ？ km',
+        ans: '50 km',
+        wrong: ['500 km', '5 km', '5,000 km', '50,000 km', '0.5 km'],
+        exp: '5 cm × 1,000,000年 ＝ 5,000,000 cm ＝ 50,000 m ＝ 50 km になります。'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'speed', catName: '速さ', sub: '地学',
+        context: '【地学】地球の公転速度は秒速約30kmです。1日（86,400秒）で何km進みますか？',
+        q: '秒速 30 km で 1日 ＝ ？ km',
+        ans: '2,592,000 km',
+        wrong: ['108,000 km', '259,200 km', '25,920,000 km', '43,200 km', '1,800 km'],
+        exp: '30 km × 86,400秒 ＝ 2,592,000 km（約259万km）です。（108,000は1時間＝3,600秒の距離です）'
+      },
+      {
+        level: 'high', levelName: '高校生', cat: 'time', catName: '時間', sub: '地学',
+        context: '【地学】太陽の光が地球に届くまで約8分20秒かかります。秒に直すと何秒？',
+        q: '8分20秒 ＝ ？ 秒',
+        ans: '500 秒',
+        wrong: ['820 秒', '480 秒', '100 秒', '520 秒', '300 秒'],
+        exp: '8 × 60 ＋ 20 ＝ 500秒 です。（1.5×10^8 km ÷ 3.0×10^5 km/s ＝ 500秒）'
+      },
+
+        {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】真空中の光の速さ c ＝ 3.0×10^8 m/s を分速（m/分）に直すと？","q":"3.0×10<sup>8</sup> m/s ＝ ？ m/分","ans":"1.8 × 10<sup>10</sup> m/分","wrong":["1.8 × 10<sup>9</sup> m/分","1.8 × 10<sup>11</sup> m/分","5.0 × 10<sup>6</sup> m/分","3.0 × 10<sup>10</sup> m/分","1.8 × 10<sup>7</sup> m/分"],"exp":"1分 ＝ 60秒なので、3.0×10^8 × 60 ＝ 180×10^8 ＝ 1.8 × 10^10 m/分 です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】第二宇宙速度（地球の重力を振り切る脱出速度）は約11.2 km/sです。時速にすると？","q":"秒速 11.2 km ＝ 時速 ？ km","ans":"40,320 km/時","wrong":["672 km/時","4,032 km/時","403,200 km/時","3.11 km/時","40,320,000 km/時"],"exp":"1時間 ＝ 3,600秒なので、11.2 × 3,600 ＝ 時速 40,320 km です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】リニア中央新幹線の営業最高速度は時速500kmを予定しています。秒速に直すと約何m？（整数で）","q":"時速 504 km ＝ 秒速 ？ m","ans":"140 m/秒","wrong":["1,814.4 m/秒","14 m/秒","1,400 m/秒","8.4 m/秒","8,400 m/秒"],"exp":"504,000 m ÷ 3,600秒 ＝ 秒速 140 m です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】ジェット旅客機の巡航速度は時速約900kmです。秒速に直すと？","q":"時速 900 km ＝ 秒速 ？ m","ans":"250 m/秒","wrong":["3,240 m/秒","25 m/秒","2,500 m/秒","15 m/秒","15,000 m/秒"],"exp":"900,000 m ÷ 3,600秒 ＝ 秒速 250 m です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】水中の音の速さは空気中よりずっと速く、秒速約1,500mです。時速何km？","q":"秒速 1,500 m ＝ 時速 ？ km","ans":"5,400 km/時","wrong":["416.7 km/時","540 km/時","54,000 km/時","90 km/時","5,400,000 km/時"],"exp":"1,500 × 3,600 ＝ 5,400,000 m ＝ 時速 5,400 km です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"物理","context":"【物理】鉄の中を伝わる音の速さは秒速約5,000mです。分速何km？","q":"秒速 5,000 m ＝ 分速 ？ km","ans":"300 km/分","wrong":["30 km/分","3,000 km/分","300,000 km/分","18,000 km/分","83.3 km/分"],"exp":"5,000 × 60 ＝ 300,000 m ＝ 分速 300 km です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"物理","context":"【物理】赤い可視光の波長は約7.0×10^-7 mです。nm（ナノメートル）に直すと？","q":"7.0×10<sup>-7</sup> m ＝ ？ nm","ans":"700 nm","wrong":["70 nm","7,000 nm","7.0 nm","0.7 nm","70,000 nm"],"exp":"1 m ＝ 10^9 nm なので、7.0×10^-7 × 10^9 ＝ 7.0×10^2 ＝ 700 nm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"物理","context":"【物理】青い可視光の波長は約450 nmです。mに直すと？","q":"450 nm ＝ ？ m","ans":"4.5 × 10<sup>-7</sup> m","wrong":["4.5 × 10<sup>-9</sup> m","4.5 × 10<sup>-6</sup> m","4.5 × 10<sup>-8</sup> m","4.5 × 10<sup>-5</sup> m","4.5 × 10<sup>-11</sup> m"],"exp":"1 nm ＝ 10^-9 m なので、450 × 10^-9 ＝ 4.5 × 10^-7 m です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"物理","context":"【物理】赤外線の一種、波長 10 μm（マイクロメートル）を m に直すと？","q":"10 μm ＝ ？ m","ans":"1.0 × 10<sup>-5</sup> m","wrong":["1.0 × 10<sup>-6</sup> m","1.0 × 10<sup>-4</sup> m","1.0 × 10<sup>-7</sup> m","1.0 × 10<sup>-8</sup> m","1.0 × 10<sup>-3</sup> m"],"exp":"1 μm ＝ 10^-6 m なので、10 × 10^-6 ＝ 1.0 × 10^-5 m です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"物理","context":"【物理】金属板の厚さ 0.12 mm を μm に直してみましょう。","q":"0.12 mm ＝ ？ μm","ans":"120 μm","wrong":["12 μm","1,200 μm","1.2 μm","12,000 μm","0.012 μm"],"exp":"1 mm ＝ 1,000 μm なので、0.12 × 1,000 ＝ 120 μm です。"},
+      {"level":"high","levelName":"高校生","cat":"time","catName":"時間","sub":"物理","context":"【物理】高校物理の力学でよく使う、分を秒に直す計算です。","q":"2.5分 ＝ ？ 秒","ans":"150 秒","wrong":["250 秒","25 秒","125 秒","1,500 秒","90 秒"],"exp":"1分 ＝ 60秒なので、2.5 × 60 ＝ 150秒 です。"},
+      {"level":"high","levelName":"高校生","cat":"time","catName":"時間","sub":"物理","context":"【物理】電気量 Q ＝ I t の計算で使う「30分」は何秒？","q":"30分 ＝ ？ 秒","ans":"1,800 秒","wrong":["3,000 秒","180 秒","300 秒","18,000 秒","3,600 秒"],"exp":"30 × 60 ＝ 1,800秒 です。"},
+      {"level":"high","levelName":"高校生","cat":"area","catName":"面積","sub":"物理","context":"【物理】断面積 2.0 cm² の導線やピストンを m² に直すと？","q":"2.0 cm² ＝ ？ m²","ans":"2.0 × 10<sup>-4</sup> m²","wrong":["2.0 × 10<sup>-2</sup> m²","2.0 × 10<sup>-3</sup> m²","2.0 × 10<sup>-5</sup> m²","2.0 × 10<sup>-6</sup> m²","2.0 × 10<sup>4</sup> m²"],"exp":"1 cm ＝ 10^-2 m なので、1 cm² ＝ 10^-4 m²。よって 2.0 × 10^-4 m² です。"},
+      {"level":"high","levelName":"高校生","cat":"area","catName":"面積","sub":"物理","context":"【物理】断面積 5.0 mm² を m² に直すと？","q":"5.0 mm² ＝ ？ m²","ans":"5.0 × 10<sup>-6</sup> m²","wrong":["5.0 × 10<sup>-3</sup> m²","5.0 × 10<sup>-4</sup> m²","5.0 × 10<sup>-5</sup> m²","5.0 × 10<sup>-2</sup> m²","5.0 × 10<sup>-9</sup> m²"],"exp":"1 mm ＝ 10^-3 m なので、1 mm² ＝ (10^-3)^2 ＝ 10^-6 m²。よって 5.0 × 10^-6 m² です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"化学","context":"【化学】水素原子の半径は約 0.053 nm です。m に直すと？","q":"0.053 nm ＝ ？ m","ans":"5.3 × 10<sup>-11</sup> m","wrong":["5.3 × 10<sup>-10</sup> m","5.3 × 10<sup>-9</sup> m","5.3 × 10<sup>-12</sup> m","5.3 × 10<sup>-8</sup> m","5.3 × 10<sup>-13</sup> m"],"exp":"1 nm ＝ 10^-9 m なので、0.053 × 10^-9 ＝ 5.3 × 10^-11 m です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"化学","context":"【化学】塩化ナトリウム結晶のイオン間距離は約 2.8×10^-10 m です。nm に直すと？","q":"2.8×10<sup>-10</sup> m ＝ ？ nm","ans":"0.28 nm","wrong":["2.8 nm","28 nm","0.028 nm","280 nm","0.0028 nm"],"exp":"1 m ＝ 10^9 nm なので、2.8×10^-10 × 10^9 ＝ 0.28 nm です。"},
+      {"level":"high","levelName":"高校生","cat":"volume","catName":"かさ・体積","sub":"化学","context":"【化学】気体の状態方程式 PV ＝ nRT で、22.4 L を m³ に直すと？","q":"22.4 L ＝ ？ m³","ans":"2.24 × 10<sup>-2</sup> m³","wrong":["2.24 × 10<sup>-3</sup> m³","2.24 × 10<sup>-1</sup> m³","2.24 × 10<sup>4</sup> m³","2.24 × 10<sup>-4</sup> m³","2.24 × 10<sup>2</sup> m³"],"exp":"1,000 L ＝ 1 m³（1 L ＝ 10^-3 m³）なので、22.4 × 10^-3 ＝ 2.24 × 10^-2 m³ です。"},
+      {"level":"high","levelName":"高校生","cat":"volume","catName":"かさ・体積","sub":"化学","context":"【化学】実験で使う 500 cm³ を m³ に直すと？","q":"500 cm³ ＝ ？ m³","ans":"5.0 × 10<sup>-4</sup> m³","wrong":["5.0 × 10<sup>-2</sup> m³","5.0 × 10<sup>-3</sup> m³","5.0 × 10<sup>-6</sup> m³","5.0 × 10<sup>-5</sup> m³","5.0 × 10<sup>4</sup> m³"],"exp":"1 cm³ ＝ 10^-6 m³ なので、500 × 10^-6 ＝ 5.0 × 10^-4 m³ です。"},
+      {"level":"high","levelName":"高校生","cat":"volume","catName":"かさ・体積","sub":"化学","context":"【化学】0.05 m³ の気体は何 L でしょうか？","q":"0.05 m³ ＝ ？ L","ans":"50 L","wrong":["5 L","500 L","0.5 L","5,000 L","0.005 L"],"exp":"1 m³ ＝ 1,000 L なので、0.05 × 1,000 ＝ 50 L です。"},
+      {"level":"high","levelName":"高校生","cat":"volume","catName":"かさ・体積","sub":"化学","context":"【化学】マイクロピペットで測る 250 μL（マイクロリットル）を mL に直すと？","q":"250 μL ＝ ？ mL","ans":"0.25 mL","wrong":["2.5 mL","0.025 mL","25 mL","250,000 mL","0.0025 mL"],"exp":"1 mL ＝ 1,000 μL なので、250 ÷ 1,000 ＝ 0.25 mL です。"},
+      {"level":"high","levelName":"高校生","cat":"volume","catName":"かさ・体積","sub":"化学","context":"【化学】1.5 mL の試薬を μL に直してみましょう。","q":"1.5 mL ＝ ？ μL","ans":"1,500 μL","wrong":["150 μL","15,000 μL","15 μL","0.0015 μL","150,000 μL"],"exp":"1 mL ＝ 1,000 μL なので、1.5 × 1,000 ＝ 1,500 μL です。"},
+      {"level":"high","levelName":"高校生","cat":"weight","catName":"重さ","sub":"化学","context":"【化学】微量天秤で測る 0.024 g を mg に直すと？","q":"0.024 g ＝ ？ mg","ans":"24 mg","wrong":["2.4 mg","240 mg","0.24 mg","2,400 mg","0.0024 mg"],"exp":"1 g ＝ 1,000 mg なので、0.024 × 1,000 ＝ 24 mg です。"},
+      {"level":"high","levelName":"高校生","cat":"weight","catName":"重さ","sub":"化学","context":"【化学】環境基準などで使われる μg（マイクログラム）。500 μg は何 mg？","q":"500 μg ＝ ？ mg","ans":"0.5 mg","wrong":["5 mg","0.05 mg","50 mg","500,000 mg","0.005 mg"],"exp":"1 mg ＝ 1,000 μg なので、500 ÷ 1,000 ＝ 0.5 mg です。"},
+      {"level":"high","levelName":"高校生","cat":"weight","catName":"重さ","sub":"化学","context":"【化学】分子量の大きい物質 3.2 mg を μg に直すと？","q":"3.2 mg ＝ ？ μg","ans":"3,200 μg","wrong":["320 μg","32,000 μg","32 μg","0.0032 μg","320,000 μg"],"exp":"1 mg ＝ 1,000 μg なので、3.2 × 1,000 ＝ 3,200 μg です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】ヒトの赤血球の直径は約 7.5 μm です。mm に直すと？","q":"7.5 μm ＝ ？ mm","ans":"0.0075 mm","wrong":["0.075 mm","0.75 mm","7,500 mm","0.00075 mm","75 mm"],"exp":"1 mm ＝ 1,000 μm なので、7.5 ÷ 1,000 ＝ 0.0075 mm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】ゾウリムシの体長は約 0.25 mm です。μm に直すと？","q":"0.25 mm ＝ ？ μm","ans":"250 μm","wrong":["25 μm","2,500 μm","2.5 μm","25,000 μm","0.025 μm"],"exp":"1 mm ＝ 1,000 μm なので、0.25 × 1,000 ＝ 250 μm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】大腸菌の大きさは約 2.0 μm です。nm に直すと？","q":"2.0 μm ＝ ？ nm","ans":"2,000 nm","wrong":["200 nm","20,000 nm","20 nm","0.002 nm","200,000 nm"],"exp":"1 μm ＝ 1,000 nm なので、2.0 × 1,000 ＝ 2,000 nm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】インフルエンザウイルスの直径は約 100 nm です。μm に直すと？","q":"100 nm ＝ ？ μm","ans":"0.1 μm","wrong":["1 μm","0.01 μm","10 μm","100,000 μm","0.001 μm"],"exp":"1,000 nm ＝ 1 μm なので、100 ÷ 1,000 ＝ 0.1 μm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】細胞膜の厚さは約 8.0 nm です。m に直すと？","q":"8.0 nm ＝ ？ m","ans":"8.0 × 10<sup>-9</sup> m","wrong":["8.0 × 10<sup>-6</sup> m","8.0 × 10<sup>-8</sup> m","8.0 × 10<sup>-10</sup> m","8.0 × 10<sup>-12</sup> m","8.0 × 10<sup>-7</sup> m"],"exp":"1 nm ＝ 10^-9 m なので、8.0 × 10^-9 m です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"生物","context":"【生物】真核生物の細胞の大きさの例として 20 μm を cm に直すと？","q":"20 μm ＝ ？ cm","ans":"0.002 cm","wrong":["0.02 cm","0.2 cm","0.0002 cm","2 cm","200,000 cm"],"exp":"20 μm ＝ 0.02 mm。1 cm ＝ 10 mm なので、0.02 ÷ 10 ＝ 0.002 cm です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"生物","context":"【生物】無髄神経の興奮伝導速度は約 2.0 m/s です。時速に直すと？","q":"秒速 2.0 m ＝ 時速 ？ km","ans":"7.2 km/時","wrong":["0.56 km/時","72 km/時","0.72 km/時","120 km/時","7,200 km/時"],"exp":"2.0 × 3,600 ＝ 7,200 m ＝ 時速 7.2 km です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"生物","context":"【生物】大動脈を流れる血液の速さは秒速約 40 cm です。分速何 m？","q":"秒速 40 cm ＝ 分速 ？ m","ans":"24 m/分","wrong":["2,400 m/分","2.4 m/分","240 m/分","0.24 m/分","144 m/分"],"exp":"40 cm × 60秒 ＝ 2,400 cm ＝ 分速 24 m です。"},
+      {"level":"high","levelName":"高校生","cat":"weight","catName":"重さ","sub":"生物","context":"【生物】1日にヒトの体内で作られるATPは約 50 kg にもなります。g に直すと？","q":"50 kg ＝ ？ g","ans":"50,000 g","wrong":["5,000 g","500,000 g","500 g","0.05 g","5,000,000 g"],"exp":"1 kg ＝ 1,000 g なので、50 × 1,000 ＝ 50,000 g です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"地学","context":"【地学】太平洋プレートは年間約 8 cm 移動します。50万年では何 km 移動する？","q":"年速 8 cm で 50万年 ＝ ？ km","ans":"40 km","wrong":["400 km","4 km","4,000 km","40,000 km","0.4 km"],"exp":"8 cm × 500,000年 ＝ 4,000,000 cm ＝ 40,000 m ＝ 40 km です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"地学","context":"【地学】水深 4,000 m の外洋を進む津波の速さは秒速約 200 m です。時速にすると？","q":"秒速 200 m ＝ 時速 ？ km","ans":"720 km/時","wrong":["55.6 km/時","72 km/時","7,200 km/時","12 km/時","720,000 km/時"],"exp":"200 × 3,600 ＝ 720,000 m ＝ 時速 720 km（ジェット機並みの速さ！）です。"},
+      {"level":"high","levelName":"高校生","cat":"speed","catName":"速さ","sub":"地学","context":"【地学】赤道上での地球の自転速度は時速約 1,674 km です。秒速に直すと？","q":"時速 1,674 km ＝ 秒速 ？ m","ans":"465 m/秒","wrong":["46.5 m/秒","4,650 m/秒","6,026.4 m/秒","27.9 m/秒","27,900 m/秒"],"exp":"1,674,000 m ÷ 3,600秒 ＝ 秒速 465 m（音速より速い！）です。"},
+      {"level":"high","levelName":"高校生","cat":"time","catName":"時間","sub":"地学","context":"【地学】地球の正確な恒星日（地球が1回転する時間）は 23時間56分 です。分に直すと？","q":"23時間56分 ＝ ？ 分","ans":"1,436 分","wrong":["2,356 分","1,440 分","1,396 分","1,496 分","86,160 分"],"exp":"23 × 60 ＋ 56 ＝ 1,380 ＋ 56 ＝ 1,436分 です。"},
+      {"level":"high","levelName":"高校生","cat":"time","catName":"時間","sub":"地学","context":"【地学】太陽の黒点が移動して見える周期（約27日）を時間に直すと？","q":"27日 ＝ ？ 時間","ans":"648 時間","wrong":["270 時間","1,620 時間","64.8 時間","324 時間","6,480 時間"],"exp":"1日 ＝ 24時間なので、27 × 24 ＝ 648時間 です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"地学","context":"【地学】地球の半径は約 6,400 km です。m に直すと？","q":"6,400 km ＝ ？ m","ans":"6.4 × 10<sup>6</sup> m","wrong":["6.4 × 10<sup>5</sup> m","6.4 × 10<sup>7</sup> m","6.4 × 10<sup>4</sup> m","6.4 × 10<sup>3</sup> m","6.4 × 10<sup>8</sup> m"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、6,400 × 10^3 ＝ 6.4 × 10^6 m です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"地学","context":"【地学】日本海溝の最も深い場所の深さは約 8,000 m です。cm に直すと？","q":"8,000 m ＝ ？ cm","ans":"800,000 cm","wrong":["80,000 cm","8,000,000 cm","80 cm","8,000 cm","80,000,000 cm"],"exp":"1 m ＝ 100 cm なので、8,000 × 100 ＝ 800,000 cm です。"},
+      {"level":"high","levelName":"高校生","cat":"length","catName":"長さ","sub":"地学","context":"【地学】オゾン層が多く存在する高度 25 km を m に直すと？","q":"25 km ＝ ？ m","ans":"25,000 m","wrong":["2,500 m","250,000 m","250 m","0.025 m","2,500,000 m"],"exp":"25 × 1,000 ＝ 25,000 m です。"},
+
+    // --- 宇宙コース（年・光年） ---
+      {
+        level: 'space', levelName: '宇宙コース', cat: 'time', catName: '時間', sub: '天文学',
+        context: '1年（365日）を秒に直してみましょう。',
+        q: '1年 ＝ ？ 秒',
+        ans: '31,536,000 秒',
+        wrong: ['525,600 秒', '8,760 秒', '3,153,600 秒', '315,360,000 秒', '86,400 秒'],
+        exp: '365日 × 24時間 × 3,600秒 ＝ 31,536,000秒（約3.15×10^7秒）です。（525,600は「分」、8,760は「時間」です）'
+      },
+      {
+        level: 'space', levelName: '宇宙コース', cat: 'length', catName: '長さ', sub: '天文学',
+        context: '1光年（9.46×10^15 m）を km に直してみましょう。',
+        q: '1光年 ＝ ？ km',
+        ans: '9.46 × 10<sup>12</sup> km',
+        wrong: [
+          '9.46 × 10<sup>18</sup> km',
+          '9.46 × 10<sup>13</sup> km',
+          '9.46 × 10<sup>11</sup> km',
+          '9.46 × 10<sup>15</sup> km',
+          '9.46 × 10<sup>9</sup> km'
+        ],
+        exp: '1,000 m ＝ 1 km なので、10^3 で割って 9.46 × 10^12 km（約9兆4600億km）です。'
+      },
+      {
+        level: 'space', levelName: '宇宙コース', cat: 'length', catName: '長さ', sub: '天文学',
+        context: '地球から最も近い恒星プロキシマ・ケンタウリまでは約4.2光年です。kmに直すと？',
+        q: '4.2光年 ＝ ？ km',
+        ans: '3.97 × 10<sup>13</sup> km',
+        wrong: [
+          '3.97 × 10<sup>16</sup> km',
+          '3.97 × 10<sup>12</sup> km',
+          '3.97 × 10<sup>14</sup> km',
+          '2.25 × 10<sup>12</sup> km',
+          '3.97 × 10<sup>19</sup> km'
+        ],
+        exp: '4.2 × 9.46×10^12 km ＝ 39.732×10^12 ＝ 約 3.97 × 10^13 km（約40兆km）です。'
+      },
+      {
+        level: 'space', levelName: '宇宙コース', cat: 'speed', catName: '速さ', sub: '天文学',
+        context: '光の速さは「1年で1光年」進みます。これを m/秒 に直すと？',
+        q: '1光年/年 ＝ ？ m/秒',
+        ans: '3.0 × 10<sup>8</sup> m/秒',
+        wrong: [
+          '3.0 × 10<sup>5</sup> m/秒',
+          '3.0 × 10<sup>9</sup> m/秒',
+          '3.0 × 10<sup>7</sup> m/秒',
+          '3.0 × 10<sup>10</sup> m/秒',
+          '3.0 × 10<sup>6</sup> m/秒'
+        ],
+        exp: '9.46×10^15 m ÷ 31,536,000秒 ＝ 約 3.0 × 10^8 m/秒（秒速30万km）になります。'
+      },
+      {
+        level: 'space', levelName: '宇宙コース', cat: 'length', catName: '長さ', sub: '超難問',
+        context: '1光年を「mm」で表すと、どれくらいの桁になりますか？',
+        q: '1光年 ＝ ？ mm',
+        ans: '9.46 × 10<sup>18</sup> mm',
+        wrong: [
+          '9.46 × 10<sup>12</sup> mm',
+          '9.46 × 10<sup>17</sup> mm',
+          '9.46 × 10<sup>19</sup> mm',
+          '9.46 × 10<sup>16</sup> mm',
+          '9.46 × 10<sup>21</sup> mm'
+        ],
+        exp: '1 m ＝ 1,000 mm（10^3 mm）なので、9.46×10^15 × 10^3 ＝ 9.46 × 10^18 mm です。'
+      },
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"10年間（1ディケード）は何日あるでしょうか？（1年＝365日）","q":"10年 ＝ ？ 日","ans":"3,650 日","wrong":["365 日","36,500 日","87,600 日","3,600 日","365,000 日"],"exp":"1年 ＝ 365日なので、10 × 365 ＝ 3,650日 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"1世紀（100年）を時間に直してみましょう。（1年＝365日）","q":"100年 ＝ ？ 時間","ans":"876,000 時間","wrong":["87,600 時間","8,760,000 時間","36,500 時間","52,560,000 時間","8,760 時間"],"exp":"100年 ＝ 36,500日。1日 ＝ 24時間なので、36,500 × 24 ＝ 876,000時間 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"1年（365日）は何時間あるでしょうか？","q":"1年 ＝ ？ 時間","ans":"8,760 時間","wrong":["876 時間","87,600 時間","525,600 時間","3,650 時間","31,536,000 時間"],"exp":"365日 × 24時間 ＝ 8,760時間 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"1年（365日）は何分あるでしょうか？","q":"1年 ＝ ？ 分","ans":"525,600 分","wrong":["52,560 分","5,256,000 分","8,760 分","31,536,000 分","21,900 分"],"exp":"365日 × 24時間 × 60分 ＝ 525,600分 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"宇宙の年齢は約138億年（1.38×10^10年）です。秒に直すと約何秒？（1年＝3.15×10^7秒）","q":"1.38×10<sup>10</sup>年 ＝ ？ 秒","ans":"4.35 × 10<sup>17</sup> 秒","wrong":["4.35 × 10<sup>16</sup> 秒","4.35 × 10<sup>18</sup> 秒","4.35 × 10<sup>15</sup> 秒","4.35 × 10<sup>19</sup> 秒","4.35 × 10<sup>14</sup> 秒"],"exp":"1.38×10^10 × 3.1536×10^7 ＝ 約 4.35 × 10^17 秒 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"木星の1日はとても短く、約 9時間55分 です。分に直すと？","q":"9時間55分 ＝ ？ 分","ans":"595 分","wrong":["955 分","540 分","605 分","585 分","5,950 分"],"exp":"9 × 60 ＋ 55 ＝ 540 ＋ 55 ＝ 595分 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"time","catName":"時間","sub":"天文学","context":"太陽系が天の川銀河の中心を1周する「銀河年」は約2.2億年（2.2×10^8年）です。日に直すと？","q":"2.0×10<sup>8</sup>年 ＝ ？ 日","ans":"7.3 × 10<sup>10</sup> 日","wrong":["7.3 × 10<sup>9</sup> 日","7.3 × 10<sup>11</sup> 日","7.3 × 10<sup>8</sup> 日","7.3 × 10<sup>12</sup> 日","2.0 × 10<sup>10</sup> 日"],"exp":"2.0×10^8 × 365 ＝ 730×10^8 ＝ 7.3 × 10^10 日 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"1天文単位（1 AU：太陽と地球の平均距離）は約 1.50×10^8 km です。m に直すと？","q":"1 天文単位（1.50×10<sup>8</sup> km） ＝ ？ m","ans":"1.50 × 10<sup>11</sup> m","wrong":["1.50 × 10<sup>10</sup> m","1.50 × 10<sup>12</sup> m","1.50 × 10<sup>5</sup> m","1.50 × 10<sup>9</sup> m","1.50 × 10<sup>14</sup> m"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、1.50×10^8 × 10^3 ＝ 1.50 × 10^11 m です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"地球から月までの平均距離は約 384,000 km です。m に直すと？","q":"384,000 km ＝ ？ m","ans":"3.84 × 10<sup>8</sup> m","wrong":["3.84 × 10<sup>7</sup> m","3.84 × 10<sup>9</sup> m","3.84 × 10<sup>6</sup> m","3.84 × 10<sup>5</sup> m","3.84 × 10<sup>10</sup> m"],"exp":"384,000 × 1,000 ＝ 384,000,000 m ＝ 3.84 × 10^8 m です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"夜空で最も明るい恒星「シリウス」までは約 8.6 光年です。km に直すと？","q":"8.6光年 ＝ ？ km","ans":"8.14 × 10<sup>13</sup> km","wrong":["8.14 × 10<sup>12</sup> km","8.14 × 10<sup>14</sup> km","8.14 × 10<sup>16</sup> km","8.14 × 10<sup>15</sup> km","1.10 × 10<sup>12</sup> km"],"exp":"8.6 × 9.46×10^12 km ＝ 81.356×10^12 ＝ 約 8.14 × 10^13 km です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"こと座の1等星「ベガ（織姫星）」までは約 25 光年です。km に直すと？","q":"25光年 ＝ ？ km","ans":"2.37 × 10<sup>14</sup> km","wrong":["2.37 × 10<sup>13</sup> km","2.37 × 10<sup>15</sup> km","2.37 × 10<sup>17</sup> km","2.37 × 10<sup>12</sup> km","3.78 × 10<sup>11</sup> km"],"exp":"25 × 9.46×10^12 km ＝ 236.5×10^12 ＝ 約 2.37 × 10^14 km です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"天の川銀河の直径は約 10万光年（1.0×10^5光年）です。m に直すと？","q":"1.0×10<sup>5</sup>光年 ＝ ？ m","ans":"9.46 × 10<sup>20</sup> m","wrong":["9.46 × 10<sup>17</sup> m","9.46 × 10<sup>19</sup> m","9.46 × 10<sup>21</sup> m","9.46 × 10<sup>18</sup> m","9.46 × 10<sup>23</sup> m"],"exp":"1光年 ＝ 9.46×10^15 m なので、1.0×10^5 × 9.46×10^15 ＝ 9.46 × 10^20 m です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"隣のアンドロメダ銀河までは約 250万光年（2.5×10^6光年）です。km に直すと？","q":"2.5×10<sup>6</sup>光年 ＝ ？ km","ans":"2.37 × 10<sup>19</sup> km","wrong":["2.37 × 10<sup>18</sup> km","2.37 × 10<sup>20</sup> km","2.37 × 10<sup>22</sup> km","2.37 × 10<sup>17</sup> km","2.37 × 10<sup>21</sup> km"],"exp":"2.5×10^6 × 9.46×10^12 ＝ 23.65×10^18 ＝ 約 2.37 × 10^19 km です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"木星と太陽の距離は約 5.2 天文単位（1 AU ＝ 1.50×10^8 km）です。km に直すと？","q":"5.2 天文単位 ＝ ？ km","ans":"7.80 × 10<sup>8</sup> km","wrong":["7.80 × 10<sup>7</sup> km","7.80 × 10<sup>9</sup> km","7.80 × 10<sup>11</sup> km","2.88 × 10<sup>7</sup> km","7.80 × 10<sup>10</sup> km"],"exp":"5.2 × 1.50×10^8 km ＝ 7.80 × 10^8 km（約7億8000万km）です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"海王星と太陽の距離は約 30 天文単位（1 AU ＝ 1.50×10^8 km）です。km に直すと？","q":"30 天文単位 ＝ ？ km","ans":"4.50 × 10<sup>9</sup> km","wrong":["4.50 × 10<sup>8</sup> km","4.50 × 10<sup>10</sup> km","4.50 × 10<sup>12</sup> km","5.00 × 10<sup>6</sup> km","4.50 × 10<sup>7</sup> km"],"exp":"30 × 1.50×10^8 km ＝ 45.0×10^8 ＝ 4.50 × 10^9 km（約45億km）です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"1光年（9.46×10^15 m）を cm に直すとどれくらいの桁になる？","q":"1光年 ＝ ？ cm","ans":"9.46 × 10<sup>17</sup> cm","wrong":["9.46 × 10<sup>13</sup> cm","9.46 × 10<sup>16</sup> cm","9.46 × 10<sup>18</sup> cm","9.46 × 10<sup>19</sup> cm","9.46 × 10<sup>20</sup> cm"],"exp":"1 m ＝ 100 cm（10^2 cm）なので、9.46×10^15 × 10^2 ＝ 9.46 × 10^17 cm です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"length","catName":"長さ","sub":"天文学","context":"太陽の直径は約 139万 km（1.39×10^6 km）です。m に直すと？","q":"1.39×10<sup>6</sup> km ＝ ？ m","ans":"1.39 × 10<sup>9</sup> m","wrong":["1.39 × 10<sup>8</sup> m","1.39 × 10<sup>10</sup> m","1.39 × 10<sup>3</sup> m","1.39 × 10<sup>11</sup> m","1.39 × 10<sup>7</sup> m"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、1.39×10^6 × 10^3 ＝ 1.39 × 10^9 m です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"太陽系は天の川銀河の中を秒速約 220 km で移動しています。時速にすると？","q":"秒速 220 km ＝ 時速 ？ km","ans":"792,000 km/時","wrong":["13,200 km/時","79,200 km/時","7,920,000 km/時","61.1 km/時","792 km/時"],"exp":"220 × 3,600秒 ＝ 時速 792,000 km（約79万km/時）です！"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"無人探査機ボイジャー1号は太陽系を秒速約 17 km で飛び続けています。1日（86,400秒）で何 km 進む？","q":"秒速 17 km で 1日 ＝ ？ km","ans":"1,468,800 km","wrong":["61,200 km","146,880 km","14,688,000 km","24,480 km","1,020 km"],"exp":"17 × 86,400秒 ＝ 1,468,800 km（約147万km）毎日進んでいます。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"国際宇宙ステーション（ISS）は地球の周りを秒速約 7.7 km で周回しています。分速何 km？","q":"秒速 7.7 km ＝ 分速 ？ km","ans":"462 km/分","wrong":["46.2 km/分","4,620 km/分","27,720 km/分","770 km/分","0.13 km/分"],"exp":"1分 ＝ 60秒なので、7.7 × 60 ＝ 462 km/分 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"光の速さ 3.0×10^5 km/s を時速（km/時）に直すと？","q":"3.0×10<sup>5</sup> km/s ＝ ？ km/時","ans":"1.08 × 10<sup>9</sup> km/時","wrong":["1.08 × 10<sup>8</sup> km/時","1.08 × 10<sup>10</sup> km/時","1.80 × 10<sup>7</sup> km/時","1.08 × 10<sup>12</sup> km/時","8.33 × 10<sup>1</sup> km/時"],"exp":"3.0×10^5 × 3,600秒 ＝ 10,800×10^5 ＝ 1.08 × 10^9 km/時（時速約10億8000万km）です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"太陽から噴き出す太陽風の速さは秒速約 400 km です。分速にすると何 km？","q":"秒速 400 km ＝ 分速 ？ km","ans":"24,000 km/分","wrong":["2,400 km/分","240,000 km/分","1,440,000 km/分","6.67 km/分","4,000 km/分"],"exp":"400 × 60 ＝ 24,000 km/分 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"太陽風の速さ（秒速 400 km）は、時速にすると何 km？","q":"秒速 400 km ＝ 時速 ？ km","ans":"1,440,000 km/時","wrong":["24,000 km/時","144,000 km/時","14,400,000 km/時","111.1 km/時","400,000 km/時"],"exp":"400 × 3,600 ＝ 1,440,000 km/時（時速144万km）です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"地球の公転速度（秒速 30 km）を時速に直すと？","q":"秒速 30 km ＝ 時速 ？ km","ans":"108,000 km/時","wrong":["1,800 km/時","10,800 km/時","1,080,000 km/時","8.33 km/時","30,000 km/時"],"exp":"30 × 3,600 ＝ 108,000 km/時 です。"},
+      {"level":"space","levelName":"宇宙コース","cat":"speed","catName":"速さ","sub":"天文学","context":"ハレー彗星が太陽に最接近するときの速さは秒速約 54 km です。分速何 km？","q":"秒速 54 km ＝ 分速 ？ km","ans":"3,240 km/分","wrong":["324 km/分","32,400 km/分","194,400 km/分","0.9 km/分","5,400 km/分"],"exp":"54 × 60 ＝ 3,240 km/分 です。"},
+
+      // --- ドラゴンボールコース ---
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"修行","context":"精神と時の部屋での1日は、地球の1年（365日）と同じ長さです。地球の1年は何時間？","q":"365日 ＝ ？ 時間","ans":"8,760 時間","wrong":["876 時間","87,600 時間","3,650 時間","21,900 時間","525,600 時間"],"exp":"1日 ＝ 24時間なので、365 × 24 ＝ 8,760時間 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"修行","context":"精神と時の部屋で2日間修行すると、地球では2年が過ぎます。地球では何日？","q":"2年 ＝ ？ 日","ans":"730 日","wrong":["365 日","73 日","7,300 日","48 日","720 日"],"exp":"1年 ＝ 365日なので、2 × 365 ＝ 730日 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"バトル","context":"フュージョン（ゴテンクスやゴジータ）の合体持続時間は30分です。秒に直すと？","q":"30分 ＝ ？ 秒","ans":"1,800 秒","wrong":["3,000 秒","180 秒","300 秒","18,000 秒","3,600 秒"],"exp":"1分 ＝ 60秒なので、30 × 60 ＝ 1,800秒 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"バトル","context":"ナメック星爆発まであと5分！フリーザとの死闘の残り時間を秒に直すと？","q":"5分 ＝ ？ 秒","ans":"300 秒","wrong":["500 秒","50 秒","30 秒","3,000 秒","180 秒"],"exp":"1分 ＝ 60秒なので、5 × 60 ＝ 300秒 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"バトル","context":"ポタラによる合体（界王神以外）の制限時間は1時間です。秒に直すと？","q":"1時間 ＝ ？ 秒","ans":"3,600 秒","wrong":["60 秒","600 秒","360 秒","36,000 秒","1,000 秒"],"exp":"1時間 ＝ 60分、1分 ＝ 60秒なので、60 × 60 ＝ 3,600秒 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"冒険","context":"地球のドラゴンボールが石から元の姿に戻るまで1年かかります。分に直すと？","q":"1年 ＝ ？ 分","ans":"525,600 分","wrong":["52,560 分","5,256,000 分","8,760 分","31,536,000 分","21,900 分"],"exp":"1年 ＝ 365日 × 24時間 × 60分 ＝ 525,600分 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"宇宙","context":"ナメック星の1年は地球の130日です。地球の390日（ナメック星の3年）は何時間？","q":"390日 ＝ ？ 時間","ans":"9,360 時間","wrong":["936 時間","93,600 時間","3,900 時間","23,400 時間","4,680 時間"],"exp":"1日 ＝ 24時間なので、390 × 24 ＝ 9,360時間 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"time","catName":"時間","sub":"バトル","context":"高い倍率の界王拳を維持できる限界時間を 0.25分 とすると、何秒になりますか？","q":"0.25分 ＝ ？ 秒","ans":"15 秒","wrong":["25 秒","2.5 秒","150 秒","12 秒","45 秒"],"exp":"1分 ＝ 60秒なので、0.25 × 60 ＝ 15秒 です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"修行","context":"聖地カリンにそびえ立つカリン塔の高さは約 8,000 m です。km に直すと？","q":"8,000 m ＝ ？ km","ans":"8 km","wrong":["80 km","0.8 km","800 km","8,000,000 km","0.08 km"],"exp":"1,000 m ＝ 1 km なので、8,000 ÷ 1,000 ＝ 8 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"あの世","context":"界王星へと続く「蛇の道」の長さは約 100万 km（1.0×10^6 km）です。m に直すと？","q":"1.0×10<sup>6</sup> km ＝ ？ m","ans":"1.0 × 10<sup>9</sup> m","wrong":["1.0 × 10<sup>8</sup> m","1.0 × 10<sup>10</sup> m","1.0 × 10<sup>3</sup> m","1.0 × 10<sup>7</sup> m","1.0 × 10<sup>12</sup> m"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、1.0×10^6 × 10^3 ＝ 1.0 × 10^9 m です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"冒険","context":"ドラゴンボール（四星球）の直径を 7.5 cm とすると、mm に直すと何 mm？","q":"7.5 cm ＝ ？ mm","ans":"75 mm","wrong":["750 mm","0.75 mm","7,500 mm","7.5 mm","0.075 mm"],"exp":"1 cm ＝ 10 mm なので、7.5 × 10 ＝ 75 mm です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"バトル","context":"サイヤ人が満月を見て大猿に変身したときの身長は約 15 m です。cm に直すと？","q":"15 m ＝ ？ cm","ans":"1,500 cm","wrong":["150 cm","15,000 cm","1.5 cm","0.15 cm","150,000 cm"],"exp":"1 m ＝ 100 cm なので、15 × 100 ＝ 1,500 cm です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"冒険","context":"神龍（シェンロン）の全長を約 3.5 km とすると、m に直すと何 m？","q":"3.5 km ＝ ？ m","ans":"3,500 m","wrong":["350 m","35,000 m","35 m","0.0035 m","350,000 m"],"exp":"1 km ＝ 1,000 m なので、3.5 × 1,000 ＝ 3,500 m です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"冒険","context":"食べると一瞬で傷が治る仙豆1粒の長さを 1.2 cm とすると、mm に直すと？","q":"1.2 cm ＝ ？ mm","ans":"12 mm","wrong":["120 mm","0.12 mm","1,200 mm","1.2 mm","0.012 mm"],"exp":"1 cm ＝ 10 mm なので、1.2 × 10 ＝ 12 mm です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"宇宙","context":"ナメック星までの遠い宇宙の距離 4.0×10^14 km を m に直すと？","q":"4.0×10<sup>14</sup> km ＝ ？ m","ans":"4.0 × 10<sup>17</sup> m","wrong":["4.0 × 10<sup>11</sup> m","4.0 × 10<sup>16</sup> m","4.0 × 10<sup>18</sup> m","4.0 × 10<sup>15</sup> m","4.0 × 10<sup>20</sup> m"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、4.0×10^14 × 10^3 ＝ 4.0 × 10^17 m です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"length","catName":"長さ","sub":"冒険","context":"筋斗雲に乗って飛ぶ高度 2,400 m を km に直してみましょう。","q":"2,400 m ＝ ？ km","ans":"2.4 km","wrong":["24 km","0.24 km","240 km","2,400,000 km","0.024 km"],"exp":"1,000 m ＝ 1 km なので、2,400 ÷ 1,000 ＝ 2.4 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"冒険","context":"筋斗雲の最高速度はマッハ1.5（時速 1,800 km）です！分速に直すと何 km？","q":"時速 1,800 km ＝ 分速 ？ km","ans":"30 km/分","wrong":["300 km/分","3 km/分","108,000 km/分","0.5 km/分","180 km/分"],"exp":"1時間は60分なので、1,800 ÷ 60 ＝ 分速 30 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"バトル","context":"舞空術で時速 360 km の速さで空を飛ぶとき、秒速にすると何 m？","q":"時速 360 km ＝ 秒速 ？ m","ans":"100 m/秒","wrong":["1,296 m/秒","10 m/秒","1,000 m/秒","6 m/秒","6,000 m/秒"],"exp":"360,000 m ÷ 3,600秒 ＝ 秒速 100 m です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"バトル","context":"桃白白が投げた柱の移動速度を時速 10,800 km とすると、秒速何 km？","q":"時速 10,800 km ＝ 秒速 ？ km","ans":"3 km/秒","wrong":["30 km/秒","180 km/秒","0.3 km/秒","3,000 km/秒","38,880 km/秒"],"exp":"1時間 ＝ 3,600秒なので、10,800 ÷ 3,600 ＝ 秒速 3 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"宇宙","context":"カプセルコーポレーションの宇宙船の速さが秒速 25 km のとき、時速何 km？","q":"秒速 25 km ＝ 時速 ？ km","ans":"90,000 km/時","wrong":["1,500 km/時","9,000 km/時","900,000 km/時","6.94 km/時","90 km/時"],"exp":"1時間 ＝ 3,600秒なので、25 × 3,600 ＝ 時速 90,000 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"バトル","context":"かめはめ波の飛ぶ速さを秒速 1,500 m とすると、時速何 km になりますか？","q":"秒速 1,500 m ＝ 時速 ？ km","ans":"5,400 km/時","wrong":["416.7 km/時","540 km/時","54,000 km/時","90 km/時","5,400,000 km/時"],"exp":"1,500 × 3,600 ＝ 5,400,000 m ＝ 時速 5,400 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"冒険","context":"ホイポイカプセルのジェット機が分速 15 km で飛んでいます。時速に直すと？","q":"分速 15 km ＝ 時速 ？ km","ans":"900 km/時","wrong":["90 km/時","9,000 km/時","0.25 km/時","54,000 km/時","150 km/時"],"exp":"1時間 ＝ 60分なので、15 × 60 ＝ 時速 900 km です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"speed","catName":"速さ","sub":"バトル","context":"光の速さと同じ速度の気功波（3.0×10^8 m/s）を km/s に直すと？","q":"3.0×10<sup>8</sup> m/s ＝ ？ km/s","ans":"3.0 × 10<sup>5</sup> km/s","wrong":["3.0 × 10<sup>11</sup> km/s","3.0 × 10<sup>6</sup> km/s","3.0 × 10<sup>4</sup> km/s","3.0 × 10<sup>2</sup> km/s","3.0 × 10<sup>10</sup> km/s"],"exp":"1 km ＝ 1,000 m（10^3 m）なので、10^3 で割って 3.0 × 10^5 km/s です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"weight","catName":"重さ","sub":"修行","context":"亀仙流の修行で悟空とクリリンが背負った甲羅の重さは 40 kg です。g に直すと？","q":"40 kg ＝ ？ g","ans":"40,000 g","wrong":["4,000 g","400,000 g","400 g","0.04 g","4,000,000 g"],"exp":"1 kg ＝ 1,000 g なので、40 × 1,000 ＝ 40,000 g です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"weight","catName":"重さ","sub":"修行","context":"界王星は重力が地球の10倍！地球で 60 kg の人が感じる 600 kg の重さを t（トン）に直すと？","q":"600 kg ＝ ？ t","ans":"0.6 t","wrong":["6 t","0.06 t","60 t","600,000 t","0.006 t"],"exp":"1,000 kg ＝ 1 t なので、600 ÷ 1,000 ＝ 0.6 t です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"weight","catName":"重さ","sub":"修行","context":"あの世の武道大会の修行で悟空が手足につけた重りは合計 10 t です。kg に直すと？","q":"10 t ＝ ？ kg","ans":"10,000 kg","wrong":["1,000 kg","100,000 kg","100 kg","0.01 kg","1,000,000 kg"],"exp":"1 t ＝ 1,000 kg なので、10 × 1,000 ＝ 10,000 kg です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"weight","catName":"重さ","sub":"修行","context":"100倍重力の宇宙船では 65 kg の体が 6,500 kg 相当になります。t に直すと？","q":"6,500 kg ＝ ？ t","ans":"6.5 t","wrong":["65 t","0.65 t","650 t","0.065 t","6,500,000 t"],"exp":"1,000 kg ＝ 1 t なので、6,500 ÷ 1,000 ＝ 6.5 t です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"area","catName":"面積","sub":"バトル","context":"天下一武道会の武舞台の面積は 400 m² です。cm² に直すと？","q":"400 m² ＝ ？ cm²","ans":"4,000,000 cm²","wrong":["40,000 cm²","400,000 cm²","40,000,000 cm²","4,000 cm²","4 cm²"],"exp":"1 m ＝ 100 cm なので、1 m² ＝ 10,000 cm²。400 × 10,000 ＝ 4,000,000 cm² です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"volume","catName":"かさ・体積","sub":"冒険","context":"カプセルコーポレーションにあるメディカルマシーン（治療装置）の容量 2.5 m³ を L に直すと？","q":"2.5 m³ ＝ ？ L","ans":"2,500 L","wrong":["250 L","25,000 L","25 L","0.0025 L","250,000 L"],"exp":"1 m³ ＝ 1,000 L なので、2.5 × 1,000 ＝ 2,500 L です。"},
+      {"level":"dbz","levelName":"ドラゴンボール","cat":"area","catName":"面積","sub":"修行","context":"カメハウスの周りの砂浜の面積 0.05 km² を m² に直すと？","q":"0.05 km² ＝ ？ m²","ans":"50,000 m²","wrong":["50 m²","500 m²","5,000 m²","500,000 m²","5 m²"],"exp":"1 km ＝ 1,000 m なので、1 km² ＝ 1,000,000 m²。0.05 × 1,000,000 ＝ 50,000 m² です。"}
+    ];
+
+    let currentProblem = null;
+    let currentChoices = [];
+    let score = 0;
+    let total = 0;
+    let streak = 0;
+    let isAnswered = false;
+    let showHint = true;
+    let soundEnabled = true;
+    let historyList = [];
+    let historyFilter = 'all';
+    let autoNextTimer = null;
+    let audioCtx = null;
+
+    // テストモード・強制復習モード状態
+    let isTestMode = false;
+    let testStreak = 0;
+    let testTotalAnswered = 0;
+    let testAllowCalc = true;
+    let savedHintBeforeTest = true;
+    let boltClickCount = 0;
+    let boltClickTimer = null;
+
+    let wrongCount = 0;
+    let wrongPool = [];
+    let isReviewMode = false;
+    let reviewQueue = [];
+    let reviewIndex = 0;
+    let pendingStartReview = false;
+    let savedHintBeforeReview = true;
+
+    // 効果音（Web Audio API）
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) audioCtx = new Ctx();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().catch(() => {});
+      }
+      return audioCtx;
+    }
+
+    function playCorrectSound() {
+      if (!soundEnabled) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const notes = [659.25, 880]; // E5 -> A5（ピンポーン♪）
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.11);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.11);
+        gain.gain.exponentialRampToValueAtTime(0.18, now + idx * 0.11 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.11);
+        osc.stop(now + idx * 0.11 + 0.3);
+      });
+    }
+
+    function playWrongSound() {
+      if (!soundEnabled) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const notes = [200, 165]; // ブブー
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.2, now + idx * 0.14 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.14 + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.14);
+        osc.stop(now + idx * 0.14 + 0.22);
+      });
+    }
+
+    // 配列シャッフル（Fisher-Yates）
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // 問題に応じた基本単位変換のヒントを生成（合成変換は書かない）
+    function getBasicHints(p) {
+      const q = p.q;
+      const hints = [];
+      const add = (h) => {
+        if (!hints.includes(h)) hints.push(h);
+      };
+
+      const hasYear = q.includes('年') && !q.includes('年速');
+      const hasWeek = q.includes('週間');
+      const hasDay = q.includes('日');
+      const hasHour = q.includes('時間') || q.includes('時速') || q.includes('/時');
+      const hasMin = q.includes('分');
+      const hasSec = q.includes('秒') || q.includes('/s');
+
+      // 時間・速さの時間部分
+      if (hasYear) {
+        add('1年 ＝ 365日');
+        if (hasSec) {
+          add('1日 ＝ 24時間');
+          add('1時間 ＝ 60分');
+          add('1分 ＝ 60秒');
+        }
+      }
+      if (hasWeek) add('1週間 ＝ 7日');
+      if (hasDay) {
+        add('1日 ＝ 24時間');
+        if (hasSec) {
+          add('1時間 ＝ 60分');
+          add('1分 ＝ 60秒');
+        }
+      }
+      if (hasHour && (hasMin || hasSec)) {
+        add('1時間 ＝ 60分');
+      }
+      if (hasSec && (hasMin || hasHour)) {
+        add('1分 ＝ 60秒');
+      }
+
+      // 長さ・速さの距離部分
+      if (p.cat === 'length' || p.cat === 'speed') {
+        const hasLy = q.includes('光年');
+        const hasKm = q.includes('km');
+        const hasCm = q.includes('cm');
+        const hasMm = q.includes('mm');
+        const hasM = /(^|[^a-zA-Z])m([^a-zA-Z]|$)/.test(q.replace(/km|cm|mm/g, ''));
+
+        const hasUm = q.includes('μm');
+        const hasNm = q.includes('nm');
+        const hasAu = q.includes('天文単位');
+
+        if (hasLy) add('1光年 ＝ 9.46 × 10<sup>15</sup> m');
+        if (hasAu) add('1 天文単位 ＝ 1.50 × 10<sup>8</sup> km');
+        if (hasKm && (hasM || hasCm || hasMm || hasLy)) add('1 km ＝ 1,000 m');
+        if (hasCm && (hasM || hasKm || hasLy || hasUm)) add('1 m ＝ 100 cm');
+        if (hasMm) {
+          if (hasM || hasKm || hasLy) add('1 m ＝ 100 cm');
+          add('1 cm ＝ 10 mm');
+        }
+        if (hasUm) {
+          if (hasM || hasNm) add('1 m ＝ 10<sup>6</sup> μm');
+          if (hasMm || hasCm) add('1 mm ＝ 1,000 μm');
+        }
+        if (hasNm) {
+          if (hasM) add('1 m ＝ 10<sup>9</sup> nm');
+          if (hasUm) add('1 μm ＝ 1,000 nm');
+        }
+      }
+
+      // 重さ
+      if (p.cat === 'weight') {
+        if (q.includes('t')) add('1 t ＝ 1,000 kg');
+        if (q.includes('kg') && /(^|[^a-zA-Z])g/.test(q.replace(/kg|mg|μg/g, ''))) add('1 kg ＝ 1,000 g');
+        if (q.includes('mg') && /(^|[^a-zA-Z])g/.test(q.replace(/kg|mg|μg/g, ''))) add('1 g ＝ 1,000 mg');
+        if (q.includes('μg')) add('1 mg ＝ 1,000 μg');
+      }
+
+      // かさ・体積
+      if (p.cat === 'volume') {
+        if (q.includes('m³')) add('1 m³ ＝ 1,000 L');
+        if (q.includes('cm³')) {
+          add('1 cm³ ＝ 1 mL');
+          if (/(^|[^a-zA-Z])L/.test(q.replace(/dL|mL|μL/g, ''))) add('1 L ＝ 1,000 mL');
+        }
+        if (q.includes('dL')) {
+          if (/(^|[^a-zA-Z])L/.test(q.replace(/dL|mL|μL/g, ''))) add('1 L ＝ 10 dL');
+          if (q.includes('mL')) add('1 dL ＝ 100 mL');
+        } else if (q.includes('μL')) {
+          add('1 mL ＝ 1,000 μL');
+        } else if (q.includes('mL')) {
+          add('1 L ＝ 1,000 mL');
+        }
+      }
+
+      // 面積
+      if (p.cat === 'area') {
+        if (q.includes('cm²')) add('1 m ＝ 100 cm');
+        if (q.includes('mm²')) {
+          add('1 m ＝ 100 cm');
+          add('1 cm ＝ 10 mm');
+        }
+        if (/(^|[^a-zA-Z])a([^a-zA-Z]|$)/.test(q.replace(/ha/g, ''))) add('1 a ＝ 10 m × 10 m');
+        if (q.includes('ha')) add('1 ha ＝ 100 m × 100 m');
+        if (q.includes('km²')) add('1 km ＝ 1,000 m');
+      }
+
+      return hints;
+    }
+
+    // 待機中のヒント表示を描画
+    function renderIdleFeedback() {
+      if (isAnswered || !currentProblem) return;
+      const feedbackCard = document.getElementById('feedbackCard');
+      const feedbackBody = document.getElementById('feedbackBody');
+      feedbackCard.className = 'feedback-card';
+      if (showHint) {
+        const hints = getBasicHints(currentProblem);
+        const hintChips = hints.map(h => `<span class="hint-chip">${h}</span>`).join('');
+        feedbackBody.innerHTML =
+          '<div class="feedback-idle">' +
+            '<div class="hint-title">💡 ヒント（基本の単位変換）</div>' +
+            `<div class="hint-list">${hintChips}</div>` +
+            '<div class="hint-sub">※ キーボードの <strong>1〜6</strong> キーで選択、<strong>Enter</strong> キーで次の問題へ進めます。</div>' +
+          '</div>';
+      } else {
+        feedbackBody.innerHTML =
+          '<div class="feedback-idle" style="text-align:center;">' +
+            '<div style="font-weight:700; color:var(--text-secondary);">ヒント非表示中</div>' +
+            '<div class="hint-sub">右の6つの選択肢から正しい答えを選んでください。<br>※ キーボードの <strong>1〜6</strong> キーで選択、<strong>Enter</strong> キーで次の問題へ進めます。</div>' +
+          '</div>';
+      }
+    }
+
+    const RECENT_LIMIT = 10;
+    let recentBaseProblems = [];
+
+    // 数値フォーマット（逆変換問題の誤答生成用）
+    function formatReverseNum(num) {
+      const clean = parseFloat(num.toPrecision(10));
+      return clean.toLocaleString('ja-JP', { maximumFractionDigits: 8 });
+    }
+
+    // 誤答5つを生成（桁ミスや×60/÷60・×3.6/÷3.6など）
+    function makeReverseWrongs(numStr, unit, cat) {
+      const wrongs = [];
+      const supMatch = numStr.match(/^([\d.]+)\s*×\s*10<sup>([+-]?\d+)<\/sup>$/);
+      if (supMatch) {
+        const mant = supMatch[1];
+        const exp = parseInt(supMatch[2], 10);
+        const offsets = [1, -1, 2, -2, 3, -3, 6, -6];
+        for (const off of offsets) {
+          const cand = `${mant} × 10<sup>${exp + off}</sup> ${unit}`;
+          if (!wrongs.includes(cand)) wrongs.push(cand);
+          if (wrongs.length === 5) break;
+        }
+        return wrongs;
+      }
+
+      const val = Number(numStr.replace(/,/g, ''));
+      const ansLabel = `${formatReverseNum(val)} ${unit}`;
+      const factors = [10, 0.1, 100, 0.01, 1000, 0.001];
+      if (cat === 'speed') factors.unshift(3.6, 1 / 3.6, 60, 1 / 60);
+      if (cat === 'time') factors.unshift(60, 1 / 60);
+
+      for (const f of factors) {
+        const v = parseFloat((val * f).toPrecision(10));
+        if (!isFinite(v) || v <= 0) continue;
+        // 循環小数や極端に長い小数はスキップして綺麗な候補を優先
+        const formatted = formatReverseNum(v);
+        if (!Number.isInteger(parseFloat((v * 10000).toPrecision(10))) || formatted.replace(/[,.]/g, '').length > 9) continue;
+        const cand = `${formatted} ${unit}`;
+        if (cand !== ansLabel && !wrongs.includes(cand)) {
+          wrongs.push(cand);
+        }
+        if (wrongs.length === 5) break;
+      }
+
+      // 5個に満たない場合は10倍系で補完
+      let mult = 10000;
+      while (wrongs.length < 5) {
+        const cand = `${formatReverseNum(val * mult)} ${unit}`;
+        if (cand !== ansLabel && !wrongs.includes(cand)) wrongs.push(cand);
+        mult *= 10;
+      }
+      return wrongs;
+    }
+
+    // 入れ替え問題用の問題文を生成（答えのネタバレを防ぎ、逆向きの問いかけにする）
+    function makeReverseContext(p, newLeftLabel, targetLabel) {
+      const tagMatch = p.context.match(/^【[^】]+】/);
+      const tag = tagMatch ? tagMatch[0] + ' ' : '';
+      return `${tag}${newLeftLabel} を ${targetLabel} に直すとどれくらいになりますか？`;
+    }
+
+    // 問題と正解を入れ替えた逆変換問題を生成（単一単位の変換のみ）
+    function buildReverseProblem(p) {
+      const parts = p.q.split(' ＝ ');
+      if (parts.length !== 2) return null;
+      const left = parts[0].trim();
+      const right = parts[1].trim();
+      if (left.includes('で')) return null;
+
+      // パターン1: 速さ表記（例: 時速 36 km ＝ 秒速 ？ m）
+      const leftSpeed = left.match(/^(秒速|分速|時速)\s*([\d.,]+)\s*([a-zA-Z]+)$/);
+      const rightSpeed = right.match(/^(秒速|分速|時速)\s*？\s*([a-zA-Z]+)$/);
+      if (leftSpeed && rightSpeed) {
+        const ansSpeed = p.ans.match(/^([\d.,]+)\s*([a-zA-Z]+)\/(秒|分|時)$/);
+        if (!ansSpeed) return null;
+        const unitMap = { '秒': '秒速', '分': '分速', '時': '時速' };
+        const ansPrefix = unitMap[ansSpeed[3]];
+        const leftTimeChar = leftSpeed[1].charAt(0); // 秒/分/時
+        const newAnsUnit = `${leftSpeed[3]}/${leftTimeChar}`;
+        const val = Number(leftSpeed[2].replace(/,/g, ''));
+        const newAns = `${formatReverseNum(val)} ${newAnsUnit}`;
+        const newWrong = makeReverseWrongs(leftSpeed[2], newAnsUnit, p.cat);
+        if (newWrong.length !== 5) return null;
+
+        const newLeft = `${ansPrefix} ${ansSpeed[1]} ${ansSpeed[2]}`;
+        const targetLabel = `${leftSpeed[1]}（${leftSpeed[3]}）`;
+
+        return {
+          ...p,
+          sub: `${p.sub}・逆変換`,
+          context: makeReverseContext(p, newLeft, targetLabel),
+          q: `${newLeft} ＝ ${leftSpeed[1]} ？ ${leftSpeed[3]}`,
+          ans: newAns,
+          wrong: newWrong,
+          exp: `${newLeft} ＝ ${newAns} です。（元の問題「${p.q} → ${p.ans}」の逆変換）`
+        };
+      }
+
+      // パターン2: 通常表記（例: 0.4時間 ＝ ？ 分 / 3.0×10^8 m/s ＝ ？ km/s）
+      const normLeft = left.replace(/×/g, ' × ').replace(/\s+/g, ' ');
+      const leftMatch = normLeft.match(/^([\d.,]+(?:\s×\s10<sup>[+-]?\d+<\/sup>)?)\s*([^\d\s]+)$/);
+      const rightMatch = right.match(/^？\s*([^\d\s]+)$/);
+      if (!leftMatch || !rightMatch) return null;
+
+      const numPart = leftMatch[1].trim();
+      const unitPart = leftMatch[2].trim();
+      let newAns;
+      if (numPart.includes('<sup>')) {
+        newAns = `${numPart} ${unitPart}`;
+      } else {
+        const val = Number(numPart.replace(/,/g, ''));
+        if (isNaN(val)) return null;
+        newAns = `${formatReverseNum(val)} ${unitPart}`;
+      }
+
+      const newWrong = makeReverseWrongs(numPart, unitPart, p.cat);
+      if (newWrong.length !== 5) return null;
+
+      return {
+        ...p,
+        sub: `${p.sub}・逆変換`,
+        context: makeReverseContext(p, p.ans, unitPart),
+        q: `${p.ans} ＝ ？ ${unitPart}`,
+        ans: newAns,
+        wrong: newWrong,
+        exp: `${p.ans} ＝ ${newAns} です。（元の問題「${p.q} → ${p.ans}」の逆変換）`
+      };
+    }
+
+    // 次の問題を出題
+    function nextProblem(isLevelSwitch = false) {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+
+      if (pendingStartReview) {
+        startReviewMode();
+        return;
+      }
+
+      document.getElementById('nextBtn').textContent = '次の問題へ ➔（Enter）';
+
+      if (isReviewMode) {
+        currentProblem = reviewQueue[reviewIndex];
+      } else {
+        const level = document.getElementById('levelSelect').value;
+        const cat = document.getElementById('categorySelect').value;
+        updateModePill();
+
+        let pool = PROBLEM_DB.filter(p => p.level === level && (cat === 'all' || p.cat === cat));
+        if (pool.length === 0) {
+          pool = PROBLEM_DB.filter(p => p.level === level);
+        }
+
+        let baseProblem;
+        let forceOriginal = false;
+
+        if (isLevelSwitch && level === 'space') {
+          const firstSpace = PROBLEM_DB.find(p => p.level === 'space' && p.q === '1光年 ＝ ？ km');
+          if (firstSpace) {
+            baseProblem = firstSpace;
+            forceOriginal = true;
+          }
+        }
+
+        if (!baseProblem) {
+          // 直近10問を除外（問題数が10問以下のコース/ジャンルでは pool.length - 1 問を除外）
+          let candidates = pool.filter(p => !recentBaseProblems.includes(p));
+          if (candidates.length === 0) {
+            const recentInPool = recentBaseProblems.filter(p => pool.includes(p));
+            const excludeCount = Math.min(RECENT_LIMIT, Math.max(0, pool.length - 1));
+            const toExclude = recentInPool.slice(-excludeCount);
+            candidates = pool.filter(p => !toExclude.includes(p));
+          }
+          baseProblem = candidates[Math.floor(Math.random() * candidates.length)];
+        }
+
+        recentBaseProblems = recentBaseProblems.filter(p => p !== baseProblem);
+        recentBaseProblems.push(baseProblem);
+        if (recentBaseProblems.length > RECENT_LIMIT) {
+          recentBaseProblems.shift();
+        }
+
+        // 50%の確率で問題と正解を入れ替えた問題を出題（ドラゴンボールコースと宇宙1問目は元の問題文をそのまま出題）
+        const reversed = (!forceOriginal && baseProblem.level !== 'dbz' && Math.random() < 0.5) ? buildReverseProblem(baseProblem) : null;
+        currentProblem = reversed || baseProblem;
+      }
+
+      isAnswered = false;
+
+      // 問題表示更新
+      document.getElementById('badgeLevel').textContent = currentProblem.levelName;
+      document.getElementById('badgeCat').textContent = currentProblem.catName;
+      document.getElementById('badgeSub').textContent = currentProblem.sub;
+      document.getElementById('contextText').innerHTML = currentProblem.context;
+      document.getElementById('questionText').innerHTML = currentProblem.q;
+
+      // 解説エリアに基本単位変換のヒントを表示
+      renderIdleFeedback();
+
+      // 6択生成・シャッフル
+      const rawChoices = [
+        { label: currentProblem.ans, isCorrect: true },
+        ...currentProblem.wrong.map(w => ({ label: w, isCorrect: false }))
+      ];
+      currentChoices = shuffle(rawChoices);
+
+      const grid = document.getElementById('choicesGrid');
+      grid.innerHTML = '';
+      currentChoices.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerHTML = `<span class="choice-key">${i + 1}</span><span>${choice.label}</span>`;
+        btn.onclick = () => selectChoice(i);
+        grid.appendChild(btn);
+      });
+
+      document.getElementById('nextBtn').disabled = true;
+    }
+
+    // 選択肢を選んだ時の処理
+    function selectChoice(selectedIndex) {
+      if (isAnswered) return;
+      isAnswered = true;
+      total++;
+
+      const chosen = currentChoices[selectedIndex];
+      const buttons = document.querySelectorAll('.choice-btn');
+
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (currentChoices[i].isCorrect) {
+          btn.classList.add('correct');
+        } else if (i === selectedIndex) {
+          btn.classList.add('wrong');
+        } else {
+          btn.classList.add('dimmed');
+        }
+      });
+
+      // 履歴に追加（最新が先頭）
+      historyList.unshift({
+        isCorrect: chosen.isCorrect,
+        q: currentProblem.q,
+        chosen: chosen.label,
+        ans: currentProblem.ans,
+        levelName: currentProblem.levelName,
+        catName: currentProblem.catName
+      });
+      document.getElementById('historyBtn').textContent = `📜 履歴 (${historyList.length})`;
+
+      const feedbackCard = document.getElementById('feedbackCard');
+      const feedbackBody = document.getElementById('feedbackBody');
+      if (chosen.isCorrect) {
+        score++;
+        streak++;
+        playCorrectSound();
+
+        if (isReviewMode) {
+          reviewIndex++;
+          const clearedReview = reviewIndex >= reviewQueue.length;
+          document.getElementById('testBadge').textContent = `🔁 強制復習：連続 ${reviewIndex} / ${reviewQueue.length}`;
+
+          feedbackCard.className = 'feedback-card is-correct';
+          feedbackBody.innerHTML =
+            `<div class="feedback-title">${clearedReview ? '🎉 全問連続正解！強制復習クリア！' : '⭕ 正解！（次の復習問題へ進みます…）'}</div>` +
+            `<div class="feedback-answer">答え：${currentProblem.ans}</div>` +
+            `<div class="feedback-exp">💡 ${currentProblem.exp}</div>`;
+
+          if (clearedReview) {
+            autoNextTimer = setTimeout(() => {
+              autoNextTimer = null;
+              finishReviewMode(true);
+            }, 700);
+          } else {
+            autoNextTimer = setTimeout(() => {
+              autoNextTimer = null;
+              nextProblem();
+            }, 950);
+          }
+          document.getElementById('nextBtn').disabled = clearedReview;
+        } else {
+          let clearedNow = false;
+          if (isTestMode) {
+            testTotalAnswered++;
+            testStreak++;
+            document.getElementById('testBadge').textContent = `🔥 テスト中：連続 ${testStreak} / 10`;
+            if (testStreak >= 10) clearedNow = true;
+          }
+
+          feedbackCard.className = 'feedback-card is-correct';
+          feedbackBody.innerHTML =
+            `<div class="feedback-title">${clearedNow ? '🎉 連続10問正解！テストクリア！' : '⭕ 正解！（自動で次の問題へ進みます…）'}</div>` +
+            `<div class="feedback-answer">答え：${currentProblem.ans}</div>` +
+            `<div class="feedback-exp">💡 ${currentProblem.exp}</div>`;
+
+          if (clearedNow) {
+            autoNextTimer = setTimeout(() => {
+              autoNextTimer = null;
+              finishTestMode(true);
+            }, 700);
+          } else {
+            autoNextTimer = setTimeout(() => {
+              autoNextTimer = null;
+              nextProblem();
+            }, 950);
+          }
+          document.getElementById('nextBtn').disabled = isTestMode && testStreak >= 10;
+        }
+      } else {
+        streak = 0;
+        playWrongSound();
+
+        if (isReviewMode) {
+          reviewIndex = 0;
+          reviewQueue = shuffle(wrongPool);
+          document.getElementById('testBadge').textContent = `🔁 強制復習：連続 0 / ${reviewQueue.length}`;
+          feedbackCard.className = 'feedback-card is-wrong';
+          feedbackBody.innerHTML =
+            '<div class="feedback-title">❌ おしい！最初からやり直しです！</div>' +
+            `<div class="feedback-answer">正解は <strong>${currentProblem.ans}</strong> です</div>` +
+            `<div class="feedback-exp">💡 ${currentProblem.exp}</div>`;
+          document.getElementById('nextBtn').disabled = false;
+        } else {
+          if (isTestMode) {
+            testTotalAnswered++;
+            testStreak = 0;
+            document.getElementById('testBadge').textContent = '🔥 テスト中：連続 0 / 10';
+          }
+
+          wrongCount++;
+          if (!wrongPool.some(p => p.q === currentProblem.q)) {
+            wrongPool.push(currentProblem);
+          }
+          document.getElementById('wrongCount').textContent = wrongCount;
+
+          if (wrongCount >= 10) {
+            pendingStartReview = true;
+            feedbackCard.className = 'feedback-card is-wrong';
+            feedbackBody.innerHTML =
+              '<div class="feedback-title">⚠️ 間違いが10問に達しました！強制復習モードに入ります！</div>' +
+              `<div class="feedback-answer">正解は <strong>${currentProblem.ans}</strong> です</div>` +
+              `<div class="feedback-exp">💡 ${currentProblem.exp}</div>`;
+            document.getElementById('nextBtn').textContent = '🔁 強制復習を開始する ➔（Enter）';
+          } else {
+            feedbackCard.className = 'feedback-card is-wrong';
+            feedbackBody.innerHTML =
+              '<div class="feedback-title">❌ おしい！</div>' +
+              `<div class="feedback-answer">正解は <strong>${currentProblem.ans}</strong> です</div>` +
+              `<div class="feedback-exp">💡 ${currentProblem.exp}</div>`;
+          }
+          document.getElementById('nextBtn').disabled = false;
+        }
+      }
+
+      document.getElementById('score').textContent = score;
+      document.getElementById('total').textContent = total;
+      document.getElementById('streak').textContent = streak;
+    }
+
+    // ==========================================
+    // テストモード・強制復習モード管理
+    // ==========================================
+    function openTestModal() {
+      if (isTestMode || isReviewMode) return;
+      closeMenu();
+      document.getElementById('testLevelSelect').value = document.getElementById('levelSelect').value;
+      document.getElementById('testCatSelect').value = document.getElementById('categorySelect').value;
+      document.getElementById('testModal').classList.add('is-open');
+    }
+
+    function closeTestModal() {
+      document.getElementById('testModal').classList.remove('is-open');
+    }
+
+    function updateModeLocks() {
+      const locked = isTestMode || isReviewMode;
+      document.getElementById('menuBtn').disabled = locked;
+      document.getElementById('historyBtn').disabled = locked;
+      document.getElementById('themeBtn').disabled = locked;
+      document.getElementById('hintBtn').disabled = locked;
+      const badge = document.getElementById('testBadge');
+      badge.classList.toggle('is-active', locked);
+      badge.classList.toggle('is-review', isReviewMode);
+      document.getElementById('calcLockOverlay').classList.toggle('is-active', isTestMode && !testAllowCalc);
+    }
+
+    function startTestMode() {
+      const level = document.getElementById('testLevelSelect').value;
+      const cat = document.getElementById('testCatSelect').value;
+      const calcVal = document.querySelector('input[name="testCalc"]:checked').value;
+
+      document.getElementById('levelSelect').value = level;
+      document.getElementById('categorySelect').value = cat;
+
+      isTestMode = true;
+      testStreak = 0;
+      testTotalAnswered = 0;
+      testAllowCalc = calcVal === 'use';
+      boltClickCount = 0;
+      if (!testAllowCalc) calcClear();
+
+      savedHintBeforeTest = showHint;
+      applyHintSetting(false);
+
+      document.getElementById('testBadge').textContent = '🔥 テスト中：連続 0 / 10';
+      updateModeLocks();
+      closeTestModal();
+      nextProblem(true);
+    }
+
+    function finishTestMode(cleared) {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+      if (boltClickTimer) {
+        clearTimeout(boltClickTimer);
+        boltClickTimer = null;
+      }
+
+      const usedCalcText = testAllowCalc ? '電卓使用' : '電卓なし';
+      const totalAns = testTotalAnswered;
+      const modeText = document.getElementById('currentModePill').textContent;
+
+      isTestMode = false;
+      boltClickCount = 0;
+      updateModeLocks();
+      applyHintSetting(savedHintBeforeTest);
+
+      if (cleared) {
+        document.getElementById('clearModalTitle').textContent = '🎉 テスト合格！';
+        document.getElementById('clearModalHeading').textContent = '連続10問正解達成！';
+        document.getElementById('testClearDesc').innerHTML =
+          `コース：<strong>${modeText}</strong>（${usedCalcText}）<br>` +
+          `合計回答数：<strong>${totalAns} 問</strong> で連続10問正解を達成しました！`;
+        document.getElementById('testClearModal').classList.add('is-open');
+      } else {
+        nextProblem();
+      }
+    }
+
+    function startReviewMode() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+      pendingStartReview = false;
+      savedHintBeforeReview = isTestMode ? savedHintBeforeTest : showHint;
+      isTestMode = false;
+      isReviewMode = true;
+      boltClickCount = 0;
+
+      reviewQueue = shuffle(wrongPool);
+      reviewIndex = 0;
+
+      applyHintSetting(true); // 強制復習モードではヒントはオン
+      document.getElementById('testBadge').textContent = `🔁 強制復習：連続 0 / ${reviewQueue.length}`;
+      updateModeLocks();
+      nextProblem();
+    }
+
+    function finishReviewMode(cleared) {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+      if (boltClickTimer) {
+        clearTimeout(boltClickTimer);
+        boltClickTimer = null;
+      }
+
+      const clearedCount = reviewQueue.length;
+      isReviewMode = false;
+      isTestMode = false;
+      pendingStartReview = false;
+      wrongCount = 0;
+      wrongPool = [];
+      reviewQueue = [];
+      reviewIndex = 0;
+      boltClickCount = 0;
+
+      document.getElementById('wrongCount').textContent = '0';
+      updateModeLocks();
+      applyHintSetting(savedHintBeforeReview);
+
+      if (cleared) {
+        document.getElementById('clearModalTitle').textContent = '🎉 強制復習クリア！';
+        document.getElementById('clearModalHeading').textContent = '間違えた問題を全問連続正解！';
+        document.getElementById('testClearDesc').innerHTML =
+          `復習した <strong>${clearedCount} 問</strong> をすべて連続で正解しました！<br>間違いカウントをリセットして通常モードに戻ります。`;
+        document.getElementById('testClearModal').classList.add('is-open');
+      } else {
+        nextProblem();
+      }
+    }
+
+    function closeTestClearModal() {
+      document.getElementById('testClearModal').classList.remove('is-open');
+      nextProblem();
+    }
+
+    // 稲妻マーク3回クリック（テスト中は全画面OFFのみ、強制復習中はいつでも解除）
+    function onBoltClick() {
+      if (!isTestMode && !isReviewMode) return;
+      if (isTestMode && !isReviewMode && document.fullscreenElement) {
+        boltClickCount = 0;
+        return;
+      }
+      boltClickCount++;
+      if (boltClickTimer) clearTimeout(boltClickTimer);
+      boltClickTimer = setTimeout(() => {
+        boltClickCount = 0;
+      }, 2500);
+
+      if (boltClickCount >= 3) {
+        if (isReviewMode) finishReviewMode(false);
+        else finishTestMode(false);
+      }
+    }
+
+    // ハンバーガーメニュー開閉
+    function toggleMenu() {
+      const dd = document.getElementById('menuDropdown');
+      const btn = document.getElementById('menuBtn');
+      const isOpen = dd.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    function closeMenu() {
+      const dd = document.getElementById('menuDropdown');
+      const btn = document.getElementById('menuBtn');
+      dd.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function updateModePill() {
+      const levelMap = {
+        elementary: '小学校',
+        junior: '中学校',
+        high: '高校生',
+        space: '宇宙コース',
+        dbz: '🐉 ドラゴンボール'
+      };
+      const catMap = {
+        all: 'すべて',
+        time: '時間',
+        length: '長さ',
+        speed: '速さ',
+        weight: '重さ',
+        volume: 'かさ・体積',
+        area: '面積'
+      };
+      const lvl = document.getElementById('levelSelect').value;
+      const cat = document.getElementById('categorySelect').value;
+      document.getElementById('currentModePill').textContent = `${levelMap[lvl] || lvl} ・ ${catMap[cat] || cat}`;
+    }
+
+    document.addEventListener('click', (e) => {
+      const wrap = document.getElementById('menuWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // ヒント表示切り替え
+    function applyHintSetting(enabled) {
+      showHint = enabled;
+      const btn = document.getElementById('hintBtn');
+      btn.textContent = showHint ? '💡 ヒントON' : '💡 ヒントOFF';
+      btn.classList.toggle('is-off', !showHint);
+      renderIdleFeedback();
+    }
+
+    function toggleHint() {
+      applyHintSetting(!showHint);
+      try {
+        localStorage.setItem('unit-quiz-hint', showHint ? '1' : '0');
+      } catch (e) {}
+    }
+
+    // 効果音切り替え
+    function applySoundSetting(enabled) {
+      soundEnabled = enabled;
+      const btn = document.getElementById('soundBtn');
+      btn.textContent = soundEnabled ? '🔊 音ON' : '🔇 音OFF';
+      btn.classList.toggle('is-off', !soundEnabled);
+    }
+
+    function toggleSound() {
+      applySoundSetting(!soundEnabled);
+      try {
+        localStorage.setItem('unit-quiz-sound', soundEnabled ? '1' : '0');
+      } catch (e) {}
+    }
+
+    // 解答履歴モーダル
+    function openHistory() {
+      renderHistory();
+      document.getElementById('historyModal').classList.add('is-open');
+    }
+
+    function closeHistory() {
+      document.getElementById('historyModal').classList.remove('is-open');
+    }
+
+    function setHistoryFilter(filter) {
+      historyFilter = filter;
+      document.getElementById('tabAll').classList.toggle('active', filter === 'all');
+      document.getElementById('tabWrong').classList.toggle('active', filter === 'wrong');
+      document.getElementById('tabCorrect').classList.toggle('active', filter === 'correct');
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const body = document.getElementById('historyBody');
+      const summary = document.getElementById('historySummary');
+      const okCount = historyList.filter(h => h.isCorrect).length;
+      const rate = historyList.length > 0 ? Math.round((okCount / historyList.length) * 100) : 0;
+      summary.textContent = `（全${historyList.length}問 / 正解 ${okCount}問 / 正答率 ${rate}%）`;
+
+      const filtered = historyList.filter(h => {
+        if (historyFilter === 'wrong') return !h.isCorrect;
+        if (historyFilter === 'correct') return h.isCorrect;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        body.innerHTML = '<div class="history-empty">表示できる解答履歴がありません。</div>';
+        return;
+      }
+
+      body.innerHTML = filtered.map(item => `
+        <div class="history-item ${item.isCorrect ? '' : 'is-wrong'}">
+          <div class="history-mark">${item.isCorrect ? '⭕' : '❌'}</div>
+          <div>
+            <div class="history-q">${item.q}</div>
+            <div class="history-meta">${item.levelName} ・ ${item.catName}</div>
+          </div>
+          <div class="history-ans">
+            <div>あなた：<strong>${item.chosen}</strong></div>
+            ${item.isCorrect ? '' : `<div>正解：<strong>${item.ans}</strong></div>`}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function clearHistory() {
+      if (historyList.length === 0) return;
+      historyList = [];
+      document.getElementById('historyBtn').textContent = '📜 履歴 (0)';
+      renderHistory();
+    }
+
+    // ダークモード切り替え
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const btn = document.getElementById('themeBtn');
+      btn.textContent = theme === 'dark' ? '☀️ ライト' : '🌙 ダーク';
+    }
+
+    function toggleTheme() {
+      if (isTestMode || isReviewMode) return;
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try {
+        localStorage.setItem('unit-quiz-theme', next);
+      } catch (e) {}
+    }
+
+    // 全画面表示切り替え
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('fullscreenBtn');
+      btn.textContent = document.fullscreenElement ? '✕ 全画面解除' : '⛶ 全画面';
+    });
+
+    // 指数（10^n）解説モーダル
+    function openGuide() {
+      if (isTestMode || isReviewMode) return;
+      closeMenu();
+      document.getElementById('guideModal').classList.add('is-open');
+    }
+
+    function closeGuide() {
+      document.getElementById('guideModal').classList.remove('is-open');
+    }
+
+    // キーボードショートカット（1-6で選択、Enterで次へ、Escでモーダル・メニューを閉じる）
+    document.addEventListener('keydown', (e) => {
+      const historyOpen = document.getElementById('historyModal').classList.contains('is-open');
+      const testOpen = document.getElementById('testModal').classList.contains('is-open');
+      const clearOpen = document.getElementById('testClearModal').classList.contains('is-open');
+      const guideOpen = document.getElementById('guideModal').classList.contains('is-open');
+      const anyModalOpen = historyOpen || testOpen || clearOpen || guideOpen;
+
+      if (e.key === 'Escape') {
+        if (historyOpen) closeHistory();
+        if (testOpen) closeTestModal();
+        if (guideOpen) closeGuide();
+        closeMenu();
+        return;
+      }
+      if (anyModalOpen || e.target.tagName === 'SELECT') return;
+      if (!isAnswered && e.key >= '1' && e.key <= '6') {
+        const idx = Number(e.key) - 1;
+        if (idx < currentChoices.length) {
+          selectChoice(idx);
+        }
+      } else if (isAnswered && !(isTestMode && testStreak >= 10) && !(isReviewMode && reviewIndex >= reviewQueue.length) && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        nextProblem();
+      }
+    });
+
+    // ==========================================
+    // 計算用電卓ロジック
+    // ==========================================
+    let calcCurrent = '0';
+    let calcPrev = null;
+    let calcOperator = null;
+    let calcResetNext = false;
+
+    function formatCalcNumber(str) {
+      if (str === 'エラー') return str;
+      const parts = str.split('.');
+      const intPart = parts[0];
+      const formattedInt = intPart === '-' ? '-' : Number(intPart).toLocaleString('ja-JP');
+      return parts.length > 1 ? `${formattedInt}.${parts[1]}` : formattedInt;
+    }
+
+    function updateCalcScreen(exprText = null) {
+      document.getElementById('calcDisplay').textContent = formatCalcNumber(calcCurrent);
+      if (exprText !== null) {
+        document.getElementById('calcExpr').textContent = exprText;
+      } else if (calcPrev !== null && calcOperator) {
+        const opMap = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+        document.getElementById('calcExpr').textContent = `${formatCalcNumber(String(calcPrev))} ${opMap[calcOperator]}`;
+      } else {
+        document.getElementById('calcExpr').textContent = '';
+      }
+    }
+
+    function calcDigit(d) {
+      if (calcCurrent === 'エラー') calcCurrent = '0';
+      if (calcResetNext) {
+        calcCurrent = d === '00' ? '0' : d;
+        calcResetNext = false;
+      } else if (calcCurrent === '0') {
+        calcCurrent = d === '00' ? '0' : d;
+      } else if (calcCurrent.length < 14) {
+        calcCurrent += d;
+      }
+      updateCalcScreen();
+    }
+
+    function calcDot() {
+      if (calcCurrent === 'エラー') calcCurrent = '0';
+      if (calcResetNext) {
+        calcCurrent = '0.';
+        calcResetNext = false;
+      } else if (!calcCurrent.includes('.')) {
+        calcCurrent += '.';
+      }
+      updateCalcScreen();
+    }
+
+    function calcClear() {
+      calcCurrent = '0';
+      calcPrev = null;
+      calcOperator = null;
+      calcResetNext = false;
+      updateCalcScreen('');
+    }
+
+    function calcBackspace() {
+      if (calcResetNext || calcCurrent === 'エラー') {
+        calcCurrent = '0';
+        calcResetNext = false;
+      } else if (calcCurrent.length <= 1) {
+        calcCurrent = '0';
+      } else {
+        calcCurrent = calcCurrent.slice(0, -1);
+      }
+      updateCalcScreen();
+    }
+
+    function computeCalc(a, op, b) {
+      let res;
+      if (op === '+') res = a + b;
+      else if (op === '-') res = a - b;
+      else if (op === '*') res = a * b;
+      else if (op === '/') {
+        if (b === 0) return 'エラー';
+        res = a / b;
+      }
+      return String(parseFloat(res.toPrecision(12)));
+    }
+
+    function calcOp(op) {
+      if (calcCurrent === 'エラー') return;
+      const num = Number(calcCurrent);
+      if (calcPrev !== null && calcOperator && !calcResetNext) {
+        const res = computeCalc(calcPrev, calcOperator, num);
+        calcCurrent = res;
+        if (res === 'エラー') {
+          calcPrev = null;
+          calcOperator = null;
+          calcResetNext = true;
+          updateCalcScreen('');
+          return;
+        }
+        calcPrev = Number(res);
+      } else {
+        calcPrev = num;
+      }
+      calcOperator = op;
+      calcResetNext = true;
+      updateCalcScreen();
+    }
+
+    function calcEqual() {
+      if (calcPrev === null || !calcOperator || calcCurrent === 'エラー') return;
+      const b = Number(calcCurrent);
+      const opMap = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+      const expr = `${formatCalcNumber(String(calcPrev))} ${opMap[calcOperator]} ${formatCalcNumber(calcCurrent)} =`;
+      calcCurrent = computeCalc(calcPrev, calcOperator, b);
+      calcPrev = null;
+      calcOperator = null;
+      calcResetNext = true;
+      updateCalcScreen(expr);
+    }
+
+    // 初期化
+    (function init() {
+      try {
+        const savedTheme = localStorage.getItem('unit-quiz-theme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          applyTheme(savedTheme);
+        }
+        const savedHint = localStorage.getItem('unit-quiz-hint');
+        if (savedHint === '0' || savedHint === '1') {
+          applyHintSetting(savedHint === '1');
+        }
+        const savedSound = localStorage.getItem('unit-quiz-sound');
+        if (savedSound === '0' || savedSound === '1') {
+          applySoundSetting(savedSound === '1');
+        }
+      } catch (e) {}
+      nextProblem();
+    })();
+  </script>
+</body>
+</html>
