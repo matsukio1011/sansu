@@ -1006,7 +1006,19 @@
 
     function saveStats() {
       try {
-        localStorage.setItem('multiple_master_stats_v1', JSON.stringify({
+        const key = 'multiple_master_stats_v1';
+        let bests;
+        try {
+          // The DOPA edition shares this key and owns the personal-best records.
+          const saved = JSON.parse(localStorage.getItem(key));
+          if (saved?.bests && typeof saved.bests === 'object' && !Array.isArray(saved.bests)) {
+            bests = saved.bests;
+          }
+        } catch (e) {
+          // Keep ordinary history writable even if the old snapshot was invalid.
+        }
+        localStorage.setItem(key, JSON.stringify({
+          bests,
           history: state.history.slice(0, 30),
           lifetimeTotal: state.lifetimeTotal,
           lifetimeCorrect: state.lifetimeCorrect,
