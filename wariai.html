@@ -83,7 +83,7 @@
 </head>
 <body class="h-screen w-screen overflow-hidden bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col justify-between p-2 sm:p-4 transition-colors duration-300">
 
-    <header class="w-full max-w-5xl mx-auto flex items-center justify-between bg-white dark:bg-slate-900 px-4 py-2.5 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800 shrink-0">
+    <header class="w-full max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-y-1.5 bg-white dark:bg-slate-900 px-4 py-2.5 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800 shrink-0">
         <div class="flex items-center gap-2.5">
             <span id="header-icon" class="text-2xl sm:text-3xl transition-transform duration-300 hover:scale-110">🐰</span>
             <div>
@@ -97,7 +97,7 @@
         </div>
 
         <!-- Score & Utility Buttons -->
-        <div class="flex items-center gap-2 sm:gap-3">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800/90 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold">
                 <div class="flex items-center gap-1">
                     <span class="text-slate-400">正解:</span>
@@ -110,6 +110,10 @@
                     <span id="target-streak-display" class="text-xs text-slate-400 dark:text-slate-500 font-bold">/ 10</span>
                 </div>
             </div>
+
+            <button type="button" id="btn-history" onclick="openAnswerHistory()" aria-haspopup="dialog" aria-controls="history-dialog" class="px-2.5 py-2 rounded-xl bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900 dark:hover:bg-indigo-800 text-indigo-800 dark:text-indigo-100 text-xs font-bold transition active:scale-95 whitespace-nowrap">
+                📜 履歴
+            </button>
 
             <!-- Portal Link -->
             <a href="index.html" title="ポータルへ戻る" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition active:scale-95 flex items-center justify-center">
@@ -357,12 +361,28 @@
                 <button id="btn-next-level" onclick="advancePassLevel()" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs sm:text-sm font-extrabold shadow-md shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-1">
                     <span id="btn-next-icon">🐕</span><span id="btn-next-text">次の難易度へ</span>
                 </button>
+                <button type="button" onclick="openAnswerHistory()" aria-haspopup="dialog" aria-controls="history-dialog" class="py-2 px-3 rounded-xl bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-900 dark:hover:bg-indigo-800 text-indigo-800 dark:text-indigo-100 text-xs font-bold transition">
+                    履歴
+                </button>
                 <button onclick="continuePlaying()" class="py-2 px-3 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-slate-700/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold transition active:scale-95">
                     続けて練習
                 </button>
             </div>
         </div>
     </div>
+
+    <dialog id="history-dialog" aria-labelledby="history-title" class="m-auto w-[calc(100%_-_1.5rem)] max-w-lg max-h-[85dvh] overflow-auto overscroll-contain rounded-2xl bg-white dark:bg-slate-900 p-4 sm:p-6 text-slate-800 dark:text-slate-100 shadow-xl backdrop:bg-slate-950/75">
+        <div class="flex items-start justify-between gap-3">
+            <div>
+                <h2 id="history-title" class="text-lg font-extrabold">回答履歴</h2>
+                <p id="history-summary" class="mt-1 text-xs text-slate-600 dark:text-slate-300"></p>
+            </div>
+            <form method="dialog">
+                <button type="submit" autofocus class="rounded-xl px-3 py-2 text-sm font-bold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700">閉じる</button>
+            </form>
+        </div>
+        <ol id="history-list" class="mt-3 space-y-2"></ol>
+    </dialog>
 
     <script>
         // 割合マスター辞書（％ → [％表記, 歩合表記, 小数倍表記, 分数倍表記]）
@@ -619,6 +639,94 @@
             autoNextTimer: null,
             isModalOpen: false
         };
+
+        const HISTORY_KEY = 'sansu:wariai:answerHistory:v1';
+        const HISTORY_LIMIT = 500;
+        const historyDialog = document.getElementById('history-dialog');
+        const historyDateFormat = new Intl.DateTimeFormat('ja-JP', {
+            dateStyle: 'short', timeStyle: 'short'
+        });
+        let historyCanSave = true;
+        let advanceAfterHistory = false;
+
+        function loadAnswerHistory() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+                if (!Array.isArray(saved)) return [];
+                return saved.filter(entry => entry &&
+                    Number.isFinite(entry.at) && Math.abs(entry.at) <= 8.64e15 &&
+                    typeof entry.correct === 'boolean' &&
+                    ['level', 'question', 'chosen', 'answer'].every(key => typeof entry[key] === 'string')
+                ).slice(0, HISTORY_LIMIT);
+            } catch {
+                return [];
+            }
+        }
+
+        let answerHistory = loadAnswerHistory();
+
+        function recordAnswer(q, chosen, correct) {
+            const parts = { A: String(q.A), B: q.B_str, C: String(q.C) };
+            parts[q.activeTarget] = '□';
+            const question = q.activePattern === 'ABC'
+                ? `${parts.A} の ${parts.B} は ${parts.C}`
+                : `${parts.C} は ${parts.A} の ${parts.B}`;
+            answerHistory.unshift({
+                at: Date.now(),
+                level: LEVEL_INFO[state.difficulty].name,
+                question,
+                chosen,
+                answer: q.correctStr,
+                correct
+            });
+            answerHistory.length = Math.min(answerHistory.length, HISTORY_LIMIT);
+
+            try {
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(answerHistory));
+                historyCanSave = true;
+            } catch {
+                historyCanSave = false;
+            }
+        }
+
+        function openAnswerHistory() {
+            if (historyDialog.open) return;
+            const summary = document.getElementById('history-summary');
+            summary.textContent = answerHistory.length
+                ? `新しい順に ${answerHistory.length} 件（最大 ${HISTORY_LIMIT} 件）`
+                : 'まだ回答がありません。問題に答えるとここに表示されます。';
+            if (!historyCanSave) summary.textContent += ' このブラウザに保存できなかった回答があります。';
+
+            const list = document.getElementById('history-list');
+            const rows = document.createDocumentFragment();
+            answerHistory.forEach(entry => {
+                const row = document.createElement('li');
+                row.className = 'rounded-xl bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm';
+                const details = document.createElement('p');
+                details.className = 'text-xs text-slate-600 dark:text-slate-300';
+                details.textContent = `${historyDateFormat.format(entry.at)} ／ ${entry.level}`;
+                const question = document.createElement('p');
+                question.className = 'mt-1 font-bold';
+                question.textContent = entry.question;
+                const result = document.createElement('p');
+                result.className = entry.correct
+                    ? 'mt-1 text-xs text-emerald-800 dark:text-emerald-300'
+                    : 'mt-1 text-xs text-rose-800 dark:text-rose-300';
+                result.textContent = `${entry.correct ? '⭕ 正解' : '❌ 不正解'} ／ あなたの答え：${entry.chosen} ／ 正解：${entry.answer}`;
+                row.append(details, question, result);
+                rows.append(row);
+            });
+            list.replaceChildren(rows);
+            historyDialog.showModal();
+            historyDialog.scrollTop = 0;
+        }
+
+        historyDialog.addEventListener('close', () => {
+            if (advanceAfterHistory) {
+                advanceAfterHistory = false;
+                nextQuestion();
+            }
+        });
 
         // Web Audio API Synthesizer for pleasant feedback sounds without external assets
         let audioCtx = null;
@@ -1026,6 +1134,8 @@
             const isCorrect = chosen === q.correctStr;
 
             const btn = document.getElementById(`opt-${idx}`);
+            if (!btn || btn.disabled || historyDialog.open) return;
+            recordAnswer(q, chosen, isCorrect);
             const targetBox = document.querySelector(`[data-part="${q.activeTarget}"]`);
             const fbBar = document.getElementById('feedback-bar');
             const fbText = document.getElementById('feedback-text');
@@ -1062,7 +1172,9 @@
                     playSound('correct');
                     // Auto-advance after 1.15s
                     state.autoNextTimer = setTimeout(() => {
-                        nextQuestion();
+                        state.autoNextTimer = null;
+                        if (historyDialog.open) advanceAfterHistory = true;
+                        else nextQuestion();
                     }, 1150);
                 }
 
@@ -1222,6 +1334,9 @@
 
         // Keyboard Shortcuts (1-6 to answer, Space/Enter for next, modal support)
         window.addEventListener('keydown', (e) => {
+            if (historyDialog.open) return;
+            if ((e.key === ' ' || e.key === 'Enter') &&
+                e.target instanceof Element && e.target.closest('button[aria-controls="history-dialog"]')) return;
             if (state.isModalOpen) {
                 if (e.key === 'Escape') {
                     continuePlaying();
