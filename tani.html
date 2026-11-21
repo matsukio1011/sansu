@@ -2276,7 +2276,7 @@
           if (candidates.length === 0) {
             const recentInPool = recentBaseProblems.filter(p => pool.includes(p));
             const excludeCount = Math.min(RECENT_LIMIT, Math.max(0, pool.length - 1));
-            const toExclude = recentInPool.slice(-excludeCount);
+            const toExclude = excludeCount > 0 ? recentInPool.slice(-excludeCount) : [];
             candidates = pool.filter(p => !toExclude.includes(p));
           }
           baseProblem = candidates[Math.floor(Math.random() * candidates.length)];
