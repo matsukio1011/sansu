@@ -2867,7 +2867,7 @@
     }
 
     async function recordPracticeHistory() {
-      if (!practiceUserName) return { saved: false, reason: 'no_user' };
+      if (!practiceUserName || practiceTotalAnswered === 0) return { saved: false, reason: 'no_answers' };
       const labels = buildSessionLabels();
       const durationSec = practiceStartTime ? Math.max(0, Math.round((Date.now() - practiceStartTime) / 1000)) : 0;
       const accuracy = practiceTotalAnswered > 0
@@ -2956,7 +2956,7 @@
       if (historyBtn) historyBtn.disabled = isTestMode;
       if (themeBtn) themeBtn.disabled = isTestMode;
       if (mobileThemeBtn) mobileThemeBtn.disabled = isTestMode;
-      if (skipBtn) skipBtn.disabled = isTestMode;
+      if (skipBtn) skipBtn.disabled = inSession;
 
       if (filterBar) {
         filterBar.classList.toggle('opacity-50', inSession);
@@ -3111,7 +3111,7 @@
       const correctCnt = practiceCorrectCount;
       const accuracy = totalAns > 0 ? Math.round((correctCnt / totalAns) * 100) : 0;
       const labels = buildSessionLabels();
-      const savePromise = recordPracticeHistory();
+      const savePromise = totalAns > 0 ? recordPracticeHistory() : null;
 
       isPracticeMode = false;
       practiceUserName = '';
@@ -3127,7 +3127,16 @@
         `取り組み者：<strong>${escapeHtml(userName)}</strong><br>` +
         `設定：<strong>${escapeHtml(labels.course)} ・ ${escapeHtml(labels.category)}</strong><br>` +
         `成績：<strong>${correctCnt}問正解</strong> / 全${totalAns}問（正答率 ${accuracy}% / 所要時間：${durationSec}秒）`;
-      showSaveModalStatus(savePromise, PRACTICE_SHEET_NAME);
+
+      if (savePromise) {
+        showSaveModalStatus(savePromise, PRACTICE_SHEET_NAME);
+      } else {
+        const statusEl = document.getElementById('resultSaveStatus');
+        if (statusEl) {
+          statusEl.className = 'text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300';
+          statusEl.textContent = 'ℹ️ 回答数が0問のため、履歴は保存しませんでした。';
+        }
+      }
       toggleFlexModal('sessionResultModal', true);
     }
 
