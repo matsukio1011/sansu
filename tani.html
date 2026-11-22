@@ -305,6 +305,32 @@
       box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
     }
 
+    .test-badge.is-practice {
+      background: #059669;
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
+    }
+
+    .practice-end-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      border-radius: 999px;
+      border: 1.5px solid #dc2626;
+      background: var(--surface);
+      color: #dc2626;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .practice-end-btn:hover {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
     /* メイン3カラム（左：電卓、中央：問題＋解説、右：6択） */
     .main {
       display: grid;
@@ -360,6 +386,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      overflow-y: auto;
     }
 
     .test-radio-group {
@@ -406,6 +433,72 @@
 
     .test-start-btn:hover {
       background: #b91c1c;
+    }
+
+    .practice-start-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #059669;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .practice-start-btn:hover {
+      background: #047857;
+    }
+
+    .test-user-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .test-user-row select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .test-status-msg {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      min-height: 1.1em;
+      line-height: 1.4;
+    }
+
+    .test-status-msg.is-error {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .test-status-msg.is-ok {
+      color: #059669;
+      font-weight: 700;
+    }
+
+    .test-save-status {
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .test-save-status.is-ok {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+      color: var(--correct-text);
+    }
+
+    .test-save-status.is-error {
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+      color: var(--wrong-text);
     }
 
     .calc-header {
@@ -960,6 +1053,177 @@
       line-height: 1.4;
     }
 
+    .test-history-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      margin-bottom: 4px;
+    }
+
+    .test-history-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .test-history-source {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .test-history-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: var(--surface-alt);
+    }
+
+    .test-history-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .test-history-badge.is-pass {
+      background: var(--correct-bg);
+      color: var(--correct-text);
+      border: 1px solid var(--correct-border);
+    }
+
+    .test-history-badge.is-abort {
+      background: var(--wrong-bg);
+      color: var(--wrong-text);
+      border: 1px solid var(--wrong-border);
+    }
+
+    .test-history-badge.is-practice {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    [data-theme="dark"] .test-history-badge.is-practice {
+      color: #93c5fd;
+      border-color: #60a5fa;
+    }
+
+    .test-history-name {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .test-history-meta {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .test-history-right {
+      text-align: right;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      white-space: nowrap;
+    }
+
+    .test-history-right strong {
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .practice-history-card {
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+
+    .practice-history-card .test-history-item {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .practice-qa-details {
+      border-top: 1px dashed var(--border);
+      padding: 8px 14px 10px;
+      background: var(--surface);
+      font-size: 0.82rem;
+    }
+
+    .practice-qa-details summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--accent);
+      user-select: none;
+    }
+
+    .practice-qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .practice-qa-row {
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      font-size: 0.82rem;
+    }
+
+    .practice-qa-row.is-wrong {
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+      color: var(--wrong-text);
+    }
+
+    .practice-qa-q {
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .practice-qa-a {
+      text-align: right;
+      white-space: nowrap;
+      font-size: 0.8rem;
+    }
+
+    .practice-qa-pre {
+      margin-top: 8px;
+      white-space: pre-wrap;
+      font-family: inherit;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
     /* 指数解説モーダル */
     .guide-section {
       background: var(--surface-alt);
@@ -1055,6 +1319,7 @@
             </div>
             <div class="menu-group">
               <div class="menu-label">チャレンジ</div>
+              <button class="tool-btn" id="practiceMenuBtn" onclick="openPracticeModal()" style="border-color:#059669; color:#059669;">📘 練習モード</button>
               <button class="tool-btn" id="testMenuBtn" onclick="openTestModal()" style="border-color:#dc2626; color:#dc2626;">📝 テストモード</button>
             </div>
             <div class="menu-group">
@@ -1066,6 +1331,7 @@
         <div class="title"><span id="boltSecret" class="bolt-secret" onclick="onBoltClick()">⚡</span> 単位変換マスター（6択）</div>
         <span class="current-mode-pill" id="currentModePill">小学校 ・ すべて</span>
         <span class="test-badge" id="testBadge">🔥 テスト中：連続 0 / 10</span>
+        <button type="button" class="practice-end-btn" id="endPracticeBtn" onclick="finishPracticeMode()" style="display:none;">⏹ 練習終了</button>
       </div>
 
       <div class="header-right">
@@ -1086,7 +1352,7 @@
       <aside class="calc-pane" aria-label="計算用電卓">
         <div class="calc-lock-overlay" id="calcLockOverlay">
           <div style="font-size:2rem;">🚫</div>
-          <div>テストモード中</div>
+          <div id="calcLockTitle">テストモード中</div>
           <div style="font-size:0.85rem; font-weight:600; opacity:0.85;">電卓は使用できません</div>
         </div>
         <div class="calc-header">
@@ -1158,7 +1424,7 @@
       <div class="modal-header">
         <div class="modal-title">📜 解答履歴 <span id="historySummary" style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"></span></div>
         <div class="modal-actions">
-          <button class="tool-btn" onclick="clearHistory()">🗑️ 履歴クリア</button>
+          <button class="tool-btn" id="clearHistoryBtn" onclick="clearHistory()">🗑️ 履歴クリア</button>
           <button class="tool-btn" onclick="closeHistory()">✕ 閉じる</button>
         </div>
       </div>
@@ -1166,6 +1432,8 @@
         <button class="tab-btn active" id="tabAll" onclick="setHistoryFilter('all')">すべて</button>
         <button class="tab-btn" id="tabWrong" onclick="setHistoryFilter('wrong')">間違いのみ</button>
         <button class="tab-btn" id="tabCorrect" onclick="setHistoryFilter('correct')">正解のみ</button>
+        <button class="tab-btn" id="tabTest" onclick="setHistoryFilter('test')">🏆 テスト履歴</button>
+        <button class="tab-btn" id="tabPractice" onclick="setHistoryFilter('practice')">📘 練習履歴</button>
       </div>
       <div class="modal-body" id="historyBody"></div>
     </div>
@@ -1179,6 +1447,16 @@
         <button class="tool-btn" onclick="closeTestModal()">✕ 閉じる</button>
       </div>
       <div class="test-form">
+        <div class="menu-group">
+          <div class="menu-label">氏名選択（スプレッドシート名簿）</div>
+          <div class="test-user-row">
+            <select id="testUserSelect">
+              <option value="">-- 氏名を選択してください --</option>
+            </select>
+            <button type="button" class="tool-btn" id="reloadRosterBtn" onclick="loadRosterFromSheet(true)" title="名簿を再読み込み" style="width:auto; flex-shrink:0;">🔄</button>
+          </div>
+          <div class="test-status-msg" id="rosterStatusMsg"></div>
+        </div>
         <div class="menu-group">
           <div class="menu-label">コース選択</div>
           <select id="testLevelSelect">
@@ -1216,6 +1494,61 @@
     </div>
   </div>
 
+  <!-- 練習モード設定モーダル -->
+  <div class="modal-overlay" id="practiceModal" onclick="if(event.target===this) closePracticeModal()">
+    <div class="modal-card test-modal-card" role="dialog" aria-modal="true" aria-label="練習モード設定">
+      <div class="modal-header">
+        <div class="modal-title">📘 練習モード設定</div>
+        <button class="tool-btn" onclick="closePracticeModal()">✕ 閉じる</button>
+      </div>
+      <div class="test-form">
+        <div class="menu-group">
+          <div class="menu-label">氏名選択（スプレッドシート名簿）</div>
+          <div class="test-user-row">
+            <select id="practiceUserSelect">
+              <option value="">-- 氏名を選択してください --</option>
+            </select>
+            <button type="button" class="tool-btn" id="reloadPracticeRosterBtn" onclick="loadRosterFromSheet(true)" title="名簿を再読み込み" style="width:auto; flex-shrink:0;">🔄</button>
+          </div>
+          <div class="test-status-msg" id="practiceRosterStatusMsg"></div>
+        </div>
+        <div class="menu-group">
+          <div class="menu-label">コース選択</div>
+          <select id="practiceLevelSelect">
+            <option value="elementary">小学校レベル（算数・理科）</option>
+            <option value="junior">中学校レベル（数学・理科）</option>
+            <option value="high">高校生レベル（物・化・生・地）</option>
+            <option value="space">宇宙コース（年・光年マスター）</option>
+            <option value="dbz">🐉 ドラゴンボールコース（修行・宇宙・バトル）</option>
+          </select>
+        </div>
+        <div class="menu-group">
+          <div class="menu-label">ジャンル選択</div>
+          <select id="practiceCatSelect">
+            <option value="all">ジャンル：すべて</option>
+            <option value="time">時間（秒・分・時間・日・年）</option>
+            <option value="length">長さ（mm・cm・m・km・光年）</option>
+            <option value="speed">速さ（秒速・分速・時速）</option>
+            <option value="weight">重さ（mg・g・kg・t）</option>
+            <option value="volume">かさ・体積（mL・dL・L・m³）</option>
+            <option value="area">面積（cm²・m²・a・ha・km²）</option>
+          </select>
+        </div>
+        <div class="menu-group">
+          <div class="menu-label">電卓の使用</div>
+          <div class="test-radio-group">
+            <label class="test-radio-label"><input type="radio" name="practiceCalc" value="use" checked> 🧮 電卓を使用する</label>
+            <label class="test-radio-label"><input type="radio" name="practiceCalc" value="nouse"> 🚫 使用しない</label>
+          </div>
+        </div>
+        <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
+          ※ 練習はいつでも右上の「⏹ 練習終了」ボタンで終了でき、終了時に記録がスプレッドシートへ保存されます。
+        </div>
+        <button class="practice-start-btn" onclick="startPracticeMode()">練習開始！</button>
+      </div>
+    </div>
+  </div>
+
   <!-- テスト合格モーダル -->
   <div class="modal-overlay" id="testClearModal">
     <div class="modal-card test-modal-card" role="dialog" aria-modal="true" aria-label="テスト合格">
@@ -1226,6 +1559,7 @@
         <div style="font-size:2.6rem;">🏆</div>
         <div id="clearModalHeading" style="font-size:1.2rem; font-weight:800;">連続10問正解達成！</div>
         <div id="testClearDesc" style="font-size:0.92rem; color:var(--text-secondary); line-height:1.6;"></div>
+        <div class="test-save-status" id="testSaveStatus" style="display:none;"></div>
         <button class="next-btn" style="height:46px;" onclick="closeTestClearModal()">通常モードへ戻る</button>
       </div>
     </div>
@@ -1890,12 +2224,62 @@
     let autoNextTimer = null;
     let audioCtx = null;
 
-    // テストモード・強制復習モード状態
+    // テストモード・練習モード・強制復習モード状態
+    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwTKRRxoPQ182Pg0o0960JXUH5-MKXNb0wU52G0i8VveZjpbLUZS45V0g6L_n4WL-Ty/exec';
+    const ROSTER_CACHE_KEY = 'unit-quiz-roster-cache';
+    const PENDING_HISTORY_KEY = 'unit-quiz-pending-history';
+    const LOCAL_TEST_HISTORY_KEY = 'unit-quiz-local-test-history';
+    const LOCAL_PRACTICE_HISTORY_KEY = 'unit-quiz-local-practice-history';
+
+    const HISTORY_LEVEL_LABELS = {
+      elementary: '小学校レベル',
+      junior: '中学校レベル',
+      high: '高校生レベル',
+      space: '宇宙コース',
+      dbz: 'ドラゴンボールコース'
+    };
+    const HISTORY_CAT_LABELS = {
+      all: 'すべて',
+      time: '時間',
+      length: '長さ',
+      speed: '速さ',
+      weight: '重さ',
+      volume: 'かさ・体積',
+      area: '面積'
+    };
+
     let isTestMode = false;
     let testStreak = 0;
     let testTotalAnswered = 0;
     let testAllowCalc = true;
     let savedHintBeforeTest = true;
+    let testUserName = '';
+    let testStartTime = null;
+    let testCorrectCount = 0;
+    let testWrongCount = 0;
+
+    let isPracticeMode = false;
+    let practiceUserName = '';
+    let practiceStartTime = null;
+    let practiceTotalAnswered = 0;
+    let practiceCorrectCount = 0;
+    let practiceWrongCount = 0;
+    let practiceAllowCalc = true;
+    let practiceHistoryItems = [];
+
+    let rosterLoaded = false;
+    let isLoadingRoster = false;
+    let isFlushingPending = false;
+    let remoteTestHistory = null;
+    let testHistorySource = '';
+    let isLoadingTestHistory = false;
+    let testHistoryNameFilter = 'all';
+    let testHistoryErrorMsg = '';
+    let remotePracticeHistory = null;
+    let practiceHistorySource = '';
+    let isLoadingPracticeHistory = false;
+    let practiceHistoryNameFilter = 'all';
+    let practiceHistoryErrorMsg = '';
     let boltClickCount = 0;
     let boltClickTimer = null;
 
@@ -2356,6 +2740,15 @@
       });
       document.getElementById('historyBtn').textContent = `📜 履歴 (${historyList.length})`;
 
+      if (isPracticeMode && !isReviewMode) {
+        practiceHistoryItems.push({
+          q: htmlToPlainText(currentProblem.q),
+          chosen: htmlToPlainText(chosen.label),
+          ans: htmlToPlainText(currentProblem.ans),
+          isCorrect: Boolean(chosen.isCorrect)
+        });
+      }
+
       const feedbackCard = document.getElementById('feedbackCard');
       const feedbackBody = document.getElementById('feedbackBody');
       if (chosen.isCorrect) {
@@ -2390,9 +2783,14 @@
           let clearedNow = false;
           if (isTestMode) {
             testTotalAnswered++;
+            testCorrectCount++;
             testStreak++;
-            document.getElementById('testBadge').textContent = `🔥 テスト中：連続 ${testStreak} / 10`;
+            document.getElementById('testBadge').textContent = `🔥 ${testUserName}｜連続 ${testStreak} / 10`;
             if (testStreak >= 10) clearedNow = true;
+          } else if (isPracticeMode) {
+            practiceTotalAnswered++;
+            practiceCorrectCount++;
+            document.getElementById('testBadge').textContent = `📘 ${practiceUserName}｜練習中 ${practiceCorrectCount}/${practiceTotalAnswered}`;
           }
 
           feedbackCard.className = 'feedback-card is-correct';
@@ -2431,8 +2829,13 @@
         } else {
           if (isTestMode) {
             testTotalAnswered++;
+            testWrongCount++;
             testStreak = 0;
-            document.getElementById('testBadge').textContent = '🔥 テスト中：連続 0 / 10';
+            document.getElementById('testBadge').textContent = `🔥 ${testUserName}｜連続 0 / 10`;
+          } else if (isPracticeMode) {
+            practiceTotalAnswered++;
+            practiceWrongCount++;
+            document.getElementById('testBadge').textContent = `📘 ${practiceUserName}｜練習中 ${practiceCorrectCount}/${practiceTotalAnswered}`;
           }
 
           wrongCount++;
@@ -2466,33 +2869,392 @@
     }
 
     // ==========================================
-    // テストモード・強制復習モード管理
+    // スプレッドシート連携（名簿取得・履歴保存）
     // ==========================================
-    function openTestModal() {
-      if (isTestMode || isReviewMode) return;
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getGasUrl() {
+      return DEFAULT_GAS_URL.trim();
+    }
+
+    function setStatusMessage(elemId, text, type = '') {
+      const el = document.getElementById(elemId);
+      if (!el) return;
+      el.textContent = text;
+      el.classList.remove('is-error', 'is-ok');
+      if (type === 'error') el.classList.add('is-error');
+      else if (type === 'ok') el.classList.add('is-ok');
+    }
+
+    function setRosterStatus(text, type = '') {
+      setStatusMessage('rosterStatusMsg', text, type);
+      setStatusMessage('practiceRosterStatusMsg', text, type);
+    }
+
+    function setRosterReloadDisabled(disabled) {
+      ['reloadRosterBtn', 'reloadPracticeRosterBtn'].forEach((id) => {
+        const btn = document.getElementById(id);
+        if (btn) btn.disabled = disabled;
+      });
+    }
+
+    function populateRosterSelect(names) {
+      const list = Array.isArray(names) ? names : [];
+      ['testUserSelect', 'practiceUserSelect'].forEach((selectId) => {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        const prevValue = select.value;
+        select.innerHTML = '';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '-- 氏名を選択してください --';
+        select.appendChild(placeholder);
+
+        for (let i = 0; i < list.length; i++) {
+          const name = String(list[i] || '').trim();
+          if (!name) continue;
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        }
+        if (prevValue && list.includes(prevValue)) {
+          select.value = prevValue;
+        }
+      });
+    }
+
+    async function loadRosterFromSheet(force = false) {
+      if (isLoadingRoster) return;
+
+      let cachedNames = [];
+      try {
+        const raw = localStorage.getItem(ROSTER_CACHE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            cachedNames = parsed;
+            if (!rosterLoaded) {
+              populateRosterSelect(cachedNames);
+              rosterLoaded = true;
+            }
+          }
+        }
+      } catch (e) {}
+
+      const gasUrl = getGasUrl();
+      if (!gasUrl) {
+        if (cachedNames.length > 0) {
+          setRosterStatus(`保存済みの名簿（${cachedNames.length}名）を表示中です。`);
+        } else {
+          setRosterStatus('名簿の連携先 URL が設定されていません。', 'error');
+        }
+        return;
+      }
+
+      isLoadingRoster = true;
+      setRosterReloadDisabled(true);
+      setRosterStatus('スプレッドシートから名簿を読み込み中...');
+
+      try {
+        const res = await fetch(gasUrl, { method: 'GET', cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!data || !data.ok || !Array.isArray(data.names)) {
+          throw new Error((data && data.error) || '名簿データの形式が不正です');
+        }
+        populateRosterSelect(data.names);
+        rosterLoaded = true;
+        try {
+          localStorage.setItem(ROSTER_CACHE_KEY, JSON.stringify(data.names));
+        } catch (e) {}
+        setRosterStatus(`✅ 名簿を読み込みました（${data.names.length}名）`, 'ok');
+      } catch (err) {
+        if (cachedNames.length > 0) {
+          setRosterStatus(`⚠️ 名簿の更新に失敗したため、前回の名簿（${cachedNames.length}名）を使用しています。`);
+        } else {
+          setRosterStatus(`名簿の読み込みに失敗しました: ${err.message || err}`, 'error');
+        }
+      } finally {
+        isLoadingRoster = false;
+        setRosterReloadDisabled(false);
+      }
+    }
+
+    function formatDateTimeJst(date) {
+      const jst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+      const pad = (n) => String(n).padStart(2, '0');
+      const y = jst.getUTCFullYear();
+      const m = pad(jst.getUTCMonth() + 1);
+      const d = pad(jst.getUTCDate());
+      const hh = pad(jst.getUTCHours());
+      const mm = pad(jst.getUTCMinutes());
+      const ss = pad(jst.getUTCSeconds());
+      return `${y}/${m}/${d} ${hh}:${mm}:${ss}`;
+    }
+
+    function getLocalHistoryList(storageKey) {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function addLocalHistoryItem(storageKey, record, maxItems = 100) {
+      try {
+        const list = getLocalHistoryList(storageKey);
+        list.unshift(record);
+        if (list.length > maxItems) list.length = maxItems;
+        localStorage.setItem(storageKey, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    function getLocalTestHistory() {
+      return getLocalHistoryList(LOCAL_TEST_HISTORY_KEY);
+    }
+
+    function addLocalTestHistory(record) {
+      addLocalHistoryItem(LOCAL_TEST_HISTORY_KEY, record);
+    }
+
+    function getLocalPracticeHistory() {
+      return getLocalHistoryList(LOCAL_PRACTICE_HISTORY_KEY);
+    }
+
+    function addLocalPracticeHistory(record) {
+      addLocalHistoryItem(LOCAL_PRACTICE_HISTORY_KEY, record);
+    }
+
+    function getPendingHistory() {
+      return getLocalHistoryList(PENDING_HISTORY_KEY);
+    }
+
+    function savePendingHistory(list) {
+      try {
+        if (!list || list.length === 0) {
+          localStorage.removeItem(PENDING_HISTORY_KEY);
+        } else {
+          localStorage.setItem(PENDING_HISTORY_KEY, JSON.stringify(list));
+        }
+      } catch (e) {}
+    }
+
+    async function sendHistoryRecord(record) {
+      const gasUrl = getGasUrl();
+      if (!gasUrl) {
+        return { ok: false, reason: 'no_url' };
+      }
+      try {
+        const res = await fetch(gasUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(record)
+        });
+        if (!res.ok) {
+          return { ok: false, reason: `HTTP ${res.status}` };
+        }
+        const data = await res.json();
+        if (data && data.ok) {
+          return { ok: true };
+        }
+        return { ok: false, reason: (data && data.error) || '保存エラー' };
+      } catch (err) {
+        return { ok: false, reason: err && err.message ? err.message : '通信エラー' };
+      }
+    }
+
+    async function flushPendingHistory() {
+      if (isFlushingPending) return;
+      const pending = getPendingHistory();
+      if (pending.length === 0) return;
+      const gasUrl = getGasUrl();
+      if (!gasUrl) return;
+
+      isFlushingPending = true;
+      const remaining = [];
+      for (let i = 0; i < pending.length; i++) {
+        const item = pending[i];
+        const result = await sendHistoryRecord(item);
+        if (!result.ok) {
+          remaining.push(item);
+        }
+      }
+
+      savePendingHistory(remaining);
+      isFlushingPending = false;
+    }
+
+    async function persistSessionRecord(record, localKey, clearRemoteFn) {
+      addLocalHistoryItem(localKey, record);
+      clearRemoteFn();
+
+      const res = await sendHistoryRecord(record);
+      if (res.ok) {
+        return { saved: true };
+      }
+
+      const pending = getPendingHistory();
+      pending.push(record);
+      savePendingHistory(pending);
+      return { saved: false, reason: res.reason };
+    }
+
+    async function recordTestHistory(resultLabel) {
+      if (!testUserName) return { saved: false, reason: 'no_user' };
+
+      const levelVal = document.getElementById('levelSelect').value;
+      const catVal = document.getElementById('categorySelect').value;
+      const durationSec = testStartTime ? Math.max(0, Math.round((Date.now() - testStartTime) / 1000)) : 0;
+
+      const record = {
+        mode: 'test',
+        timestamp: formatDateTimeJst(new Date()),
+        name: testUserName,
+        course: HISTORY_LEVEL_LABELS[levelVal] || levelVal,
+        category: HISTORY_CAT_LABELS[catVal] || catVal,
+        calc: testAllowCalc ? '使用' : '不使用',
+        result: resultLabel,
+        totalAnswered: testTotalAnswered,
+        correctCount: testCorrectCount,
+        wrongCount: testWrongCount,
+        durationSec
+      };
+
+      return persistSessionRecord(record, LOCAL_TEST_HISTORY_KEY, () => {
+        remoteTestHistory = null;
+      });
+    }
+
+    function htmlToPlainText(str) {
+      return String(str || '')
+        .replace(/<sup\b[^>]*>(.*?)<\/sup>/gi, '^$1')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&times;/g, '×')
+        .replace(/&divide;/g, '÷')
+        .replace(/&minus;/g, '−')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&amp;/g, '&')
+        .trim();
+    }
+
+    function formatPracticeQaText(items) {
+      if (!Array.isArray(items) || items.length === 0) return '';
+      return items.map((item, idx) => {
+        if (item.isCorrect) {
+          return `${idx + 1}. ⭕ ${item.q} → ${item.chosen}`;
+        }
+        return `${idx + 1}. ❌ ${item.q} → あなた: ${item.chosen}（正解: ${item.ans}）`;
+      }).join('\n');
+    }
+
+    async function recordPracticeHistory() {
+      if (!practiceUserName) return { saved: false, reason: 'no_user' };
+
+      const levelVal = document.getElementById('levelSelect').value;
+      const catVal = document.getElementById('categorySelect').value;
+      const durationSec = practiceStartTime ? Math.max(0, Math.round((Date.now() - practiceStartTime) / 1000)) : 0;
+      const accuracy = practiceTotalAnswered > 0
+        ? Math.round((practiceCorrectCount / practiceTotalAnswered) * 100)
+        : 0;
+      const items = practiceHistoryItems.slice();
+
+      const record = {
+        mode: 'practice',
+        timestamp: formatDateTimeJst(new Date()),
+        name: practiceUserName,
+        course: HISTORY_LEVEL_LABELS[levelVal] || levelVal,
+        category: HISTORY_CAT_LABELS[catVal] || catVal,
+        calc: practiceAllowCalc ? '使用' : '不使用',
+        totalAnswered: practiceTotalAnswered,
+        correctCount: practiceCorrectCount,
+        wrongCount: practiceWrongCount,
+        accuracy,
+        durationSec,
+        items,
+        qaText: formatPracticeQaText(items)
+      };
+
+      return persistSessionRecord(record, LOCAL_PRACTICE_HISTORY_KEY, () => {
+        remotePracticeHistory = null;
+      });
+    }
+
+    // ==========================================
+    // テストモード・練習モード・強制復習モード管理
+    // ==========================================
+    function openSessionSetupModal(modalId, levelSelectId, catSelectId, userSelectId) {
+      if (isTestMode || isReviewMode || isPracticeMode) return;
       closeMenu();
-      document.getElementById('testLevelSelect').value = document.getElementById('levelSelect').value;
-      document.getElementById('testCatSelect').value = document.getElementById('categorySelect').value;
-      document.getElementById('testModal').classList.add('is-open');
+      document.getElementById(levelSelectId).value = document.getElementById('levelSelect').value;
+      document.getElementById(catSelectId).value = document.getElementById('categorySelect').value;
+      document.getElementById(userSelectId).value = '';
+      document.getElementById(modalId).classList.add('is-open');
+
+      if (!rosterLoaded || getGasUrl()) {
+        loadRosterFromSheet(false);
+      }
+      if (getPendingHistory().length > 0 && getGasUrl()) {
+        flushPendingHistory();
+      }
+    }
+
+    function openTestModal() {
+      openSessionSetupModal('testModal', 'testLevelSelect', 'testCatSelect', 'testUserSelect');
     }
 
     function closeTestModal() {
       document.getElementById('testModal').classList.remove('is-open');
     }
 
+    function openPracticeModal() {
+      openSessionSetupModal('practiceModal', 'practiceLevelSelect', 'practiceCatSelect', 'practiceUserSelect');
+    }
+
+    function closePracticeModal() {
+      document.getElementById('practiceModal').classList.remove('is-open');
+    }
+
     function updateModeLocks() {
       const locked = isTestMode || isReviewMode;
-      document.getElementById('menuBtn').disabled = locked;
+      const inSession = locked || isPracticeMode;
+      document.getElementById('menuBtn').disabled = inSession;
       document.getElementById('historyBtn').disabled = locked;
       document.getElementById('themeBtn').disabled = locked;
       document.getElementById('hintBtn').disabled = locked;
       const badge = document.getElementById('testBadge');
-      badge.classList.toggle('is-active', locked);
+      badge.classList.toggle('is-active', inSession);
       badge.classList.toggle('is-review', isReviewMode);
-      document.getElementById('calcLockOverlay').classList.toggle('is-active', isTestMode && !testAllowCalc);
+      badge.classList.toggle('is-practice', isPracticeMode);
+      const endPracticeBtn = document.getElementById('endPracticeBtn');
+      if (endPracticeBtn) endPracticeBtn.style.display = isPracticeMode ? 'inline-flex' : 'none';
+      const calcLockActive = (isTestMode && !testAllowCalc) || (isPracticeMode && !practiceAllowCalc);
+      document.getElementById('calcLockOverlay').classList.toggle('is-active', calcLockActive);
+      const calcLockTitle = document.getElementById('calcLockTitle');
+      if (calcLockTitle) calcLockTitle.textContent = isPracticeMode ? '練習モード中' : 'テストモード中';
     }
 
     function startTestMode() {
+      const selectedName = (document.getElementById('testUserSelect').value || '').trim();
+      if (!selectedName) {
+        setStatusMessage('rosterStatusMsg', '⚠️ テストを始める前に氏名を選択してください。', 'error');
+        document.getElementById('testUserSelect').focus();
+        return;
+      }
+
       const level = document.getElementById('testLevelSelect').value;
       const cat = document.getElementById('testCatSelect').value;
       const calcVal = document.querySelector('input[name="testCalc"]:checked').value;
@@ -2501,8 +3263,12 @@
       document.getElementById('categorySelect').value = cat;
 
       isTestMode = true;
+      testUserName = selectedName;
+      testStartTime = Date.now();
       testStreak = 0;
       testTotalAnswered = 0;
+      testCorrectCount = 0;
+      testWrongCount = 0;
       testAllowCalc = calcVal === 'use';
       boltClickCount = 0;
       if (!testAllowCalc) calcClear();
@@ -2510,10 +3276,91 @@
       savedHintBeforeTest = showHint;
       applyHintSetting(false);
 
-      document.getElementById('testBadge').textContent = '🔥 テスト中：連続 0 / 10';
+      document.getElementById('testBadge').textContent = `🔥 ${testUserName}｜連続 0 / 10`;
       updateModeLocks();
       closeTestModal();
       nextProblem(true);
+    }
+
+    function startPracticeMode() {
+      const selectedName = (document.getElementById('practiceUserSelect').value || '').trim();
+      if (!selectedName) {
+        setStatusMessage('practiceRosterStatusMsg', '⚠️ 練習を始める前に氏名を選択してください。', 'error');
+        document.getElementById('practiceUserSelect').focus();
+        return;
+      }
+
+      const level = document.getElementById('practiceLevelSelect').value;
+      const cat = document.getElementById('practiceCatSelect').value;
+      const calcVal = document.querySelector('input[name="practiceCalc"]:checked').value;
+
+      document.getElementById('levelSelect').value = level;
+      document.getElementById('categorySelect').value = cat;
+
+      isPracticeMode = true;
+      practiceUserName = selectedName;
+      practiceStartTime = Date.now();
+      practiceTotalAnswered = 0;
+      practiceCorrectCount = 0;
+      practiceWrongCount = 0;
+      practiceHistoryItems = [];
+      practiceAllowCalc = calcVal === 'use';
+      if (!practiceAllowCalc) calcClear();
+
+      document.getElementById('testBadge').textContent = `📘 ${practiceUserName}｜練習中 0/0`;
+      updateModeLocks();
+      closePracticeModal();
+      nextProblem(true);
+    }
+
+    function showSaveModalStatus(savePromise, sheetLabel) {
+      const saveStatusEl = document.getElementById('testSaveStatus');
+      saveStatusEl.style.display = 'block';
+      saveStatusEl.className = 'test-save-status';
+      saveStatusEl.textContent = '📤 スプレッドシートに履歴を保存中...';
+
+      savePromise.then((res) => {
+        if (res && res.saved) {
+          saveStatusEl.className = 'test-save-status is-ok';
+          saveStatusEl.textContent = `✅ スプレッドシート「${sheetLabel}」に保存しました！`;
+        } else {
+          saveStatusEl.className = 'test-save-status is-error';
+          saveStatusEl.textContent = '⚠️ スプレッドシートへ送信できなかったため端末に一時保存しました（次回接続時に自動で再送信します）。';
+        }
+      });
+    }
+
+    function finishPracticeMode() {
+      if (!isPracticeMode) return;
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+
+      const userName = practiceUserName;
+      const durationSec = practiceStartTime ? Math.max(0, Math.round((Date.now() - practiceStartTime) / 1000)) : 0;
+      const usedCalcText = practiceAllowCalc ? '電卓使用' : '電卓なし';
+      const totalAns = practiceTotalAnswered;
+      const correctCnt = practiceCorrectCount;
+      const accuracy = totalAns > 0 ? Math.round((correctCnt / totalAns) * 100) : 0;
+      const modeText = document.getElementById('currentModePill').textContent;
+      const savePromise = recordPracticeHistory();
+
+      isPracticeMode = false;
+      practiceUserName = '';
+      practiceStartTime = null;
+      practiceHistoryItems = [];
+      updateModeLocks();
+
+      document.getElementById('clearModalTitle').textContent = '📘 練習終了！';
+      document.getElementById('clearModalHeading').textContent = '練習おつかれさまでした！';
+      document.getElementById('testClearDesc').innerHTML =
+        `取り組み者：<strong>${escapeHtml(userName)}</strong><br>` +
+        `コース：<strong>${escapeHtml(modeText)}</strong>（${usedCalcText}）<br>` +
+        `成績：<strong>${correctCnt}問正解</strong> / 全${totalAns}問（正答率 ${accuracy}% / 所要時間：${durationSec}秒）`;
+
+      showSaveModalStatus(savePromise, '単位変換練習履歴');
+      document.getElementById('testClearModal').classList.add('is-open');
     }
 
     function finishTestMode(cleared) {
@@ -2526,11 +3373,18 @@
         boltClickTimer = null;
       }
 
+      const userName = testUserName;
+      const durationSec = testStartTime ? Math.max(0, Math.round((Date.now() - testStartTime) / 1000)) : 0;
       const usedCalcText = testAllowCalc ? '電卓使用' : '電卓なし';
       const totalAns = testTotalAnswered;
       const modeText = document.getElementById('currentModePill').textContent;
+      const savePromise = isTestMode
+        ? recordTestHistory(cleared ? '合格' : '中断')
+        : Promise.resolve({ saved: false });
 
       isTestMode = false;
+      testUserName = '';
+      testStartTime = null;
       boltClickCount = 0;
       updateModeLocks();
       applyHintSetting(savedHintBeforeTest);
@@ -2539,8 +3393,11 @@
         document.getElementById('clearModalTitle').textContent = '🎉 テスト合格！';
         document.getElementById('clearModalHeading').textContent = '連続10問正解達成！';
         document.getElementById('testClearDesc').innerHTML =
-          `コース：<strong>${modeText}</strong>（${usedCalcText}）<br>` +
-          `合計回答数：<strong>${totalAns} 問</strong> で連続10問正解を達成しました！`;
+          `受験者：<strong>${escapeHtml(userName)}</strong><br>` +
+          `コース：<strong>${escapeHtml(modeText)}</strong>（${usedCalcText}）<br>` +
+          `合計回答数：<strong>${totalAns} 問</strong>（所要時間：${durationSec}秒）で連続10問正解を達成しました！`;
+
+        showSaveModalStatus(savePromise, '単位変換履歴');
         document.getElementById('testClearModal').classList.add('is-open');
       } else {
         nextProblem();
@@ -2552,9 +3409,20 @@
         clearTimeout(autoNextTimer);
         autoNextTimer = null;
       }
+      if (isTestMode) {
+        recordTestHistory('中断（強制復習）');
+      } else if (isPracticeMode) {
+        recordPracticeHistory();
+      }
       pendingStartReview = false;
       savedHintBeforeReview = isTestMode ? savedHintBeforeTest : showHint;
       isTestMode = false;
+      testUserName = '';
+      testStartTime = null;
+      isPracticeMode = false;
+      practiceUserName = '';
+      practiceStartTime = null;
+      practiceHistoryItems = [];
       isReviewMode = true;
       boltClickCount = 0;
 
@@ -2596,6 +3464,7 @@
         document.getElementById('clearModalHeading').textContent = '間違えた問題を全問連続正解！';
         document.getElementById('testClearDesc').innerHTML =
           `復習した <strong>${clearedCount} 問</strong> をすべて連続で正解しました！<br>間違いカウントをリセットして通常モードに戻ります。`;
+        document.getElementById('testSaveStatus').style.display = 'none';
         document.getElementById('testClearModal').classList.add('is-open');
       } else {
         nextProblem();
@@ -2702,8 +3571,315 @@
     }
 
     // 解答履歴モーダル
+    function formatDuration(sec) {
+      const s = Math.max(0, Math.round(Number(sec) || 0));
+      if (s < 60) return `${s}秒`;
+      const m = Math.floor(s / 60);
+      const rem = s % 60;
+      return `${m}分${rem}秒`;
+    }
+
+    function setTestHistoryNameFilter(name) {
+      testHistoryNameFilter = name || 'all';
+      renderTestHistory();
+    }
+
+    function setPracticeHistoryNameFilter(name) {
+      practiceHistoryNameFilter = name || 'all';
+      renderPracticeHistory();
+    }
+
+    async function fetchSheetHistoryAction(action, sheetDisplayLabel) {
+      if (getPendingHistory().length > 0 && getGasUrl()) {
+        await flushPendingHistory();
+      }
+
+      const gasUrl = getGasUrl();
+      if (!gasUrl) {
+        return {
+          source: 'local',
+          records: null,
+          errorMsg: 'GAS URLが未設定のため、この端末の履歴を表示しています'
+        };
+      }
+
+      const url = gasUrl + (gasUrl.includes('?') ? '&' : '?') + 'action=' + encodeURIComponent(action);
+      const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      if (data && data.ok && Array.isArray(data.records)) {
+        return { source: 'sheet', records: data.records, errorMsg: '' };
+      }
+      if (data && Array.isArray(data.names)) {
+        return {
+          source: 'local',
+          records: null,
+          errorMsg: 'GAS側が旧バージョンのため、この端末の履歴を表示しています（GAS更新デプロイ後に全員の履歴が見られます）'
+        };
+      }
+      return {
+        source: 'local',
+        records: null,
+        errorMsg: (data && data.error) || `スプレッドシート（${sheetDisplayLabel}）から履歴を取得できなかったため、この端末の履歴を表示しています`
+      };
+    }
+
+    async function loadTestHistoryFromSheet(force = false) {
+      if (isLoadingTestHistory) return;
+      if (!force && remoteTestHistory !== null) {
+        renderTestHistory();
+        return;
+      }
+
+      isLoadingTestHistory = true;
+      testHistoryErrorMsg = '';
+      if (historyFilter === 'test') renderTestHistory();
+
+      try {
+        const result = await fetchSheetHistoryAction('history', '単位変換履歴');
+        testHistorySource = result.source;
+        testHistoryErrorMsg = result.errorMsg;
+        if (result.source === 'sheet') remoteTestHistory = result.records;
+      } catch (err) {
+        testHistorySource = 'local';
+        testHistoryErrorMsg = '通信エラーのため、この端末の履歴を表示しています';
+      } finally {
+        isLoadingTestHistory = false;
+        if (historyFilter === 'test') renderTestHistory();
+      }
+    }
+
+    async function loadPracticeHistoryFromSheet(force = false) {
+      if (isLoadingPracticeHistory) return;
+      if (!force && remotePracticeHistory !== null) {
+        renderPracticeHistory();
+        return;
+      }
+
+      isLoadingPracticeHistory = true;
+      practiceHistoryErrorMsg = '';
+      if (historyFilter === 'practice') renderPracticeHistory();
+
+      try {
+        const result = await fetchSheetHistoryAction('practice_history', '単位変換練習履歴');
+        practiceHistorySource = result.source;
+        practiceHistoryErrorMsg = result.errorMsg;
+        if (result.source === 'sheet') remotePracticeHistory = result.records;
+      } catch (err) {
+        practiceHistorySource = 'local';
+        practiceHistoryErrorMsg = '通信エラーのため、この端末の履歴を表示しています';
+      } finally {
+        isLoadingPracticeHistory = false;
+        if (historyFilter === 'practice') renderPracticeHistory();
+      }
+    }
+
+    function filterSessionRecordsByName(allRecords, currentFilter) {
+      const names = [];
+      const seen = {};
+      for (let i = 0; i < allRecords.length; i++) {
+        const n = String(allRecords[i].name || '').trim();
+        if (n && !seen[n]) {
+          seen[n] = true;
+          names.push(n);
+        }
+      }
+      const normalizedFilter = (currentFilter !== 'all' && !seen[currentFilter]) ? 'all' : currentFilter;
+      const filtered = normalizedFilter === 'all'
+        ? allRecords
+        : allRecords.filter(r => String(r.name || '').trim() === normalizedFilter);
+      return { names, normalizedFilter, filtered };
+    }
+
+    function buildSessionHistoryToolbar({ names, normalizedFilter, onFilterFnName, onReloadFnName, isLoading, source, sheetLabel, totalCount, errorMsg, loadingText }) {
+      let sourceText = '';
+      if (isLoading) {
+        sourceText = loadingText;
+      } else if (source === 'sheet') {
+        sourceText = `☁️ スプレッドシート「${sheetLabel}」より（最新${totalCount}件）`;
+      } else {
+        sourceText = `📱 ${errorMsg || 'この端末の履歴を表示中'}`;
+      }
+
+      const nameOptions = ['<option value="all">すべての氏名</option>']
+        .concat(names.map(n => `<option value="${escapeHtml(n)}"${normalizedFilter === n ? ' selected' : ''}>${escapeHtml(n)}</option>`))
+        .join('');
+
+      return `
+        <div class="test-history-toolbar">
+          <div class="test-history-toolbar-left">
+            <select onchange="${onFilterFnName}(this.value)" aria-label="氏名で絞り込み">
+              ${nameOptions}
+            </select>
+            <button type="button" class="tool-btn" onclick="${onReloadFnName}(true)" ${isLoading ? 'disabled' : ''}>🔄 更新</button>
+          </div>
+          <span class="test-history-source">${escapeHtml(sourceText)}</span>
+        </div>
+      `;
+    }
+
+    function renderTestHistory() {
+      const body = document.getElementById('historyBody');
+      const summary = document.getElementById('historySummary');
+      const allRecords = (testHistorySource === 'sheet' && Array.isArray(remoteTestHistory))
+        ? remoteTestHistory
+        : getLocalTestHistory();
+
+      const { names, normalizedFilter, filtered } = filterSessionRecordsByName(allRecords, testHistoryNameFilter);
+      testHistoryNameFilter = normalizedFilter;
+
+      const passCount = filtered.filter(r => r.result === '合格').length;
+      summary.textContent = `（テスト履歴 ${filtered.length}件 / 合格 ${passCount}件）`;
+
+      const toolbarHtml = buildSessionHistoryToolbar({
+        names,
+        normalizedFilter,
+        onFilterFnName: 'setTestHistoryNameFilter',
+        onReloadFnName: 'loadTestHistoryFromSheet',
+        isLoading: isLoadingTestHistory,
+        source: testHistorySource,
+        sheetLabel: '単位変換履歴',
+        totalCount: allRecords.length,
+        errorMsg: testHistoryErrorMsg,
+        loadingText: '⏳ スプレッドシートからテスト履歴を読み込み中...'
+      });
+
+      let listHtml = '';
+      if (isLoadingTestHistory && allRecords.length === 0) {
+        listHtml = '<div class="history-empty">テスト履歴を読み込み中です...</div>';
+      } else if (filtered.length === 0) {
+        listHtml = '<div class="history-empty">表示できるテスト履歴がありません。</div>';
+      } else {
+        listHtml = filtered.map(r => {
+          const isPass = r.result === '合格';
+          const badgeLabel = isPass ? '🏆 合格' : (r.result || '中断');
+          const totalAns = Number(r.totalAnswered || 0);
+          const correctCnt = Number(r.correctCount || 0);
+          const wrongCnt = Number(r.wrongCount || 0);
+          const dur = formatDuration(r.durationSec);
+          return `
+            <div class="test-history-item">
+              <span class="test-history-badge ${isPass ? 'is-pass' : 'is-abort'}">${escapeHtml(badgeLabel)}</span>
+              <div>
+                <div class="test-history-name">${escapeHtml(r.name || '（氏名なし）')}</div>
+                <div class="test-history-meta">${escapeHtml(r.timestamp || '')} ｜ ${escapeHtml(r.course || '-')} ・ ${escapeHtml(r.category || '-')} ・ 電卓：${escapeHtml(r.calc || '-')}</div>
+              </div>
+              <div class="test-history-right">
+                <div><strong>${correctCnt}問正解</strong> / 全${totalAns}問（ミス${wrongCnt}）</div>
+                <div>⏱️ ${escapeHtml(dur)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      body.innerHTML = toolbarHtml + listHtml;
+    }
+
+    function renderPracticeHistory() {
+      const body = document.getElementById('historyBody');
+      const summary = document.getElementById('historySummary');
+      const allRecords = (practiceHistorySource === 'sheet' && Array.isArray(remotePracticeHistory))
+        ? remotePracticeHistory
+        : getLocalPracticeHistory();
+
+      const { names, normalizedFilter, filtered } = filterSessionRecordsByName(allRecords, practiceHistoryNameFilter);
+      practiceHistoryNameFilter = normalizedFilter;
+
+      const totalSolved = filtered.reduce((sum, r) => sum + Number(r.totalAnswered || 0), 0);
+      summary.textContent = `（練習履歴 ${filtered.length}件 / 合計 ${totalSolved}問）`;
+
+      const toolbarHtml = buildSessionHistoryToolbar({
+        names,
+        normalizedFilter,
+        onFilterFnName: 'setPracticeHistoryNameFilter',
+        onReloadFnName: 'loadPracticeHistoryFromSheet',
+        isLoading: isLoadingPracticeHistory,
+        source: practiceHistorySource,
+        sheetLabel: '単位変換練習履歴',
+        totalCount: allRecords.length,
+        errorMsg: practiceHistoryErrorMsg,
+        loadingText: '⏳ スプレッドシートから練習履歴を読み込み中...'
+      });
+
+      let listHtml = '';
+      if (isLoadingPracticeHistory && allRecords.length === 0) {
+        listHtml = '<div class="history-empty">練習履歴を読み込み中です...</div>';
+      } else if (filtered.length === 0) {
+        listHtml = '<div class="history-empty">表示できる練習履歴がありません。</div>';
+      } else {
+        listHtml = filtered.map(r => {
+          const totalAns = Number(r.totalAnswered || 0);
+          const correctCnt = Number(r.correctCount || 0);
+          const wrongCnt = Number(r.wrongCount || 0);
+          const accuracy = r.accuracy != null
+            ? Number(r.accuracy)
+            : (totalAns > 0 ? Math.round((correctCnt / totalAns) * 100) : 0);
+          const dur = formatDuration(r.durationSec);
+          const items = Array.isArray(r.items) ? r.items : [];
+          const qaText = r.qaText ? String(r.qaText).trim() : '';
+          let detailsHtml = '';
+          if (items.length > 0) {
+            const rowsHtml = items.map((item, idx) => {
+              const ok = Boolean(item.isCorrect);
+              return `
+                <div class="practice-qa-row ${ok ? '' : 'is-wrong'}">
+                  <div>${ok ? '⭕' : '❌'}</div>
+                  <div class="practice-qa-q">${idx + 1}. ${escapeHtml(item.q || '')}</div>
+                  <div class="practice-qa-a">${ok
+                    ? `<strong>${escapeHtml(item.chosen || '')}</strong>`
+                    : `あなた：<strong>${escapeHtml(item.chosen || '')}</strong> ／ 正解：<strong>${escapeHtml(item.ans || '')}</strong>`
+                  }</div>
+                </div>
+              `;
+            }).join('');
+            detailsHtml = `
+              <details class="practice-qa-details">
+                <summary>📝 問題と解答を見る（${items.length}問）</summary>
+                <div class="practice-qa-list">${rowsHtml}</div>
+              </details>
+            `;
+          } else if (qaText) {
+            detailsHtml = `
+              <details class="practice-qa-details">
+                <summary>📝 問題と解答を見る</summary>
+                <pre class="practice-qa-pre">${escapeHtml(qaText)}</pre>
+              </details>
+            `;
+          }
+          return `
+            <div class="practice-history-card">
+              <div class="test-history-item">
+                <span class="test-history-badge is-practice">📘 ${accuracy}%</span>
+                <div>
+                  <div class="test-history-name">${escapeHtml(r.name || '（氏名なし）')}</div>
+                  <div class="test-history-meta">${escapeHtml(r.timestamp || '')} ｜ ${escapeHtml(r.course || '-')} ・ ${escapeHtml(r.category || '-')} ・ 電卓：${escapeHtml(r.calc || '-')}</div>
+                </div>
+                <div class="test-history-right">
+                  <div><strong>${correctCnt}問正解</strong> / 全${totalAns}問（ミス${wrongCnt}）</div>
+                  <div>⏱️ ${escapeHtml(dur)}</div>
+                </div>
+              </div>
+              ${detailsHtml}
+            </div>
+          `;
+        }).join('');
+      }
+
+      body.innerHTML = toolbarHtml + listHtml;
+    }
+
     function openHistory() {
-      renderHistory();
+      if (historyFilter === 'test') {
+        renderTestHistory();
+        loadTestHistoryFromSheet(true);
+      } else if (historyFilter === 'practice') {
+        renderPracticeHistory();
+        loadPracticeHistoryFromSheet(true);
+      } else {
+        renderHistory();
+      }
       document.getElementById('historyModal').classList.add('is-open');
     }
 
@@ -2716,7 +3892,20 @@
       document.getElementById('tabAll').classList.toggle('active', filter === 'all');
       document.getElementById('tabWrong').classList.toggle('active', filter === 'wrong');
       document.getElementById('tabCorrect').classList.toggle('active', filter === 'correct');
-      renderHistory();
+      document.getElementById('tabTest').classList.toggle('active', filter === 'test');
+      document.getElementById('tabPractice').classList.toggle('active', filter === 'practice');
+      const clearBtn = document.getElementById('clearHistoryBtn');
+      if (clearBtn) clearBtn.style.display = (filter === 'test' || filter === 'practice') ? 'none' : '';
+
+      if (filter === 'test') {
+        renderTestHistory();
+        loadTestHistoryFromSheet(remoteTestHistory === null);
+      } else if (filter === 'practice') {
+        renderPracticeHistory();
+        loadPracticeHistoryFromSheet(remotePracticeHistory === null);
+      } else {
+        renderHistory();
+      }
     }
 
     function renderHistory() {
@@ -2805,18 +3994,20 @@
     document.addEventListener('keydown', (e) => {
       const historyOpen = document.getElementById('historyModal').classList.contains('is-open');
       const testOpen = document.getElementById('testModal').classList.contains('is-open');
+      const practiceOpen = document.getElementById('practiceModal').classList.contains('is-open');
       const clearOpen = document.getElementById('testClearModal').classList.contains('is-open');
       const guideOpen = document.getElementById('guideModal').classList.contains('is-open');
-      const anyModalOpen = historyOpen || testOpen || clearOpen || guideOpen;
+      const anyModalOpen = historyOpen || testOpen || practiceOpen || clearOpen || guideOpen;
 
       if (e.key === 'Escape') {
         if (historyOpen) closeHistory();
         if (testOpen) closeTestModal();
+        if (practiceOpen) closePracticeModal();
         if (guideOpen) closeGuide();
         closeMenu();
         return;
       }
-      if (anyModalOpen || e.target.tagName === 'SELECT') return;
+      if (anyModalOpen || e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (!isAnswered && e.key >= '1' && e.key <= '6') {
         const idx = Number(e.key) - 1;
         if (idx < currentChoices.length) {
